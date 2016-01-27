@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <faceted-project>
   <fixed facet="php.core.component"/>
@@ -7,3 +8,14 @@
   <installed facet="php.composer.component" version="1"/>
   <installed facet="php.symfony.component" version="2.2"/>
 </faceted-project>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<faceted-project>
+  <fixed facet="php.core.component"/>
+  <fixed facet="php.component"/>
+  <installed facet="php.core.component" version="1"/>
+  <installed facet="php.component" version="5.6"/>
+  <installed facet="php.composer.component" version="1"/>
+  <installed facet="php.symfony.component" version="2.2"/>
+</faceted-project>
+>>>>>>> 377e9e17654b3376a2e07c2c8ee35072fa0d6b94
