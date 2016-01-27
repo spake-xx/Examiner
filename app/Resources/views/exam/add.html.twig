@@ -2,23 +2,26 @@
 {% block body %}
 
 <div class="table-responsive">
+<h1 class="text-center">{{ exam.name }}</h1>
   <table class="table">
     <thead>
       <tr>
         <th>#</th>
-        <th>Nazwa sprawdzianu</th>
+        <th>Pytanie</th>
+        <td>Odpowiedź</td>
       </tr>
     </thead>
     <tbody>
-    {% for exam in exams %}
+    {% for question in questions %}
       <tr>
-        <td>{{ exam.id }}</td>
-        <td>{{ exam.name }}</td>
+      	<td>{{ question.id }}</td>
+        <td>{{ question.question }}</td>
+        <td>{{ question.correcttext }}</td>
         <td>
       </tr>
     {% endfor %}
     </tbody>
   </table>
 </div>
-{{ form(add_exam) }}
+{{ form(add_question) }}
 {% endblock %}

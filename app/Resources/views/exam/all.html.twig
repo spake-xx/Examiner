@@ -7,6 +7,7 @@
       <tr>
         <th>#</th>
         <th>Nazwa sprawdzianu</th>
+        <th>Edytuj</th>
       </tr>
     </thead>
     <tbody>
@@ -14,7 +15,8 @@
       <tr>
         <td>{{ exam.id }}</td>
         <td>{{ exam.name }}</td>
-        <td>
+        <td><a href="/web/app_dev.php/exam/edit/{{ exam.id }}">Edytuj</a></td>
+        <td><a href="/web/app_dev.php/solve/exam/{{ exam.id }}">Rozwiąż</a></td>
       </tr>
     {% endfor %}
     </tbody>
