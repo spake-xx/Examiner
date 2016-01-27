@@ -33,7 +33,7 @@ class ExamController extends Controller
 		if($form->isValid()){
 			$em->persist($exam);
 			$em->flush();
-			return $this->redirect('/web/app_dev.php/exam/edit/'.$exam->getId());
+			return $this->redirect('/exam/edit/'.$exam->getId());
 		}
 		
 		$exams = $em->getRepository('AppBundle:Exam')->findAll();
@@ -110,7 +110,7 @@ class ExamController extends Controller
 		
 		echo $attempt->getId();
 		$session->set('attempt', $attempt->getId());
-		return $this->redirect('/web/app_dev.php/solve/answer/1');
+		return $this->redirect('/solve/answer/1');
 	}
 	
 	/**
@@ -152,7 +152,7 @@ class ExamController extends Controller
 			$em->flush();
 			$answer_number++;
 			if(isset($questions[$answer_number])){
-				return $this->redirect('/web/app_dev.php/solve/answer/'.$answer_number);
+				return $this->redirect('/solve/answer/'.$answer_number);
 			}else{
 				echo "Nie ma już nic";
 			}
