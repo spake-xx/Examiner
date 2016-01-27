@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <buildpath>
-	<buildpathentry kind="src" path="app"/>
-	<buildpathentry kind="src" path="bin"/>
-	<buildpathentry kind="src" path="src/AppBundle"/>
-	<buildpathentry kind="src" path="vendor"/>
-	<buildpathentry kind="src" path="web"/>
+	<buildpathentry kind="src" path="src"/>
 	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
+	<buildpathentry kind="src" path="app"/>
 </buildpath>
