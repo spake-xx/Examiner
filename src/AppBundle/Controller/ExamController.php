@@ -28,13 +28,27 @@ class ExamController extends Controller
 		if($form->isValid()){
 			$em->persist($exam);
 			$em->flush();
+			return $this->redirectToRoute('editExam', $exam->getId());
 		}
 		
 		$exams = $em->getRepository('AppBundle:Exam')->findAll();
-		return $this->render('quiz/all.html.twig',array(
+		return $this->render('exam/all.html.twig',array(
 				'exams'=>$exams,
 				'add_exam'=>$form->createView(),
 				
 		));
 	}
+	
+	/**
+	 * @Route("/exam/edit/{id}", name="editExam")
+	 */
+	public function editExamAction($id){
+		$em = $this->getDoctrine()->getManager();
+		$exam = $em->getRepository('AppBundle:Exam')->find($id);
+		
+		return $this->render('exam/add.html.twig', array(
+				'exam'=>$exam,
+		));
+	}
+	
 }
