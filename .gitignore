@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /web/bundles/
 /app/bootstrap.php.cache
 /app/cache/*
@@ -10,7 +9,6 @@
 /build/
 /vendor/
 /bin/
-=======
 # Cache and logs (Symfony2)
 /app/cache/*
 /app/logs/*
@@ -49,6 +47,4 @@
 # Build data
 /build/
 
-# Composer PHAR
->>>>>>> 68e247becde94a275888b3a5fa698fac436444dd
-/composer.phar
+/.idea
