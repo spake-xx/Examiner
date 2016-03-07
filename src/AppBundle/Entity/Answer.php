@@ -17,23 +17,15 @@ class Answer
     protected $id;
 	
     /**
-     * @ORM\ManyToOne(targetEntity="Attempt")
-     * @ORM\JoinColumn(name="attempt_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Question")
+     * @ORM\JoinColumn(name="question", referencedColumnName="id")
      */
-    protected $attempt_id;
+    protected $question;
     
     /**
      * @ORM\Column(type="string")
      */
     protected $answer;
-    
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="Question")
-     * @ORM\JoinColumn(name="question_id", referencedColumnName="id")
-     */
-    protected $question_id;
-    
 
     /**
      * Get id
@@ -43,29 +35,6 @@ class Answer
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set attempt_id
-     *
-     * @param \AppBundle\Entity\Attempt $attemptId
-     * @return Answer
-     */
-    public function setAttemptId(\AppBundle\Entity\Attempt $attemptId = null)
-    {
-        $this->attempt_id = $attemptId;
-
-        return $this;
-    }
-
-    /**
-     * Get attempt_id
-     *
-     * @return \AppBundle\Entity\Attempt 
-     */
-    public function getAttemptId()
-    {
-        return $this->attempt_id;
     }
 
     /**
@@ -92,25 +61,25 @@ class Answer
     }
 
     /**
-     * Set question_id
+     * Set question
      *
-     * @param \AppBundle\Entity\Question $questionId
+     * @param \AppBundle\Entity\Question $question
      * @return Answer
      */
-    public function setQuestionId(\AppBundle\Entity\Question $questionId = null)
+    public function setQuestion(\AppBundle\Entity\Question $question = null)
     {
-        $this->question_id = $questionId;
+        $this->question = $question;
 
         return $this;
     }
 
     /**
-     * Get question_id
+     * Get question
      *
      * @return \AppBundle\Entity\Question 
      */
-    public function getQuestionId()
+    public function getQuestion()
     {
-        return $this->question_id;
+        return $this->question;
     }
 }

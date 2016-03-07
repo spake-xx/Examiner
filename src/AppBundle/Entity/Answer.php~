@@ -17,54 +17,13 @@ class Answer
     protected $id;
 	
     /**
-     * @ORM\ManyToOne(targetEntity="Attempt")
-     * @ORM\JoinColumn(name="attempt_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Question")
+     * @ORM\JoinColumn(name="question", referencedColumnName="id")
      */
-    protected $attempt_id;
+    protected $question;
     
     /**
      * @ORM\Column(type="string")
      */
     protected $answer;
-    
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="Question")
-     * @ORM\JoinColumn(name="question_id", referencedColumnName="id")
-     */
-    protected $question_id;
-    
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set attempt_id
-     *
-     * @param \AppBundle\Entity\Attempt $attemptId
-     * @return Answer
-     */
-    public function setAttemptId(\AppBundle\Entity\Attempt $attemptId = null)
-    {
-        $this->attempt_id = $attemptId;
-
-        return $this;
-    }
-
-    /**
-     * Get attempt_id
-     *
-     * @return \AppBundle\Entity\Attempt 
-     */
-    public function getAttemptId()
-    {
-        return $this->attempt_id;
-    }
 }

@@ -17,10 +17,10 @@ class Question
     protected $id;
 	
     /**
-     * @ORM\ManyToOne(targetEntity="Exam")
-     * @ORM\JoinColumn(name="exam_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Quiz")
+     * @ORM\JoinColumn(name="quiz", referencedColumnName="id")
      */
-    protected $exam_id;
+    protected $quiz;
     
     /**
      * @ORM\Column(type="string", length=200)
@@ -28,32 +28,13 @@ class Question
     protected $question;
     
     /**
-     * @ORM\Column(type="integer", length=5, nullable=true)
+     * @ORM\Column(type="string", length=5, nullable=true)
      */
     protected $image;
     
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    protected $a;
-    
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    protected $b;
-    
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    protected $c;
-    
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    protected $d;
-    
-    /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\OneToOne(targetEntity="Answer")
+     * @ORM\JoinColumn(name="correct", referencedColumnName="id")
      */
     protected $correct;
 
@@ -93,7 +74,7 @@ class Question
     /**
      * Set image
      *
-     * @param integer $image
+     * @param string $image
      * @return Question
      */
     public function setImage($image)
@@ -106,7 +87,7 @@ class Question
     /**
      * Get image
      *
-     * @return integer 
+     * @return string 
      */
     public function getImage()
     {
@@ -114,127 +95,35 @@ class Question
     }
 
     /**
-     * Set a
+     * Set quiz
      *
-     * @param string $a
+     * @param \AppBundle\Entity\Quiz $quiz
      * @return Question
      */
-    public function setA($a)
+    public function setQuiz(\AppBundle\Entity\Quiz $quiz = null)
     {
-        $this->a = $a;
+        $this->quiz = $quiz;
 
         return $this;
     }
 
     /**
-     * Get a
+     * Get quiz
      *
-     * @return string 
+     * @return \AppBundle\Entity\Quiz 
      */
-    public function getA()
+    public function getQuiz()
     {
-        return $this->a;
-    }
-
-    /**
-     * Set b
-     *
-     * @param string $b
-     * @return Question
-     */
-    public function setB($b)
-    {
-        $this->b = $b;
-
-        return $this;
-    }
-
-    /**
-     * Get b
-     *
-     * @return string 
-     */
-    public function getB()
-    {
-        return $this->b;
-    }
-
-    /**
-     * Set c
-     *
-     * @param string $c
-     * @return Question
-     */
-    public function setC($c)
-    {
-        $this->c = $c;
-
-        return $this;
-    }
-
-    /**
-     * Get c
-     *
-     * @return string 
-     */
-    public function getC()
-    {
-        return $this->c;
-    }
-
-    /**
-     * Set d
-     *
-     * @param string $d
-     * @return Question
-     */
-    public function setD($d)
-    {
-        $this->d = $d;
-
-        return $this;
-    }
-
-    /**
-     * Get d
-     *
-     * @return string 
-     */
-    public function getD()
-    {
-        return $this->d;
-    }
-
-    /**
-     * Set exam_id
-     *
-     * @param \AppBundle\Entity\Exam $examId
-     * @return Question
-     */
-    public function setExamId(\AppBundle\Entity\Exam $examId = null)
-    {
-        $this->exam_id = $examId;
-
-        return $this;
-    }
-
-    /**
-     * Get exam_id
-     *
-     * @return \AppBundle\Entity\Exam 
-     */
-    public function getExamId()
-    {
-        return $this->exam_id;
+        return $this->quiz;
     }
 
     /**
      * Set correct
      *
-     * @param string $correct
+     * @param \AppBundle\Entity\Answer $correct
      * @return Question
      */
-    public function setCorrect($correct)
+    public function setCorrect(\AppBundle\Entity\Answer $correct = null)
     {
         $this->correct = $correct;
 
@@ -244,31 +133,10 @@ class Question
     /**
      * Get correct
      *
-     * @return string 
+     * @return \AppBundle\Entity\Answer 
      */
     public function getCorrect()
     {
         return $this->correct;
-    }
-    
-    public function getCorrectText(){
-    	$correct = $this->correct;
-    	switch($correct){
-    		case 'a':
-    			return $this->a;
-    			break;
-    		case 'b':
-    			return $this->b;
-    			break;
-    		case 'c':
-    			return $this->c;
-    			break;
-    		case 'd':
-    			return $this->c;
-    			break;
-    		default:
-    			return;
-    			break;
-    	}
     }
 }

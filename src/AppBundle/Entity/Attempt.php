@@ -17,12 +17,15 @@ class Attempt
     protected $id;
 	
     /**
-     * @ORM\ManyToOne(targetEntity="Exam")
-     * @ORM\JoinColumn(name="exam_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Quiz")
+     * @ORM\JoinColumn(name="quiz", referencedColumnName="id")
      */
-    protected $exam_id;
-    
-    
+    protected $quiz;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $result;
 
     /**
      * Get id
@@ -35,25 +38,48 @@ class Attempt
     }
 
     /**
-     * Set exam_id
+     * Set result
      *
-     * @param \AppBundle\Entity\Exam $examId
+     * @param integer $result
      * @return Attempt
      */
-    public function setExamId(\AppBundle\Entity\Exam $examId = null)
+    public function setResult($result)
     {
-        $this->exam_id = $examId;
+        $this->result = $result;
 
         return $this;
     }
 
     /**
-     * Get exam_id
+     * Get result
      *
-     * @return \AppBundle\Entity\Exam 
+     * @return integer 
      */
-    public function getExamId()
+    public function getResult()
     {
-        return $this->exam_id;
+        return $this->result;
+    }
+
+    /**
+     * Set quiz
+     *
+     * @param \AppBundle\Entity\Quiz $quiz
+     * @return Attempt
+     */
+    public function setQuiz(\AppBundle\Entity\Quiz $quiz = null)
+    {
+        $this->quiz = $quiz;
+
+        return $this;
+    }
+
+    /**
+     * Get quiz
+     *
+     * @return \AppBundle\Entity\Quiz 
+     */
+    public function getQuiz()
+    {
+        return $this->quiz;
     }
 }

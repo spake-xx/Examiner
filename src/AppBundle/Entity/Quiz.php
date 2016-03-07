@@ -5,9 +5,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="exams")
+ * @ORM\Table(name="quizes")
  */
-class Exam
+class Quiz
 {
     /**
      * @ORM\Column(type="integer")
@@ -20,6 +20,8 @@ class Exam
      * @ORM\Column(type="string", length=50)
      */
     protected $name;
+
+    protected $teacher;
 
     /**
      * Get id
