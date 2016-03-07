@@ -1,26 +1,48 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-
-<div class="table-responsive">
-  <table class="table">
-    <thead>
+{#<div class="table-responsive">#}
+  {#<table class="table">#}
+    {#<thead>#}
+      {#<tr>#}
+        {#<th>#</th>#}
+        {#<th>Nazwa sprawdzianu</th>#}
+        {#<th>Edytuj</th>#}
+      {#</tr>#}
+    {#</thead>#}
+    {#<tbody>#}
+    {#{% for exam in exams %}#}
+      {#<tr>#}
+        {#<td>{{ exam.id }}</td>#}
+        {#<td>{{ exam.name }}</td>#}
+        {#<td><a href="/exam/edit/{{ exam.id }}">Edytuj</a></td>#}
+        {#<td><a href="/solve/exam/{{ exam.id }}">Rozwiąż</a></td>#}
+      {#</tr>#}
+    {#{% endfor %}#}
+    {#</tbody>#}
+  {#</table>#}
+{#</div>#}
+<div class="panel">
+  <div class="panel-heading">
+    <h3>Egzaminy</h3>
+  </div>
+  <div class="panel-body">
+    <table class="table table-stripped table-hover">
       <tr>
-        <th>#</th>
-        <th>Nazwa sprawdzianu</th>
+        <th>ID</th>
+        <th>Nazwa quizu</th>
         <th>Edytuj</th>
+        <th>Rozwiąż</th>
       </tr>
-    </thead>
-    <tbody>
-    {% for exam in exams %}
+      {% for exam in exams %}
       <tr>
         <td>{{ exam.id }}</td>
         <td>{{ exam.name }}</td>
-        <td><a href="/exam/edit/{{ exam.id }}">Edytuj</a></td>
-        <td><a href="/solve/exam/{{ exam.id }}">Rozwiąż</a></td>
+        <td><a href="{{ path('editExam', {'id':exam.id}) }}">Edytuj</a></td>
+        <td><a href="{{ path('solve_exam', {'exam':exam.id}) }}">Rozwiąż</a></td>
       </tr>
-    {% endfor %}
-    </tbody>
-  </table>
+      {% endfor %}
+    </table>
+  </div>
 </div>
 {{ form(add_exam) }}
 {% endblock %}
