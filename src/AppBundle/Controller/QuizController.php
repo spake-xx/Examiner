@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Answer;
 use AppBundle\Entity\Question;
 use AppBundle\Entity\Quiz;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -33,20 +34,20 @@ class QuizController extends Controller
 			return $this->redirect('/quiz/edit/'.$quiz->getId());
 		}
 
-		$exams = $em->getRepository('AppBundle:Quiz')->findAll();
-		return $this->render('exam/all.html.twig',array(
-				'exams'=>$exams,
-				'add_exam'=>$form->createView(),
+		$quizes = $em->getRepository('AppBundle:Quiz')->findAll();
+		return $this->render('teacher/all.html.twig',array(
+				'quizes'=>$quizes,
+				'add_quiz'=>$form->createView(),
 
 		));
 	}
 
 	/**
-	 * @Route("/exam/edit/{id}", name="editExam")
+	 * @Route("/quiz/edit/{id}", name="editQuiz")
 	 */
-	public function editExamAction($id, Request $request){
+	public function editQuizAction($id, Request $request){
 		$em = $this->getDoctrine()->getManager();
-		$exam = $em->getRepository('AppBundle:Quiz')->find($id);
+		$quiz = $em->getRepository('AppBundle:Quiz')->find($id);
 
 		$question = new Question();
 
@@ -56,30 +57,63 @@ class QuizController extends Controller
 					->getForm();
 
 		$questrepo = $em->getRepository('AppBundle:Question');
-		$questions = $questrepo->findBy(array('quiz'=>$exam));
+		$questions = $questrepo->findBy(array('quiz'=>$quiz));
 
 
 
 		$form->handleRequest($request);
 
 		if($form->isValid()){
-			$question->setQuiz($exam);
+			$question->setQuiz($quiz);
 			$em->persist($question);
 			$em->flush();
-			return $this->redirect($request->getUri());
+			return $this->redirectToRoute('editQuestion', array('question'=>$question->getId()));
 		}
 
-		return $this->render('exam/add.html.twig', array(
-				'exam'=>$exam,
+		return $this->render('teacher/edit_quiz.html.twig', array(
+				'quiz'=>$quiz,
 				'add_question'=>$form->createView(),
 				'questions'=>$questions,
 		));
 	}
 
 	/**
-	 * @Route("/solve/exam/{exam}", name="solve_exam")
+	 * @Route("/quiz/question/{question}", name="editQuestion")
 	 */
-	public function solveExamAction($exam, Request $request)
+	public function editQuestionAction(Request $request, $question){
+		$em = $this->getDoctrine()->getManager();
+		$question = $em->getRepository('AppBundle:Question')->find($question);
+		$answers = $em->getRepository('AppBundle:Answer')->findByQuestion($question);
+
+		$answer = new Answer();
+		$answer->setQuestion($question);
+
+		$form = $this->createFormBuilder($answer)
+					->add('answer')
+					->add('save', SubmitType::class, array('label'=>"Dodaj odpowiedź"))
+					->getForm();
+		$form->handleRequest($request);
+		if($form->isValid()){
+			$em->persist($answer);
+			$em->flush();
+		}
+
+		$question = new Question();
+//		$form = $this->createFormBuilder($question)
+//			->add('question', TextType::class)
+//			->add('save', SubmitType::class, array('label'=>'Dodaj'))
+//			->getForm();
+
+		return $this->render('teacher/edit_question.html.twig', array(
+			'answers'=>$answers,
+			'add_answer'=>$form->createView(),
+		));
+	}
+
+	/**
+	 * @Route("/solve/quiz/{quiz}", name="solve_quiz")
+	 */
+	public function solveQuizAction($quiz, Request $request)
 	{
 	}
 

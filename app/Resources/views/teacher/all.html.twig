@@ -34,12 +34,12 @@
           <th>Edytuj</th>
           <th>Rozwiąż</th>
         </tr>
-        {% for exam in exams %}
+        {% for exam in quizes %}
         <tr>
           <td>{{ exam.id }}</td>
           <td>{{ exam.name }}</td>
-          <td><a href="{{ path('editExam', {'id':exam.id}) }}">Edytuj</a></td>
-          <td><a href="{{ path('solve_exam', {'exam':exam.id}) }}">Rozwiąż</a></td>
+          <td><a href="{{ path('editQuiz', {'id':exam.id}) }}">Edytuj</a></td>
+          <td><a href="{{ path('solve_quiz', {'quiz':exam.id}) }}">Rozwiąż</a></td>
         </tr>
         {% endfor %}
       </table>
@@ -49,14 +49,15 @@
             <h4 class="text-center">Nowy quiz</h4>
           </div>
           <div class="col-md-6">
-            {{ form_widget(add_exam.name, { 'attr': {'placeholder': 'nazwa', 'class':'form-control'} }) }}
-            {% if form_errors(add_exam.name) %}
+            {{ form_widget(add_quiz.name, { 'attr': {'placeholder': 'nazwa', 'class':'form-control'} }) }}
+            {% if form_errors(add_quiz.name) %}
               <div class="alert alert-danger">{{ form_errors(add_exam.name) }}</div>
             {% endif %}
           </div>
           <div class="col-md-4">
-            {#{{ form_widget(add_exam) }}#}
-            {{ form_widget(add_exam.save, { 'attr': {'class':'btn btn-primary btn-block'} }) }}
+
+
+            {{ form_widget(add_quiz.save, { 'attr': {'class':'btn btn-primary btn-block'} }) }}
           </div>
         </div>
       </form>
