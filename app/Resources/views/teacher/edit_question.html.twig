@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+<div class="table-responsive">
+<h1 class="text-center">Edycja pytania</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Odpowiedź</th>
+        <td>Poprawna?</td>
+      </tr>
+    </thead>
+    <tbody>
+    {% for answer in answers %}
+      <tr>
+      	<td>{{ answer.id }}</td>
+        <td>{{ answer.answer }}</td>
+        {#<td>{{ question.correcttext }}</td>#}
+        <td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{{ form(add_answer) }}
+
+
+  <h1>Dodaj kolejne pytanie...</h1>
+  << tu pole do wpisania kolejnego pytania >>
+  {#{{ form(next_question) }}#}
+{% endblock %}
