@@ -21,28 +21,46 @@
     {#</tbody>#}
   {#</table>#}
 {#</div>#}
-<div class="panel">
-  <div class="panel-heading">
-    <h3>Egzaminy</h3>
-  </div>
-  <div class="panel-body">
-    <table class="table table-stripped table-hover">
-      <tr>
-        <th>ID</th>
-        <th>Nazwa quizu</th>
-        <th>Edytuj</th>
-        <th>Rozwiąż</th>
-      </tr>
-      {% for exam in exams %}
-      <tr>
-        <td>{{ exam.id }}</td>
-        <td>{{ exam.name }}</td>
-        <td><a href="{{ path('editExam', {'id':exam.id}) }}">Edytuj</a></td>
-        <td><a href="{{ path('solve_exam', {'exam':exam.id}) }}">Rozwiąż</a></td>
-      </tr>
-      {% endfor %}
-    </table>
+<div class="container">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3>Egzaminy</h3>
+    </div>
+    <div class="panel-body">
+      <table class="table table-stripped table-hover">
+        <tr>
+          <th>ID</th>
+          <th>Nazwa quizu</th>
+          <th>Edytuj</th>
+          <th>Rozwiąż</th>
+        </tr>
+        {% for exam in exams %}
+        <tr>
+          <td>{{ exam.id }}</td>
+          <td>{{ exam.name }}</td>
+          <td><a href="{{ path('editExam', {'id':exam.id}) }}">Edytuj</a></td>
+          <td><a href="{{ path('solve_exam', {'exam':exam.id}) }}">Rozwiąż</a></td>
+        </tr>
+        {% endfor %}
+      </table>
+      <form class="form">
+        <div class="row">
+          <div class="col-md-2">
+            <h4 class="text-center">Nowy quiz</h4>
+          </div>
+          <div class="col-md-6">
+            {{ form_widget(add_exam.name, { 'attr': {'placeholder': 'nazwa', 'class':'form-control'} }) }}
+            {% if form_errors(add_exam.name) %}
+              <div class="alert alert-danger">{{ form_errors(add_exam.name) }}</div>
+            {% endif %}
+          </div>
+          <div class="col-md-4">
+            
+            {{ form_widget(add_exam.save, { 'attr': {'class':'btn btn-primary btn-block'} }) }}
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
-{{ form(add_exam) }}
 {% endblock %}
