@@ -1,27 +1,28 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-
-<div class="table-responsive">
-<h1 class="text-center">Edycja pytania</h1>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Odpowiedź</th>
-        <td>Poprawna?</td>
-      </tr>
-    </thead>
-    <tbody>
-    {% for answer in answers %}
-      <tr>
-      	<td>{{ answer.id }}</td>
-        <td>{{ answer.answer }}</td>
-        {#<td>{{ question.correcttext }}</td>#}
-        <td>
-      </tr>
-    {% endfor %}
-    </tbody>
-  </table>
+<div class="container">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3>Egzaminy</h3>
+    </div>
+    <div class="panel-body">
+      <table class="table table-stripped table-condensed table-hover">
+        <tr>
+          <th>#</th>
+          <th>Odpowiedź</th>
+          <th>Poprawna?->to do</th>
+        </tr>
+        {% for answer in answers %}
+        <tr>
+          <td>{{ answer.id }}</td>
+          <td>{{ answer.answer }}</td>
+          {#<td>{{ question.correcttext }}</td>#}
+          <td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
 </div>
 {{ form(add_answer) }}
 

@@ -96,6 +96,7 @@ class QuizController extends Controller
 		if($form->isValid()){
 			$em->persist($answer);
 			$em->flush();
+			$answers = $em->getRepository('AppBundle:Answer')->findByQuestion($question);
 		}
 
 		$question = new Question();
