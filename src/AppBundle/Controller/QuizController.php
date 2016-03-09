@@ -100,14 +100,21 @@ class QuizController extends Controller
 		}
 
 		$question = new Question();
-//		$form = $this->createFormBuilder($question)
-//			->add('question', TextType::class)
-//			->add('save', SubmitType::class, array('label'=>'Dodaj'))
-//			->getForm();
+		$formq = $this->createFormBuilder($question)
+			->add('question', TextType::class)
+			->add('save', SubmitType::class, array('label'=>'Dodaj'))
+			->getForm();
+		$formq->handleRequest($request);
+		if($formq->isValid()) {
+			$em->persist($answer);
+			$em->flush();
+		}
 
 		return $this->render('teacher/edit_question.html.twig', array(
+			'question' => $question,
 			'answers'=>$answers,
 			'add_answer'=>$form->createView(),
+			'add_question'=>$formq->createView(),
 		));
 	}
 
