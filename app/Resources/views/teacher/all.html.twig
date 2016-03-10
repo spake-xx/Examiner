@@ -39,7 +39,7 @@
           <td>{{ exam.id }}</td>
           <td>{{ exam.name }}</td>
           <td><a href="{{ path('editQuiz', {'id':exam.id}) }}">Edytuj</a></td>
-          <td><a href="{{ path('solve_quiz', {'quiz':exam.id}) }}">Rozwiąż</a></td>
+          <td><a href="{{ path('start_quiz', {'quiz':exam.id}) }}">Rozwiąż</a></td>
         </tr>
         {% endfor %}
       </table>

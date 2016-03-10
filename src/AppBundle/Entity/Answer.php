@@ -28,6 +28,11 @@ class Answer
     protected $answer;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $points;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -81,5 +86,28 @@ class Answer
     public function getQuestion()
     {
         return $this->question;
+    }
+
+    /**
+     * Set points
+     *
+     * @param integer $points
+     * @return Answer
+     */
+    public function setPoints($points)
+    {
+        $this->points = $points;
+
+        return $this;
+    }
+
+    /**
+     * Get points
+     *
+     * @return integer 
+     */
+    public function getPoints()
+    {
+        return $this->points;
     }
 }

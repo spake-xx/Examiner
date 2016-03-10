@@ -23,7 +23,69 @@ class Attempt
     protected $quiz;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $result;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Question")
+     * @ORM\JoinColumn(name="question", referencedColumnName="id")
+     */
+    protected $question;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set result
+     *
+     * @param integer $result
+     * @return Attempt
+     */
+    public function setResult($result)
+    {
+        $this->result = $result;
+
+        return $this;
+    }
+
+    /**
+     * Get result
+     *
+     * @return integer 
+     */
+    public function getResult()
+    {
+        return $this->result;
+    }
+
+    /**
+     * Set quiz
+     *
+     * @param \AppBundle\Entity\Quiz $quiz
+     * @return Attempt
+     */
+    public function setQuiz(\AppBundle\Entity\Quiz $quiz = null)
+    {
+        $this->quiz = $quiz;
+
+        return $this;
+    }
+
+    /**
+     * Get quiz
+     *
+     * @return \AppBundle\Entity\Quiz 
+     */
+    public function getQuiz()
+    {
+        return $this->quiz;
+    }
 }

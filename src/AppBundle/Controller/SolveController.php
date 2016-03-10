@@ -5,6 +5,9 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Answer;
 use AppBundle\Entity\Attempt;
 use AppBundle\Entity\Question;
+use AppBundle\Entity\UserAnswer;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -29,22 +32,60 @@ class SolveController extends SystemController
 		$em->persist($attempt);
 		$em->flush();
 
-		echo $attempt->getId();
 		$session->set('attempt', $attempt->getId());
-		return $this->redirect('/solve/answer/1');
+		return $this->redirectToRoute('solver_attempt', array(
+			'attempt'=>$attempt->getId(),
+		));
 	}
 
 	/**
-	 * @Route("/attempt/{attempt}")
+	 * @Route("/attempt/{attempt}", name="solver_attempt")
 	 */
 	public function attemptAction(Request $request, $attempt){
 		$em = $this->getDoctrine()->getManager();
+        $attempt = $em->getRepository('AppBundle:Attempt')->find($attempt);
+        if(empty($attempt->getQuestion())) {
+            $attempt->setQuestion($this->getNextQuestion($attempt));
+            $em->flush();
+        }
+        if(empty($attempt->getQuestion())){
+            print "KONIEC PYTAŃ !";
+            exit();
+        }
 
-		$question = $this->getQuestion($attempt);
+		$u_answer = new UserAnswer();
+		$form = $this->createFormBuilder($u_answer)
+					->add('answer', EntityType::class, array(
+						'class' => 'AppBundle:Answer',
+						'query_builder' => function (EntityRepository $er) use ($attempt) {
+							return $er->createQueryBuilder('a')
+								->where('a.question='.$attempt->getQuestion()->getId());
+						},
+                        'choice_label'=>'answer',
+                        'expanded'=>true,
+                    ))
+					->add('submit', SubmitType::class)
+					->getForm();
 
-		print $question->getQuestion();
+		$form->handleRequest($request);
 
+        if($form->isValid()){
+            print $u_answer->getAnswer()->getAnswer();
+			$u_answer->setAttempt($attempt);
+			$em->persist($u_answer);
+			$em->flush();
 
+            $attempt->setQuestion(null);
+            $em->flush();
+            return $this->redirectToRoute('solver_attempt', array(
+                'attempt'=>$attempt->getId(),
+            ));
+		}
+
+		return $this->render('solver/solve_question.html.twig', array(
+			'question'=>$attempt->getQuestion(),
+            'form'=>$form->createView(),
+		));
 	}
 
 	/**

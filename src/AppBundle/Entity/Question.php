@@ -31,12 +31,6 @@ class Question
      * @ORM\Column(type="string", length=5, nullable=true)
      */
     protected $image;
-    
-    /**
-     * @ORM\OneToOne(targetEntity="Answer")
-     * @ORM\JoinColumn(name="correct", referencedColumnName="id")
-     */
-    protected $correct;
 
     /**
      * Get id

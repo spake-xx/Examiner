@@ -23,9 +23,15 @@ class Attempt
     protected $quiz;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $result;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Question")
+     * @ORM\JoinColumn(name="question", referencedColumnName="id")
+     */
+    protected $question;
 
     /**
      * Get id
@@ -81,5 +87,28 @@ class Attempt
     public function getQuiz()
     {
         return $this->quiz;
+    }
+
+    /**
+     * Set question
+     *
+     * @param \AppBundle\Entity\Question $question
+     * @return Attempt
+     */
+    public function setQuestion(\AppBundle\Entity\Question $question = null)
+    {
+        $this->question = $question;
+
+        return $this;
+    }
+
+    /**
+     * Get question
+     *
+     * @return \AppBundle\Entity\Question 
+     */
+    public function getQuestion()
+    {
+        return $this->question;
     }
 }

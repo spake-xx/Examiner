@@ -31,10 +31,106 @@ class Question
      * @ORM\Column(type="string", length=5, nullable=true)
      */
     protected $image;
-    
+
     /**
-     * @ORM\OneToOne(targetEntity="Answer")
-     * @ORM\JoinColumn(name="correct", referencedColumnName="id")
+     * Get id
+     *
+     * @return integer 
      */
-    protected $correct;
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set question
+     *
+     * @param string $question
+     * @return Question
+     */
+    public function setQuestion($question)
+    {
+        $this->question = $question;
+
+        return $this;
+    }
+
+    /**
+     * Get question
+     *
+     * @return string 
+     */
+    public function getQuestion()
+    {
+        return $this->question;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     * @return Question
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string 
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set quiz
+     *
+     * @param \AppBundle\Entity\Quiz $quiz
+     * @return Question
+     */
+    public function setQuiz(\AppBundle\Entity\Quiz $quiz = null)
+    {
+        $this->quiz = $quiz;
+
+        return $this;
+    }
+
+    /**
+     * Get quiz
+     *
+     * @return \AppBundle\Entity\Quiz 
+     */
+    public function getQuiz()
+    {
+        return $this->quiz;
+    }
+
+    /**
+     * Set correct
+     *
+     * @param \AppBundle\Entity\Answer $correct
+     * @return Question
+     */
+    public function setCorrect(\AppBundle\Entity\Answer $correct = null)
+    {
+        $this->correct = $correct;
+
+        return $this;
+    }
+
+    /**
+     * Get correct
+     *
+     * @return \AppBundle\Entity\Answer 
+     */
+    public function getCorrect()
+    {
+        return $this->correct;
+    }
 }
