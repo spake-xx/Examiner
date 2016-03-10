@@ -1,27 +1,50 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-
-<div class="table-responsive">
-<h1 class="text-center">{{ quiz.name }}</h1>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Pytanie</th>
-        <td>Odpowiedź</td>
-      </tr>
-    </thead>
-    <tbody>
-    {% for question in questions %}
-      <tr>
-      	<td>{{ question.id }}</td>
-        <td>{{ question.question }}</td>
-        {#<td>{{ question.correcttext }}</td>#}
-        <td>
-      </tr>
-    {% endfor %}
-    </tbody>
-  </table>
+<div class="container">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h1 class="text-center">{{ quiz.name }}</h1>
+    </div>
+    <div class="panel-body">
+        <table class="table table-stripped table-hover table-condensed">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Pytanie</th>
+              <th>Odpowiedź</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for question in questions %}
+            <tr>
+              <td>{{ question.id }}</td>
+              <td>{{ question.question }}</td>
+              <td>to do </td>
+              {#<td>{{ question.correcttext }}</td>#}
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        <form class="form" method="POST">
+          <div class="row">
+            <div class="col-md-2">
+              <h4>Nowe pytanie:</h4>
+            </div>
+            <div class="col-md-6">
+              {#{{ form_widget(add_question.name, { 'attr': {'placeholder': 'nazwa', 'class':'form-control'} }) }}#}
+              {{ form_widget(add_question.question, {'attr': {'placeholder':'nazwa', 'class':'form-control'} }) }}
+              {% if form_errors(add_question.question) %}
+                <div class="alert alert-danger">{{ form_errors(add_question.question) }}</div>
+              {% endif %}
+            </div>
+            <div class="col-md-4">
+              {{ form_widget(add_question.save, { 'attr': {'class':'btn btn-primary btn-block'} }) }}
+              {{ form_widget(add_question._token) }}
+            </div>
+          </div>
+        </form>
+    </div>
+  </div>
 </div>
-{{ form(add_question) }}
+{#{{ form(add_question) }}#}
 {% endblock %}

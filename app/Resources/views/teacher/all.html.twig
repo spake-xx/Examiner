@@ -27,7 +27,7 @@
       <h3>Egzaminy</h3>
     </div>
     <div class="panel-body">
-      <table class="table table-stripped table-hover">
+      <table class="table table-stripped table-hover table-condensed">
         <tr>
           <th>ID</th>
           <th>Nazwa quizu</th>
@@ -43,7 +43,7 @@
         </tr>
         {% endfor %}
       </table>
-      <form class="form">
+      <form class="form"method="POST">
         <div class="row">
           <div class="col-md-2">
             <h4 class="text-center">Nowy quiz</h4>
@@ -51,12 +51,14 @@
           <div class="col-md-6">
             {{ form_widget(add_quiz.name, { 'attr': {'placeholder': 'nazwa', 'class':'form-control'} }) }}
             {% if form_errors(add_quiz.name) %}
-              <div class="alert alert-danger">{{ form_errors(add_exam.name) }}</div>
+              <div class="alert alert-danger">{{ form_errors(add_quiz.name) }}</div>
             {% endif %}
           </div>
           <div class="col-md-4">
-            
+
+            {#{{ form_widget(add_quiz) }}#}
             {{ form_widget(add_quiz.save, { 'attr': {'class':'btn btn-primary btn-block'} }) }}
+            {{ form_widget(add_quiz._token) }}
           </div>
         </div>
       </form>
