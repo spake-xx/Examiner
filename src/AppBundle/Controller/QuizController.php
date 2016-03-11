@@ -86,6 +86,7 @@ class QuizController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$question = $em->getRepository('AppBundle:Question')->find($question);
 		$answers = $em->getRepository('AppBundle:Answer')->findByQuestion($question);
+		$quiz = $question->getQuiz();
 
 		$answer = new Answer();
 		$answer->setQuestion($question);
@@ -102,17 +103,18 @@ class QuizController extends Controller
 			$answers = $em->getRepository('AppBundle:Answer')->findByQuestion($question);
 		}
 
-		$question = new Question();
-		$formq = $this->createFormBuilder($question)
+		$question_new = new Question();
+		$formq = $this->createFormBuilder($question_new)
 			->add('question', TextType::class)
 			->add('save', SubmitType::class, array('label'=>'Dodaj'))
 			->getForm();
 		$formq->handleRequest($request);
 		if($formq->isValid()) {
-			$em->persist($question);
+			$question_new->setQuiz($quiz);
+			$em->persist($question_new);
 			$em->flush();
 			return $this->redirectToRoute('editQuestion', array(
-				'question'=>$question->getId(),
+				'question'=>$question_new->getId(),
 			));
 		}
 

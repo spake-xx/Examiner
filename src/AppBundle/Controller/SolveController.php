@@ -53,6 +53,7 @@ class SolveController extends SystemController
         }
 
 		$u_answer = new UserAnswer();
+		$u_answer->setAttempt($attempt);
 		$form = $this->createFormBuilder($u_answer)
 					->add('answer', EntityType::class, array(
 						'class' => 'AppBundle:Answer',
@@ -70,7 +71,6 @@ class SolveController extends SystemController
 
         if($form->isValid()){
             print $u_answer->getAnswer()->getAnswer();
-			$u_answer->setAttempt($attempt);
 			$em->persist($u_answer);
 			$em->flush();
 
