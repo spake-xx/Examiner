@@ -12,6 +12,7 @@
               <th>#</th>
               <th>Pytanie</th>
               <th>Odpowiedź</th>
+              <th>Edytuj</th>
             </tr>
           </thead>
           <tbody>
@@ -20,6 +21,7 @@
               <td>{{ question.id }}</td>
               <td>{{ question.question }}</td>
               <td>to do </td>
+              <td><a href="{{ path('editQuestion', {'question':question.id}) }}">EDIT</a></td>
               {#<td>{{ question.correcttext }}</td>#}
             </tr>
           {% endfor %}

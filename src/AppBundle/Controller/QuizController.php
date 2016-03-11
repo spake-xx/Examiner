@@ -68,7 +68,10 @@ class QuizController extends Controller
 			$question->setQuiz($quiz);
 			$em->persist($question);
 			$em->flush();
-			return $this->redirectToRoute('editQuestion', array('question'=>$question->getId()));
+			return $this->redirectToRoute('editQuestion', array(
+				'question'=>$question->getId(),
+				'questions'=>$questions,
+			));
 		}
 
 		return $this->render('teacher/edit_quiz.html.twig', array(
@@ -87,6 +90,7 @@ class QuizController extends Controller
 		$question = $em->getRepository('AppBundle:Question')->find($question);
 		$answers = $em->getRepository('AppBundle:Answer')->findByQuestion($question);
 		$quiz = $question->getQuiz();
+		$questions = $em->getRepository('AppBundle:Question')->findByQuiz($quiz);
 
 		$answer = new Answer();
 		$answer->setQuestion($question);
@@ -120,6 +124,8 @@ class QuizController extends Controller
 
 		return $this->render('teacher/edit_question.html.twig', array(
 			'question' => $question,
+			'questions' => $questions,
+			'quiz' => $quiz,
 			'answers'=>$answers,
 			'add_answer'=>$form->createView(),
 			'add_question'=>$formq->createView(),
