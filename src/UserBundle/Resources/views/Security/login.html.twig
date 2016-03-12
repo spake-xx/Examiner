@@ -1,24 +1,52 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends 'base.html.twig' %}
 
-{% trans_default_domain 'FOSUserBundle' %}
+{% block body %}
+{#<form action="{{ path("fos_user_security_check") }}" method="post">#}
+    {#<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />#}
 
-{% block fos_user_content %}
-{% if error %}
-    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-{% endif %}
+    {#<label for="username">{{ 'security.login.username'|trans }}</label>#}
+    {#<input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />#}
 
-<form action="{{ path("fos_user_security_check") }}" method="post">
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+    {#<label for="password">{{ 'security.login.password'|trans }}</label>#}
+    {#<input type="password" id="password" name="_password" required="required" />#}
 
-    <label for="username">{{ 'security.login.username'|trans }}</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+    {#<input type="checkbox" id="remember_me" name="_remember_me" value="on" />#}
+    {#<label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>#}
 
-    <label for="password">{{ 'security.login.password'|trans }}</label>
-    <input type="password" id="password" name="_password" required="required" />
-
-    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-    <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
-
-    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
-</form>
-{% endblock fos_user_content %}
+    {#<input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />#}
+{#</form>#}
+<div class="container col-md-6 col-md-offset-3">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3>Logowanie</h3>
+        </div>
+        <div class="panel-body">
+            <form action="{{ path("fos_user_security_check") }}" method="post">
+                <div class="well">
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="form-control"/>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="password" id="password" name="_password" required="required" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input type="checkbox" id="remember_me" name="_remember_me" value="on" /> Remember me!
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="submit" id="_submit" name="_submit" class="btn btn-block btn-primary" value="{{ 'Login' }}" />
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
