@@ -3,18 +3,29 @@
 <div class="container">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h3>NAZWA QUIZU</h3>
+            <h4>NAZWA QUIZU i jakieś dane usera i logout</h4>
         </div>
         <div class="panel-body">
-            <div class="well col-md-6 col-md-offset-3">
-                <h3>{{ question.question }}</h3>
-                {{ form_start(form) }}
-                <ul class="list-group">
-                    <li class="list-group-item">{{ form_widget(form.answer)  }}</li>
-                </ul>
-                {{ form_widget(form.submit, { 'attr': {'class':'btn btn-primary btn-block'} }) }}
-                {{ form_widget(form._token) }}
-                {{ form_end(form) }}
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="well">
+                        tutaj info o  quizie<br>
+                        ilość pytań<br>
+                        które obecnie pytanie
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="well">
+                        <h3>{{ question.question }}</h3>
+                        {{ form_start(form) }}
+                        <ul class="list-group">
+                            <li class="list-group-item">{{ form_widget(form.answer)  }}</li>
+                        </ul>
+                        {{ form_widget(form.submit, { 'attr': {'class':'btn btn-primary btn-block'} }) }}
+                        {{ form_widget(form._token) }}
+                        {{ form_end(form) }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
