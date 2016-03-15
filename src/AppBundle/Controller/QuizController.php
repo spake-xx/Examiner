@@ -131,6 +131,16 @@ class QuizController extends Controller
 			'add_question'=>$formq->createView(),
 		));
 	}
+
+	/**
+	 * @Route("/teacher/index/", name="teacher_index")
+	 */
+	public function teacherIndexAction()
+	{
+
+
+		return $this->render('teacher/view_panel.html.twig');
+	}
 //
 //	/**
 //	 * @Route("/quiz/result/{attempt}", name="result")

@@ -7,3 +7,7 @@
 .panel-own {
     padding:0px;
 }
+.panel-own .nav-pills {
+    padding:0px;
+    margin:0px;
+}
