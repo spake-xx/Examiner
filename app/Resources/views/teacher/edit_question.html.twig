@@ -1,60 +1,9 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-{#<div class="container">#}
-  {#<div class="panel panel-primary">#}
-    {#<div class="panel-heading">#}
-      {#<h3>Quiz {{ question.quiz.name }} -> {{ question.question }}</h3>#}
-    {#</div>#}
-    {#<div class="panel-body">#}
-      {#<table class="table table-stripped table-condensed table-hover">#}
-        {#<tr>#}
-          {#<th>#</th>#}
-          {#<th>Odpowiedź</th>#}
-          {#<th>Poprawna</th>#}
-          {#<th>EDIT</th>#}
-        {#</tr>#}
-        {#{% for answer in answers %}#}
-        {#<tr>#}
-          {#<td>{{ answer.id }}</td>#}
-          {#<td>{{ answer.answer }}</td>#}
-          {#<td>{% if answer.points>0 %}<i class="fa fa-check"></i> {{ answer.points }} pkt.{% endif %}</td>#}
-          {#<td>TO DO</td>#}
-        {#</tr>#}
-        {#{% endfor %}#}
-      {#</table>#}
-      {#<div class="row">#}
-        {#{{ form_start(add_answer) }}#}
-        {#<div class="col-md-6">#}
-          {#{{ form_widget(add_answer.answer, { 'attr': {'class':'form-control', 'placeholder':'answer'} }) }}#}
-        {#</div>#}
-        {#<div class="col-md-3">#}
-          {#{{ form_widget(add_answer.points, { 'attr': {'class':'form-control', 'placeholder':'points'} }) }}#}
-        {#</div>#}
-        {#<div class="col-md-3">#}
-          {#{{ form_widget(add_answer.save, { 'attr': {'class':'btn btn-primary btn-block'} }) }}#}
-          {#{{ form_widget(add_answer._token) }}#}
-        {#</div>#}
-        {#{{ form_end(add_answer) }}#}
-      {#</div>#}
-      {#<h1>Nowe pytanie</h1>#}
-        {#{{ form_start(add_question) }}#}
-      {#<div class="row">#}
-        {#<div class="col-md-6">#}
-          {#{{ form_widget(add_question.question, { 'attr': {'class':'form-control', 'placeholder':'question'} }) }}#}
-        {#</div>#}
-        {#<div class="col-md-6">#}
-          {#{{ form_widget(add_question.save, { 'attr': {'class':'btn btn-primary btn-block'} }) }}#}
-          {#{{ form_widget(add_question._token) }}#}
-        {#</div>#}
-        {#{{ form_end(add_question) }}#}
-      {#</div>#}
-    {#</h3>#}
-  {#</div>#}
-{#</div>#}
 <div class="container">
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <h2 class="panel-title">TUTAJ JAKIEŚ COŚ</h2>
+      <h2 class="panel-title">Edytuj pytanie</h2>
     </div>
     <div class="panel-body">
       <div class="row">

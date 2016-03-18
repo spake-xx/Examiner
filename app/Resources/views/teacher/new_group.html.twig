@@ -15,9 +15,9 @@
                             </div>
                             <div class="panel-body">
                                 <ul class="nav nav-pills nav-stacked">
-                                    {% for quiz in quizes %}
-                                        <li><a href="{{ path('editQuiz', {'id': quiz.id}) }}">{{ quiz.name }}</a></li>
-                                    {% endfor %}
+                                    {#{% for quiz in quizes %}#}
+                                        {#<li><a href="{{ path('editQuiz', {'id': quiz.id}) }}">{{ quiz.name }}</a></li>#}
+                                    {#{% endfor %}#}
                                 </ul>
                             </div>
                         </div>
@@ -27,9 +27,7 @@
                             </div>
                             <div class="panel-body">
                                 <ul class="nav nav-pills nav-stacked">
-                                    {% for class in classess %}
-                                        <li><a href="">{{ class.name }}</a></li>
-                                    {% endfor %}
+                                    <li><a href="#">TUTAJ pętla</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -39,7 +37,10 @@
                     <div class="well well-own">
                         <div class="panel panel-default panel-own">
                             <div class="panel-body">
-                                TUTAJ TREŚĆ
+                                {{ form_start(form) }}
+                                {{ form_widget(form) }}
+                                {{ form_errors(form) }}
+                                {{ form_end(form) }}
                             </div>
                         </div>
                     </div>

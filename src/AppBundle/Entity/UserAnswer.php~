@@ -2,6 +2,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -18,12 +19,14 @@ class UserAnswer{
     /**
      * @ORM\ManyToOne(targetEntity="Answer")
      * @ORM\JoinColumn(name="answer", referencedColumnName="id")
+     * @Assert\NotBlank()
      */
     protected $answer;
 
     /**
      * @ORM\ManyToOne(targetEntity="Attempt")
      * @ORM\JoinColumn(name="attempt", referencedColumnName="id")
+     * @Assert\NotBlank()
      */
     protected $attempt;
 

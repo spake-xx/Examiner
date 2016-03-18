@@ -14,10 +14,12 @@ class TeacherController extends Controller{
     {
         $em = $this->getDoctrine()->getManager();
         $quizes = $em->getRepository("AppBundle:Quiz")->findAll();
+        $classess = $em->getRepository("AppBundle:Grade")->findAll();
 
 
         return $this->render('teacher/view_panel.html.twig', array(
             'quizes'=>$quizes,
+            'classess'=>$classess,
         ));
     }
 }
