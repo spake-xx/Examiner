@@ -50,8 +50,8 @@
 {#</div>#}
 {#{{ form(add_question) }}#}
   <div class="container">
-    <div class="panel panel-primary">
-      <div class="panel-heading">
+    <div class="panel panel-default">
+      <div class="panel-heading text-center">
         <h2 class="panel-title">TUTAJ JAKIEŚ COŚ</h2>
       </div>
       <div class="panel-body">
@@ -77,7 +77,7 @@
                 <div class="panel-body panel-own">
                   {{ form_start(add_question) }}
                   {{ form_widget(add_question.question, { 'attr': {'class':'form-control', 'placeholder':'new question'} }) }}
-                  {{ form_widget(add_question.save, { 'attr': {'class':'btn btn-primary btn-block'} }) }}
+                  {{ form_widget(add_question.save, { 'attr': {'class':'btn btn-default btn-block'} }) }}
                   {{ form_widget(add_question._token) }}
                   {{ form_end(add_question) }}
                 </div>

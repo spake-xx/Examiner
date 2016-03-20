@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 <div class="container">
-  <div class="panel panel-primary">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <h2 class="panel-title">Edytuj pytanie</h2>
     </div>
@@ -28,7 +28,7 @@
               <div class="panel-body panel-own">
                 {{ form_start(add_question) }}
                 {{ form_widget(add_question.question, { 'attr': {'class':'form-control', 'placeholder':'new question'} }) }}
-                {{ form_widget(add_question.save, { 'attr': {'class':'btn btn-primary btn-block'} }) }}
+                {{ form_widget(add_question.save, { 'attr': {'class':'btn btn-default btn-block'} }) }}
                 {{ form_widget(add_question._token) }}
                 {{ form_end(add_question) }}
               </div>
@@ -67,7 +67,7 @@
                 {{ form_widget(add_answer.points, { 'attr': {'class':'form-control', 'placeholder':'points'} }) }}
               </div>
               <div class="col-md-3">
-                {{ form_widget(add_answer.save, { 'attr': {'class':'btn btn-primary btn-block'} }) }}
+                {{ form_widget(add_answer.save, { 'attr': {'class':'btn btn-default btn-block'} }) }}
                 {{ form_widget(add_answer._token) }}
               </div>
               {{ form_end(add_answer) }}
