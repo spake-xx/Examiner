@@ -1,27 +1,5 @@
-{% extends 'base.html.twig' %}
-{% block body %}
-    <div class="container">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                PANEL PUPILA
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <div class="well well-own">
-                            <div class="panel panel-default panel-own">
-                                <div class="panel-body">
-                                    {{ form_start(form) }}
-                                    {{ form_widget(form) }}
-                                    {{ form_errors(form) }}
-                                    <input type="submit" value="Zarejestruj się" class="btn" />
-                                    {{ form_end(form) }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+{% extends 'teacher_base.html.twig' %}
+{% block heading %} TICZER - ADD PUPIL (CHYBA){% endblock %}
+{% block content %}
+{{ form(form) }}
 {% endblock %}

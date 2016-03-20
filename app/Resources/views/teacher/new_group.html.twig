@@ -1,52 +1,13 @@
-{% extends 'base.html.twig' %}
-{% block body %}
-<div class="container">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            PANEL TICZERA
-        </div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="well well-own">
-                        <div class="panel panel-default panel-own">
-                            <div class="panel-heading">
-                                My quizes
-                            </div>
-                            <div class="panel-body">
-                                <ul class="nav nav-pills nav-stacked">
-                                    {#{% for quiz in quizes %}#}
-                                        {#<li><a href="{{ path('editQuiz', {'id': quiz.id}) }}">{{ quiz.name }}</a></li>#}
-                                    {#{% endfor %}#}
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="panel panel-default panel-own">
-                            <div class="panel-heading">
-                                My classess
-                            </div>
-                            <div class="panel-body">
-                                <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="#">TUTAJ pętla</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="well well-own">
-                        <div class="panel panel-default panel-own">
-                            <div class="panel-body">
-                                {{ form_start(form) }}
-                                {{ form_widget(form) }}
-                                {{ form_errors(form) }}
-                                {{ form_end(form) }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+{% extends 'teacher_base.html.twig' %}
+{% block heading %}TICZER - ADD CLASS{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    {% if form_errors(form.name) %}
+        <div class="alert alert-danger">{{ form_errors(form.name) }}</div>
+    {% endif %}
+    <div class="form-group">
+        {{ form_widget(form.name, {'attr':{'placeholder':'Class name'}}) }}
     </div>
-</div>
+    <input type="submit" class="btn btn-block btn-default" value="ADD"/>
+    {{ form_end(form) }}
 {% endblock %}

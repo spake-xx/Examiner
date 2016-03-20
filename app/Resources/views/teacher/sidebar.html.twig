@@ -1,0 +1,26 @@
+<div class="panel panel-default panel-own">
+    <div class="panel-heading">
+        My quizes
+    </div>
+    <div class="panel-body">
+        <ul class="nav nav-pills nav-stacked">
+            {% for quiz in quizes %}
+                <li><a href="{{ path('editQuiz', {'id': quiz.id}) }}">{{ quiz.name }}</a></li>
+            {% endfor %}
+        </ul>
+        <a class="btn btn-default btn-block"><i class="fa fa-plus"></i>TODO</a>
+    </div>
+</div>
+<div class="panel panel-default panel-own">
+    <div class="panel-heading">
+        My classes
+    </div>
+    <div class="panel-body">
+        <ul class="nav nav-pills nav-stacked">
+            {% for class in classes %}
+                <li><a href="">{{ class.name }}</a></li>
+            {% endfor %}
+        </ul>
+        <a class="btn btn-default btn-block" href="{{ path('teacher_grade_new') }}"><i class="fa fa-plus"></i></a>
+    </div>
+</div>

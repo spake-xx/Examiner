@@ -13,13 +13,26 @@ class TeacherController extends Controller{
     public function teacherIndexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $quizes = $em->getRepository("AppBundle:Quiz")->findAll();
-        $classess = $em->getRepository("AppBundle:Grade")->findAll();
+//        $quizes = $em->getRepository("AppBundle:Quiz")->findAll();
+//        $classess = $em->getRepository("AppBundle:Grade")->findAll();
 
 
         return $this->render('teacher/view_panel.html.twig', array(
+//            'quizes'=>$quizes,
+//            'classess'=>$classess,
+        ));
+    }
+
+    public function teacherSidebarAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $quizes = $em->getRepository("AppBundle:Quiz")->findAll();
+        $classes = $em->getRepository("AppBundle:Grade")->findAll();
+
+
+        return $this->render('teacher/sidebar.html.twig', array(
             'quizes'=>$quizes,
-            'classess'=>$classess,
+            'classes'=>$classes,
         ));
     }
 }

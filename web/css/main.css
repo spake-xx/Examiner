@@ -1,3 +1,6 @@
+body {
+    background-color: #F4F4F4;
+}
 .well-own {
     padding:0.5em;
 }
@@ -8,6 +11,9 @@
     padding:0px;
 }
 .panel-own .nav-pills {
-    padding:0px;
-    margin:0px;
+    padding: 0px;
+    margin: 0px;
+}
+.panel-own {
+    margin: 0.5em;
 }

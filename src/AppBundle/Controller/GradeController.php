@@ -20,7 +20,8 @@ class GradeController extends Controller{
         $grade = new Grade();
 
         $form = $this->createFormBuilder($grade)
-            ->add('name')->getForm();
+            ->add('name')
+            ->getForm();
 
         $form->handleRequest($request);
 
@@ -28,7 +29,9 @@ class GradeController extends Controller{
             $grade->setTeacher($this->getUser());
             $em->persist($grade);
             $em->flush();
-            return $this->redirectToRoute('teacher_grade_register', array('grade'=>$grade->getId()));
+            return $this->redirectToRoute('teacher_grade_register', array(
+                'grade'=>$grade->getId()
+            ));
         }
 
         return $this->render('teacher/new_group.html.twig', array(
@@ -44,12 +47,14 @@ class GradeController extends Controller{
         $em = $this->getDoctrine()->getManager();
         $grade = $em->getRepository('AppBundle:Grade')->find($grade);
 
-        $form = $this->createFormBuilder($grade);
-        $form = $form->add('name')->getForm();
+        $form = $this->createFormBuilder($grade)
+                ->add('name')
+                ->getForm();
 
 
         return $this->render('teacher/grade_registration.html.twig', array(
             'grade'=>$grade,
+            'form'=>$form,
         ));
     }
 
