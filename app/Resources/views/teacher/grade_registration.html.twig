@@ -1,6 +1,21 @@
 {% extends 'teacher_base.html.twig' %}
 {% block heading %}Ticzer - class <b>{{ grade.name }}</b>{% endblock %}
 {% block content %}
-<div class="alert alert-info text-center">Students can register themselves on: <b>{{ url('pupil_register', {'grade': grade.id}) }}</b></div>
-{{ form(form) }}
+<div class="alert alert-info text-center">Students can register on: <b>{{ url('pupil_register', {'grade': grade.id}) }}</b></div>
+<table class="table table-stripped table-hover">
+    <tr>
+        <th>Username</th>
+        <th>email</th>
+        <th>edit</th>
+        <th>remove</th>
+    </tr>
+    {% for pupil in pupils %}
+    <tr>
+        <td>{{ pupil.username }}</td>
+        <td>{{ pupil.email }}</td>
+        <td><a><i class="fa fa-pencil"></i></a></td>
+        <td><a><i class="fa fa-remove"></i></a></td>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}

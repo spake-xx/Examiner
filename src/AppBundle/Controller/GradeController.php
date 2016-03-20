@@ -47,7 +47,7 @@ class GradeController extends Controller{
     {
         $em = $this->getDoctrine()->getManager();
         $grade = $em->getRepository('AppBundle:Grade')->find($grade);
-
+        $pupils = $em->getRepository("AppBundle:User")->findByGrade($grade->getId());
         $form = $this->createFormBuilder($grade)
                 ->add('name')
                 ->getForm();
@@ -55,7 +55,8 @@ class GradeController extends Controller{
 
         return $this->render('teacher/grade_registration.html.twig', array(
             'grade'=>$grade,
-            'form'=>$form->createView(),
+            'pupils'=>$pupils,
+//            'form'=>$form->createView(),
         ));
     }
 
@@ -83,7 +84,7 @@ class GradeController extends Controller{
             $user->setRoles(array('ROLE_PUPIL'));
             $user->setGrade($grade);
             $userManager->updateUser($user);
-            print "POMYŚLNIE ZAREJESTROWANO";
+            $this->addFlash('notice', 'zarejestrowano');
         }
 
         return $this->render('pupil/register.html.twig', array(

@@ -5,6 +5,11 @@
     {#<div class="panel-body">#}
         <div class="well col-md-4 col-md-offset-4">
             <div class="panel panel-default">
+                {% for m in app.session.flashbag.get('notice') %}
+                    <div class="alert alert-success text-center">
+                        {{ m }}
+                    </div>
+                {% endfor %}
                 <div class="panel-heading text-center"><b>{{ grade.name }}</b> - Register Pupil</div>
                 <div class="panel-body">
                     {{ form_start(form) }}
