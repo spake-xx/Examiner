@@ -74,6 +74,7 @@ class GradeController extends Controller{
 
         if($form->isValid()){
             $user->setEnabled(1);
+            $user->setRoles(array('ROLE_PUPIL'));
             $user->setGrade($grade);
             $userManager->updateUser($user);
             print "POMYŚLNIE ZAREJESTROWANO";
