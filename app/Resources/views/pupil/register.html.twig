@@ -1,5 +1,27 @@
-{% extends 'teacher_base.html.twig' %}
-{% block heading %} TICZER - ADD PUPIL (CHYBA){% endblock %}
-{% block content %}
-{{ form(form) }}
+{% extends 'pupil_base.html.twig' %}
+{#{% block heading %} TICZER - ADD PUPIL (CHYBA){% endblock %}#}
+{% block body %}
+{#<div class="panel">#}
+    {#<div class="panel-body">#}
+        <div class="well col-md-4 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center"><b>{{ grade.name }}</b> - Register Pupil</div>
+                <div class="panel-body">
+                    {{ form_start(form) }}
+                    <div class="form-group">
+                            {{ form_widget(form.email, {'attr':{'placeholder':'email', 'class':'text-center'}}) }}
+                    </div>
+                    <div class="form-group">
+                            {{ form_widget(form.username, {'attr':{'placeholder':'username', 'class':'text-center'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_widget(form.plainPassword, {'attr':{'placeholder':'password', 'class':'text-center'}}) }}
+                    </div>
+                    <input type="submit" class="btn btn-default btn-block" value="Register" />
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    {#</div>#}
+{#</div>#}
 {% endblock %}

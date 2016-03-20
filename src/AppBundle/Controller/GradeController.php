@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Grade;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -54,7 +55,7 @@ class GradeController extends Controller{
 
         return $this->render('teacher/grade_registration.html.twig', array(
             'grade'=>$grade,
-            'form'=>$form,
+            'form'=>$form->createView(),
         ));
     }
 
@@ -73,7 +74,7 @@ class GradeController extends Controller{
         $form = $this->createFormBuilder($user)
             ->add('username')
             ->add('email')
-            ->add('plainPassword')
+            ->add('plainPassword', PasswordType::class)
             ->getForm();
         $form->handleRequest($request);
 

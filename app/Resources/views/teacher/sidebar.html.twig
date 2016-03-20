@@ -18,7 +18,7 @@
     <div class="panel-body">
         <ul class="nav nav-pills nav-stacked">
             {% for class in classes %}
-                <li><a href="">{{ class.name }}</a></li>
+                <li><a href="{{ path('teacher_grade_register', {'grade':class.id}) }}">{{ class.name }}</a></li>
             {% endfor %}
         </ul>
         <a class="btn btn-default btn-block" href="{{ path('teacher_grade_new') }}"><i class="fa fa-plus"></i></a>
