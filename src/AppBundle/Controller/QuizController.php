@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Answer;
 use AppBundle\Entity\Question;
 use AppBundle\Entity\Quiz;
+use AppBundle\Entity\QuizSession;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -132,26 +133,31 @@ class QuizController extends Controller
 		));
 	}
 
-//
-//	/**
-//	 * @Route("/quiz/result/{attempt}", name="result")
-//	 */
-//	public function resultAction($attempt, Request $request){
-//		$em = $this->getDoctrine()->getManager();
-//
-//		$answer_repo = $em->getRepository('AppBundle:Answer');
-//		$attempt = $em->getRepository('AppBundle:Attempt')->find($attempt);
-//		$answers = $answer_repo->findByAttempt($attempt);
-//
-//		$wynik = 0;
-//
-//		foreach($answers as $k=>$v){
-//			if($v->getQuestionId()->getCorrect()==$v->getAnswer()){
-//				$wynik++;
-//			}
-//		}
-//
-//		print $wynik;
-//	}
+	/**
+	 * @Route("/teacher/quiz/share/{quiz}", name="quiz_share")
+	 */
+	public function ShareToAction(Request $request, $quiz){
+		$em = $this->getDoctrine()->getManager();
+		$quiz = $em->getRepository("AppBundle:Quiz")->find($quiz);
+
+		$session = new QuizSession();
+
+		$form = $this->createFormBuilder($session)
+					->add('minutes')->getForm();
+		$form->handleRequest($request);
+
+		if($form->isValid()){
+			$session->setQuiz($quiz);
+			$minutes = $session->minutes;
+			$session->setEnd(new \DateTime("+$minutes minutes"));
+			$em->persist($session);
+			$em->flush();
+		}
+
+		return $this->render("teacher/quiz_share.html.twig", array(
+			'quiz'=>$quiz,
+			'form'=>$form->createView(),
+		));
+	}
 }
 ?>

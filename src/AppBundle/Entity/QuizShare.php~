@@ -1,0 +1,30 @@
+<?php
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="quiz_shares")
+ */
+class QuizShare
+{
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Quiz")
+     * @ORM\JoinColumn(name="quiz", referencedColumnName="id")
+     */
+    protected $quiz;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="teacher", referencedColumnName="id")
+     */
+    protected $teacher;
+}
