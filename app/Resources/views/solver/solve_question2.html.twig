@@ -1,0 +1,38 @@
+{% extends 'base_ajax.html.twig' %}
+{% block body %}
+<div class="container" ng-controller="myCtrl">
+    {% verbatim %}
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4>NAZWA QUIZU i jakieś dane usera i logout</h4>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="well">
+                        tutaj info o  quizie {{ 5+5 }}<br>
+                        ilość pytań<br>
+                        które obecnie pytanie
+                    </div>
+
+                </div>
+                <div class="col-md-8">
+                    <div class="well">
+                        <h3>{{ question }}</h3>
+                        <form name="myForm">
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="x in answers">
+                                   <input type="radio" ng-model="user_answer.id" ng-value="{{x.id}}"> {{ x.answer }}
+                                </li>
+                            </ul>
+                            <div id="spinner">Oczekiwanie...</div>
+                            <input type="submit" class='btn btn-primary btn-block' ng-click="send(user_answer)" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endverbatim %}
+</div>
+{% endblock %}

@@ -110,27 +110,4 @@ class Question
     {
         return $this->quiz;
     }
-
-    /**
-     * Set correct
-     *
-     * @param \AppBundle\Entity\Answer $correct
-     * @return Question
-     */
-    public function setCorrect(\AppBundle\Entity\Answer $correct = null)
-    {
-        $this->correct = $correct;
-
-        return $this;
-    }
-
-    /**
-     * Get correct
-     *
-     * @return \AppBundle\Entity\Answer 
-     */
-    public function getCorrect()
-    {
-        return $this->correct;
-    }
 }

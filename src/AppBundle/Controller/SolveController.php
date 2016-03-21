@@ -87,21 +87,6 @@ class SolveController extends SystemController
 		));
 	}
 
-    public function showResults($attempt){
-        $em = $this->getDoctrine()->getManager();
-        $u_answers = $em->getRepository('AppBundle:UserAnswer')->findByAttempt($attempt);
-
-        $points = 0;
-        foreach($u_answers as $a){
-            $points += $a->getAnswer()->getPoints();
-        }
-
-        return $this->render('solver/result.html.twig', array(
-            'points'=>$points,
-            'attempt'=>$attempt,
-        ));
-    }
-
 	/**
 	 * @Route("/quiz/result/{attempt}", name="result")
 	 */
