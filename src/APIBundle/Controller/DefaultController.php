@@ -32,8 +32,10 @@ class DefaultController extends SystemController
             $em->flush();
         }
         if(empty($attempt->getQuestion())){
-            return $this->showResults($attempt);
+            return new JsonResponse(false);
         }
+
+        
         $answers = $em->getRepository('AppBundle:Answer');
         $query = $answers->createQueryBuilder('a')
 								->where('a.question='.$attempt->getQuestion()->getId())->getQuery();
@@ -96,17 +98,18 @@ class DefaultController extends SystemController
 
 
     /**
-     * @Route("/ajax/quiz/{quiz}", name="ajax_start")
+     * @Route("/ajax/quiz/{quizsession}", name="ajax_start")
      */
-    public function startQuizAction($quiz, Request $request)
+    public function startQuizAction($quizsession, Request $request)
     {
         $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
-        $quiz = $em->getRepository('AppBundle:Quiz')->find($quiz);
+        $quizsession = $em->getRepository('AppBundle:QuizSession')->find($quizsession);
 
 
         $attempt = new Attempt();
-        $attempt->setQuiz($quiz);
+        $attempt->setSession($quizsession);
+        $attempt->setUser($this->getUser());
 
         $em->persist($attempt);
         $em->flush();
@@ -115,6 +118,30 @@ class DefaultController extends SystemController
         return $this->redirectToRoute('ajax_solve', array(
             'attempt'=>$attempt->getId(),
         ));
+    }
+
+
+    /**
+     * @Route("/API/time/{attempt}")
+     */
+    public function checkTimeAction($attempt){
+        $em = $this->getDoctrine()->getManager();
+        $attempt = $em->getRepository("AppBundle:Attempt")->find($attempt);
+        $time = $attempt->getSession()->getTime();
+        $time_s = $time * 60;
+
+        $start = $attempt->getStarted()->getTimestamp();
+        $end = $start+$time_s;
+        $now = new \DateTime();
+        $now = $now->getTimestamp();
+
+        $remaining = $end-$now;
+
+        $response = new JsonResponse();
+        $response->setData(array(
+            'time'=>$remaining,
+        ));
+        return $response;
     }
 
 }

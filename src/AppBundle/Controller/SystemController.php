@@ -14,7 +14,7 @@ class SystemController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $attempt = $em->getRepository('AppBundle:Attempt')->find($attempt);
-        $questions = $em->getRepository('AppBundle:Question')->findByQuiz($attempt->getQuiz());
+        $questions = $em->getRepository('AppBundle:Question')->findByQuiz($attempt->getSession()->getQuiz());
         $u_answers = $em->getRepository('AppBundle:UserAnswer')->findByAttempt($attempt);
 
         foreach ($questions as $q) {

@@ -1,6 +1,6 @@
 {% extends 'base_ajax.html.twig' %}
 {% block body %}
-<div class="container" ng-controller="myCtrl">
+<div class="container" ng-controller="myCtrl" ng-init="setAttempt({{ attempt }})">
     {% verbatim %}
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -9,10 +9,10 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-4">
-                    <div class="well">
+                    <div class="well" id="quiz-info">
+                       <h2 class="text-center"><timer autostart="false" countdown="ile" interval="1000">{{mminutes}} min {{sseconds}} s</timer></h2>
                         tutaj info o  quizie {{ 5+5 }}<br>
                         ilość pytań<br>
-                        które obecnie pytanie
                     </div>
 
                 </div>

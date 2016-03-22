@@ -34,6 +34,11 @@ class QuizSession
      */
     protected $end;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $time;
+
     public function __construct()
     {
         $this->started = new \DateTime("now");
@@ -116,5 +121,28 @@ class QuizSession
     public function getEnd()
     {
         return $this->end;
+    }
+
+    /**
+     * Set time
+     *
+     * @param integer $time
+     * @return QuizSession
+     */
+    public function setTime($time)
+    {
+        $this->time = $time;
+
+        return $this;
+    }
+
+    /**
+     * Get time
+     *
+     * @return integer 
+     */
+    public function getTime()
+    {
+        return $this->time;
     }
 }

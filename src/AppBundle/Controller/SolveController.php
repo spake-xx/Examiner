@@ -12,7 +12,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class SolveController extends SystemController
 {
@@ -27,6 +29,7 @@ class SolveController extends SystemController
 
 
 		$attempt = new Attempt();
+		$attempt->setUser($this->getUser());
 		$attempt->setQuiz($quiz);
 
 		$em->persist($attempt);
@@ -49,7 +52,7 @@ class SolveController extends SystemController
             $em->flush();
         }
         if(empty($attempt->getQuestion())){
-            return $this->showResults($attempt);
+            return $this->redirectToRoute('quiz_show_result', array('attempt'=>$attempt));
         }
 
 		$u_answer = new UserAnswer();
@@ -87,25 +90,23 @@ class SolveController extends SystemController
 		));
 	}
 
+
 	/**
-	 * @Route("/quiz/result/{attempt}", name="result")
+	 * @Route("/quiz/result/{attempt}", name="quiz_show_result")
 	 */
-	public function resultAction($attempt, Request $request){
+	public function showResultsAction($attempt){
 		$em = $this->getDoctrine()->getManager();
+		$u_answers = $em->getRepository('AppBundle:UserAnswer')->findByAttempt($attempt);
 
-		$answer_repo = $em->getRepository('AppBundle:Answer');
-		$attempt = $em->getRepository('AppBundle:Attempt')->find($attempt);
-		$answers = $answer_repo->findByAttempt($attempt);
-
-		$wynik = 0;
-
-		foreach($answers as $k=>$v){
-			if($v->getQuestionId()->getCorrect()==$v->getAnswer()){
-				$wynik++;
-			}
+		$points = 0;
+		foreach($u_answers as $a){
+			$points += $a->getAnswer()->getPoints();
 		}
 
-		print $wynik;
+		return $this->render('solver/result.html.twig', array(
+			'points'=>$points,
+			'attempt'=>$attempt,
+		));
 	}
 
 

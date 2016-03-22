@@ -17,10 +17,10 @@ class Attempt
     protected $id;
 	
     /**
-     * @ORM\ManyToOne(targetEntity="Quiz")
-     * @ORM\JoinColumn(name="quiz", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="QuizSession")
+     * @ORM\JoinColumn(name="session", referencedColumnName="id")
      */
-    protected $quiz;
+    protected $session;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -32,6 +32,27 @@ class Attempt
      * @ORM\JoinColumn(name="question", referencedColumnName="id")
      */
     protected $question;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $started;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $end;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id")
+     */
+    protected $user;
+
+    public function __construct()
+    {
+        $this->started = new \DateTime();
+    }
 
     /**
      * Get id
@@ -67,26 +88,26 @@ class Attempt
     }
 
     /**
-     * Set quiz
+     * Set session
      *
-     * @param \AppBundle\Entity\Quiz $quiz
+     * @param \AppBundle\Entity\QuizSession $session
      * @return Attempt
      */
-    public function setQuiz(\AppBundle\Entity\Quiz $quiz = null)
+    public function setSession(\AppBundle\Entity\QuizSession $session = null)
     {
-        $this->quiz = $quiz;
+        $this->session = $session;
 
         return $this;
     }
 
     /**
-     * Get quiz
+     * Get session
      *
-     * @return \AppBundle\Entity\Quiz 
+     * @return \AppBundle\Entity\Session
      */
-    public function getQuiz()
+    public function getSession()
     {
-        return $this->quiz;
+        return $this->session;
     }
 
     /**
@@ -110,5 +131,74 @@ class Attempt
     public function getQuestion()
     {
         return $this->question;
+    }
+
+    /**
+     * Set started
+     *
+     * @param \DateTime $started
+     * @return Attempt
+     */
+    public function setStarted($started)
+    {
+        $this->started = $started;
+
+        return $this;
+    }
+
+    /**
+     * Get started
+     *
+     * @return \DateTime 
+     */
+    public function getStarted()
+    {
+        return $this->started;
+    }
+
+    /**
+     * Set end
+     *
+     * @param \DateTime $end
+     * @return Attempt
+     */
+    public function setEnd($end)
+    {
+        $this->end = $end;
+
+        return $this;
+    }
+
+    /**
+     * Get end
+     *
+     * @return \DateTime 
+     */
+    public function getEnd()
+    {
+        return $this->end;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     * @return Attempt
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

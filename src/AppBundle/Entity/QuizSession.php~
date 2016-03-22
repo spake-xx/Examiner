@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class QuizSession
 {
-    protected $minutes;
+    public $minutes;
 
     /**
      * @ORM\Column(type="integer")
@@ -33,6 +33,11 @@ class QuizSession
      * @ORM\Column(type="datetime")
      */
     protected $end;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $time;
 
     public function __construct()
     {
@@ -116,5 +121,28 @@ class QuizSession
     public function getEnd()
     {
         return $this->end;
+    }
+
+    /**
+     * Set time
+     *
+     * @param integer $time
+     * @return QuizSession
+     */
+    public function setTime($time)
+    {
+        $this->time = $time;
+
+        return $this;
+    }
+
+    /**
+     * Get time
+     *
+     * @return integer 
+     */
+    public function getTime()
+    {
+        return $this->time;
     }
 }
