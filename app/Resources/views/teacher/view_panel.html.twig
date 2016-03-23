@@ -53,9 +53,9 @@
 {#{% endblock %}#}
 {% extends 'teacher_base.html.twig' %}
 {% block heading %}
-Panel TICZERA
+Aktywne sesje
 {% endblock %}
 {% block content %}
-TUTAJ JAKIEŚ AKTUALNIE URUCHOMIONE QUIZY CZY COŚ
+{% render(controller('AppBundle:TeacherSession:teacherActiveSessions')) %}
     <img src="http://www.wykop.pl/cdn/c3201142/comment_mnMwz7BcpZ1nK8wZBrvwVCzv7rJJ9Ap8,w400.jpg"/>
 {% endblock %}
