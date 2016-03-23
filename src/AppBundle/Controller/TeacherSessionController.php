@@ -23,10 +23,29 @@ class TeacherSessionController extends Controller
     public function teacherActiveSessionsAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $sessions = $em->getRepository("AppBundle:QuizSession")->findAll();
+        $sessions_all = $em->getRepository("AppBundle:QuizSession");
+        $qb = $sessions_all->createQueryBuilder('s');
+        $datetime_now = new \DateTime(date('Y-m-d H:i:s'));
+        $sessions = $qb
+            ->where('s.end'<$datetime_now)->getQuery()->getResult();
+
 
         return $this->render('teacher/active_sessions.html.twig', array(
            'sessions'=>$sessions,
+        ));
+    }
+
+    /**
+     * @Route("/teacher/index/sessions/all/", name="teacher_all_sessions")
+     */
+    public function teacherAllSessionsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $sessions = $em->getRepository("AppBundle:QuizSession")->findAll();
+
+
+        return $this->render('teacher/all_sessions.html.twig', array(
+            'sessions'=>$sessions,
         ));
     }
 }
