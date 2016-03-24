@@ -3,16 +3,14 @@
         <th>Quiz</th>
         <th>Start</th>
         <th>End</th>
-        <th>Left</th>
-        <th>Pupilz</th>
+        <th>More</th>
     </tr>
     {% for session in sessions %}
     <tr>
         <td>{{ session.quiz.name }}</td>
         <td>{{ session.started|date('Y-m-d H:i:s') }}</td>
-        <td>{{ session.end|date('Y-m-d H:i:s') }}</td>
-        <td>left</td>
-        <td><a ><i class="fa fa-binoculars"></i></a></td>
+        <td>{{ session.time }}</td>
+        <td><a href="{{ path('teacher_session_view', {'session':session.id}) }}"><i class="fa fa-binoculars"></i></a></td>
     </tr>
     {% endfor %}
 </table>
