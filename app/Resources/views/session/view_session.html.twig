@@ -3,7 +3,9 @@
     Widok konkretnej sesji skiz
 {% endblock %}
 {% block content %}
-    {{ session.quiz.name }} - {{ session.started|date('Y-m-d H:i:s') }} - {{ session.time }}
+    {% for m in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">{{ m }}</div>
+    {% endfor %}
     <table class="table table-stripped table-hover">
         <tr>
             <th>{{ session.quiz.name }}</th>
@@ -11,9 +13,9 @@
             <th>{{ session.time }}</th>
             <th>
                 {% if session.end == null %}
-                    <a class="btn btn-default btn-block">FINISH</a>
+                    <a href="{{ path('teacher_session_end') }}" class="btn btn-default btn-block">FINISH</a>
                 {% else %}
-                    {{ session.end }}
+                    {{ session.end|date('Y-m-d H:i:s') }}
                 {% endif %}
             </th>
         </tr>

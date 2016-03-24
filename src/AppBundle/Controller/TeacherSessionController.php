@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\Date;
 
 
 class TeacherSessionController extends Controller
@@ -51,15 +52,31 @@ class TeacherSessionController extends Controller
     }
 
     /**
-     * @Route("teacher/index/session/view/{sessionID}/", name="teacher_session_view")
+     * @Route("teacher/index/session/view/{session}/", name="teacher_session_view")
      */
-    public function teacherSessionViewAction($sessionID)
+    public function teacherSessionViewAction($session)
     {
         $em = $this->getDoctrine()->getManager();
-        $sessionID = $em->getRepository('AppBundle:QuizSession')->find($sessionID);
+        $session = $em->getRepository('AppBundle:QuizSession')->find($session);
 
         return $this->render('session/view_session.html.twig', array(
-            'session'=>$sessionID,
+            'session'=>$session,
+        ));
+    }
+
+    /**
+     * @Route("/teacher/index/session/end/" name="teacher_session_end")
+     */
+    public function teacherSessionEndAction($session)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $session = $em->getRepository("AppBundle:QuizSession")->find($session);
+        $session->setEnd(new \DateTime(date('Y-m-d H:i:s')));
+        $em->persist($session);
+        $em->flush();
+        $this->addFlash('notice','Finished');
+        return $this->redirectToRoute('teacher_session_view', array(
+           'session'=>$session->getID(),
         ));
     }
 

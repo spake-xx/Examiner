@@ -33,8 +33,8 @@ class TeacherController extends Controller{
         if($addSession->isValid()){
             $em->persist($quiz_session);
             $em->flush();
-            $sessionID = $em->getRepository("AppBundle:QuizSession")->find($quiz_session)->getID();
-            return $this->redirectToRoute('teacher_session_view',array('session'=>$sessionID));
+            $session = $em->getRepository("AppBundle:QuizSession")->find($quiz_session)->getID();
+            return $this->redirectToRoute('teacher_session_view',array('session'=>$session));
         }
 
         return $this->render('teacher/view_panel.html.twig', array(
