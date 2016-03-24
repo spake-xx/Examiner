@@ -65,7 +65,7 @@ class TeacherSessionController extends Controller
     }
 
     /**
-     * @Route("/teacher/index/session/end/" name="teacher_session_end")
+     * @Route("/teacher/index/session/end/{session}/", name="teacher_session_end")
      */
     public function teacherSessionEndAction($session)
     {
