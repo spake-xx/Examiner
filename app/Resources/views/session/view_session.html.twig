@@ -1,0 +1,27 @@
+{% extends 'teacher_base.html.twig' %}
+{% block heading %}
+    Widok konkretnej sesji skiz
+{% endblock %}
+{% block content %}
+    {{ session.quiz.name }} - {{ session.started|date('Y-m-d H:i:s') }} - {{ session.time }}
+    <table class="table table-stripped table-hover">
+        <tr>
+            <th>{{ session.quiz.name }}</th>
+            <th>{{ session.started|date('Y-m-d H:i:s') }}</th>
+            <th>{{ session.time }}</th>
+            <th>
+                {% if session.end == null %}
+                    <a class="btn btn-default btn-block">FINISH</a>
+                {% else %}
+                    {{ session.end }}
+                {% endif %}
+            </th>
+        </tr>
+        <tr>
+            <th>Uczeń</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Wynik</th>
+        </tr>
+    </table>
+{% endblock %}

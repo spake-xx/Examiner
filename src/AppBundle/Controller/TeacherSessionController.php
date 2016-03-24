@@ -18,27 +18,26 @@ use Symfony\Component\HttpFoundation\Request;
 class TeacherSessionController extends Controller
 {
     /**
-     * @Route("/teacher/index/sessions/active/", name="teacher_active_sessions")
+     * @Route("/teacher/index/sessions/active/", name="teacher_session_active")
      */
     public function teacherActiveSessionsAction()
     {
         $em = $this->getDoctrine()->getManager();
         $sessions_all = $em->getRepository("AppBundle:QuizSession");
         $qb = $sessions_all->createQueryBuilder('s');
-        $datetime_now = new \DateTime(date('Y-m-d H:i:s')); <--nie pyka
-        $datetime_now = Date('Y-m-d');
+
         
         $sessions = $qb
-            ->where('s.end<'.$datetime_now)->getQuery()->getResult();
+            ->where('s.end is null')->getQuery()->getResult();
 
 
-        return $this->render('teacher/active_sessions.html.twig', array(
+        return $this->render('session/active_sessions.html.twig', array(
            'sessions'=>$sessions,
         ));
     }
 
     /**
-     * @Route("/teacher/index/sessions/all/", name="teacher_all_sessions")
+     * @Route("/teacher/index/sessions/all/", name="teacher_session_all")
      */
     public function teacherAllSessionsAction()
     {
@@ -46,9 +45,47 @@ class TeacherSessionController extends Controller
         $sessions = $em->getRepository("AppBundle:QuizSession")->findAll();
 
 
-        return $this->render('teacher/all_sessions.html.twig', array(
+        return $this->render('session/all_sessions.html.twig', array(
             'sessions'=>$sessions,
         ));
     }
+
+    /**
+     * @Route("teacher/index/session/view/{sessionID}/", name="teacher_session_view")
+     */
+    public function teacherSessionViewAction($sessionID)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $sessionID = $em->getRepository('AppBundle:QuizSession')->find($sessionID);
+
+        return $this->render('session/view_session.html.twig', array(
+            'session'=>$sessionID,
+        ));
+    }
+
+//    /**
+//     * @Route("/teacher/index/session/new/", name="teacher_session_new")
+//     */
+//    public function teacherSessionNewAction(Request $request)
+//    {
+//        $em = $this->getDoctrine()->getManager();
+//        $quiz_session = new QuizSession();
+//        $addSession = $this->createFormBuilder($quiz_session)
+//            ->add('quiz', EntityType::class, array(
+//                'class' => 'AppBundle:Quizez',
+//                'choice_label' => 'name',
+//                'query_builder' => function (EntityRepository $er){
+//                    return $er->createQueryBuilder('s');
+//                },
+//            ))
+//            ->add('time')
+//            ->getForm();
+//        $addSession->handleRequest($request);
+//        if($addSession->isValid()){
+//            $em->persist($quiz_session);
+//            $em->flush();
+//            $this->redirectToRoute('teacher_session_view');
+//        }
+//    }
 }
 ?>

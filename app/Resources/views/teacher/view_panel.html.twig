@@ -56,6 +56,18 @@
 Aktywne sesje
 {% endblock %}
 {% block content %}
+    <div class="row form-group">
+        {{ form_start(addSession) }}
+        <div class="col-md-4">
+            {{ form_widget(addSession.quiz) }}
+        </div>
+        <div class="col-md-4">
+            {{ form_widget(addSession.time) }}
+        </div>
+        <div class="col-md-4">
+            <input type="submit" class="btn btn-block btn-default" value="New"/>
+        </div>
+        {{ form_end(addSession) }}
+    </div>
 {% render(controller('AppBundle:TeacherSession:teacherActiveSessions')) %}
-    <img src="http://www.wykop.pl/cdn/c3201142/comment_mnMwz7BcpZ1nK8wZBrvwVCzv7rJJ9Ap8,w400.jpg"/>
 {% endblock %}
