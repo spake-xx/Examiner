@@ -1,0 +1,23 @@
+
+{% extends 'teacher_base.html.twig' %}
+{% block heading %}
+    All sesje
+{% endblock %}
+{% block content %}
+    <table class="table table-stripped table-hover">
+        <tr>
+            <th>Quiz</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>MORE</th>
+        </tr>
+        {% for session in sessions %}
+            <tr>
+                <td>{{ session.quiz.name }}</td>
+                <td>{{ session.started|date('Y-m-d H:i:s') }}</td>
+                <td>{{ session.end|date('Y-m-d H:i:s') }}</td>
+                <td><a href="{{ path('teacher_session_view', {'session':session.id}) }}"><i class="fa fa-binoculars"></i></a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
