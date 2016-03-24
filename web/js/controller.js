@@ -11,14 +11,14 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
         client_time = data.millis / 1000;
         $scope.checkTime($scope.attempt);
         console.log(server_time);
-        if(client_time%10==0) {
+        if(client_time%1==0) {
             if (client_time < server_time) {
                 roznica = server_time - client_time;
                 $scope.$broadcast('timer-add-cd-seconds', roznica);
                 console.log("SERVER:" + server_time + ", KLIENT:"+ client_time + ", DODAWANIE " + roznica);
             } else if(client_time>server_time){
                 roznica = client_time - server_time;
-                $scope.$broadcast('timer-add-cd-seconds', -0);
+                $scope.$broadcast('timer-add-cd-seconds', -roznica);
                 console.log("SERVER:" + server_time + ", KLIENT:"+ client_time + ", ODEJMOWANIE: " + roznica);
             }
         }
@@ -31,7 +31,7 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
                 .then(function (response) {
                     server_time = response.data.time;
                     $scope.ile = server_time;
-                    $scope.$broadcast('timer-add-cd-seconds', server_time);
+                    //$scope.$broadcast('timer-add-cd-seconds', server_time);
                     $scope.$broadcast('timer-start');
                     $('#quiz-info').show();
                 });

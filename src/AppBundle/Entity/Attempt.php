@@ -51,7 +51,7 @@ class Attempt
 
     public function __construct()
     {
-        $this->started = new \DateTime();
+        $this->started = new \DateTime("now");
     }
 
     /**

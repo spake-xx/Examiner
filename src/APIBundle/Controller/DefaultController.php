@@ -4,8 +4,8 @@ namespace APIBundle\Controller;
 
 use AppBundle\Controller\SystemController;
 use Doctrine\ORM\EntityRepository;
-use Proxies\__CG__\AppBundle\Entity\Attempt;
-use Proxies\__CG__\AppBundle\Entity\UserAnswer;
+use AppBundle\Entity\Attempt;
+use AppBundle\Entity\UserAnswer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -91,8 +91,12 @@ class DefaultController extends SystemController
      */
     public function solveAjaxAction(Request $request, $attempt)
     {
+        $em = $this->getDoctrine()->getManager();
+        $attempt = $em->getRepository('AppBundle:Attempt')->find($attempt);
+        $time = $attempt->getSession()->getTime()*60;
         return $this->render('solver/solve_question2.html.twig', array(
-            'attempt'=>$attempt,
+            'attempt'=>$attempt->getId(),
+            'time'=>$time,
         ));
     }
 

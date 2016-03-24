@@ -25,7 +25,7 @@ class TeacherSessionController extends Controller
         $em = $this->getDoctrine()->getManager();
         $sessions_all = $em->getRepository("AppBundle:QuizSession");
         $qb = $sessions_all->createQueryBuilder('s');
-        $datetime_now = new \DateTime(date('Y-m-d H:i:s')); <--nie pyka
+        $datetime_now = new \DateTime(date('Y-m-d H:i:s'));
         $datetime_now = Date('Y-m-d');
         
         $sessions = $qb
