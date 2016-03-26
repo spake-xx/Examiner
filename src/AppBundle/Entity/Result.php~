@@ -24,7 +24,7 @@ class Result
     /**
      * @var \stdClass
      * @ORM\ManyToOne(targetEntity="Attempt")
-     * @ORM\JoinColumn(name="attempt", referencedColumnName="id")
+     * @ORM\JoinColumn(name="attempt", referencedColumnName="id", unique=true)
      */
     private $attempt;
 
