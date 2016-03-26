@@ -9,9 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 class PupilController extends Controller{
 
     /**
-     * @Route("/pupil/index/", name="pupil_view_index")
+     * @Route("/pupil/index/", name="pupil_index")
      */
-    public function pupilViewIndexAction()
+    public function pupilIndexAction()
     {
 
         return $this->render('pupil/view_index.html.twig');
