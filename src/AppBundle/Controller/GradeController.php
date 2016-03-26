@@ -84,7 +84,8 @@ class GradeController extends Controller{
             $user->setRoles(array('ROLE_PUPIL'));
             $user->setGrade($grade);
             $userManager->updateUser($user);
-            $this->addFlash('notice', 'zarejestrowano');
+            $this->addFlash('notice', 'Your account has been successfully registered, now you can log in ;)');
+            return $this->redirectToRoute('fos_user_security_login');
         }
 
         return $this->render('pupil/register.html.twig', array(
