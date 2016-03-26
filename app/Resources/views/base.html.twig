@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Examiner{% endblock %}</title>
+        <title>{% block title %}NaOcene{% endblock %}</title>
         {% block stylesheets %}
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
         {% endblock %}
@@ -34,6 +34,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav pull-right">
                         {% if app.user %}
+                            <li><a href="{{ path('pupil_index') }}">Uczeń</a></li>
                             <li><a href="{{ path('teacher_index') }}">Nauczyciel</a></li>
                             {#<li><a href="{{ path('all_quizes') }}">QUIZY</a></li>#}
                             <li><a href="{{ path('fos_user_security_logout') }}">Wyloguj</a></li>

@@ -12,10 +12,14 @@
             <th>MORE</th>
         </tr>
         {% for session in sessions %}
-            <tr>
+            <tr {% if session.end is null %}class="alert-info"{% endif %}>
                 <td>{{ session.quiz.name }}</td>
                 <td>{{ session.started|date('Y-m-d H:i:s') }}</td>
-                <td>{{ session.end|date('Y-m-d H:i:s') }}</td>
+                {% if  session.end is null %}
+                    <td>{{ session.time }}</td>
+                {% else %}
+                    <td>{{ session.end|date('Y-m-d H:i:s') }}</td>
+                {% endif %}
                 <td><a href="{{ path('teacher_session_view', {'session':session.id}) }}"><i class="fa fa-binoculars"></i></a></td>
             </tr>
         {% endfor %}
