@@ -4,15 +4,15 @@
     {% verbatim %}
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h4>NAZWA QUIZU i jakieś dane usera i logout</h4>
+            <h4>NaOcene.pl - {{ quiz.name }}</h4>
         </div>
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-4">
                     <div class="well" id="quiz-info">
-                       <h2 class="text-center"><timer autostart="false" countdown="{% endverbatim %}{{ time }}{% verbatim %}" interval="1000">{{mminutes}} min {{sseconds}} s</timer></h2>
-                        tutaj info o  quizie {{ 5+5 }}<br>
-                        ilość pytań<br>
+                       <h1 class="text-center"><i id="spinner" class="fa fa-circle-o-notch fa-spin"></i></h1>
+                       <h2 class="text-center">
+                       <timer autostart="false" countdown="{% endverbatim %}{{ time }}{% verbatim %}" interval="1000">{{mminutes}} min {{sseconds}} s</timer></h2>
                     </div>
 
                 </div>
@@ -25,8 +25,7 @@
                                    <input type="radio" ng-model="user_answer.id" ng-value="{{x.id}}"> {{ x.answer }}
                                 </li>
                             </ul>
-                            <div id="spinner">Oczekiwanie...</div>
-                            <input type="submit" class='btn btn-primary btn-block' ng-click="send(user_answer)" />
+                            <input type="submit" class='btn btn-primary btn-block' value="Następne pytanie" ng-click="send(user_answer)" />
                         </form>
                     </div>
                 </div>

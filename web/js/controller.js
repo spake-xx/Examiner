@@ -42,8 +42,23 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
             .then(function (response) {
                 server_time = response.data.time;
                 if(server_time<1){
-                    window.location = "/quiz/end/"+$scope.attempt
+                    endQuiz();
                 }
+            });
+    }
+
+    endQuiz = function(){
+        $('#spinner').show();
+        data = {
+            attempt: $scope.attempt
+        };
+        console.log(angular.toJson(data));
+        $http.post('/API/end/', data)
+            .then(function(response){
+                $('#spinner').hide();
+                window.location.assign('/quiz/result/'+$scope.attempt)
+            },function(response){
+                alert("Wystąpił błąd.");
             });
     }
 
@@ -55,7 +70,7 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
                     $scope.question = response.data.question;
                     $scope.user_answer.attempt = response.data.attempt;
                 }else{
-                    window.location = "/quiz/result/"+$scope.attempt
+                    endQuiz();
                 }
             });
     }

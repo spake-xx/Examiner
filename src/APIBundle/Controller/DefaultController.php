@@ -3,12 +3,14 @@
 namespace APIBundle\Controller;
 
 use AppBundle\Controller\SystemController;
+use AppBundle\Entity\Result;
 use Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Attempt;
 use AppBundle\Entity\UserAnswer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -124,6 +126,31 @@ class DefaultController extends SystemController
         ));
     }
 
+
+    /**
+     * @Route("/API/end/")
+     */
+    public function endQuizAction(){
+        try {
+            $dane = json_decode(file_get_contents('php://input'), true);
+
+            $em = $this->getDoctrine()->getManager();
+            $attempt = $em->getRepository("AppBundle:Attempt")->find($dane['attempt']);
+            $attempt->setEnd(new \DateTime());
+
+            $result = new Result();
+            $result->setAttempt($attempt);
+            $result->setPoints($em->getRepository('AppBundle:Attempt')->getPointsByAttempt($attempt));
+            $result->setMaxPoints($em->getRepository('AppBundle:Quiz')->getPointsByQuiz($attempt->getSession()->getQuiz()));
+
+            $em->persist($result);
+            $em->flush();
+        }catch(Exception $e){
+            return new JsonResponse('', 500);
+        }
+
+        return new JsonResponse('', 200);
+    }
 
     /**
      * @Route("/API/time/{attempt}")

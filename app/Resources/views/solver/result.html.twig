@@ -3,13 +3,13 @@
 <div class="container">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h3>Egzaminy</h3>
+            <h3>Wyniki</h3>
         </div>
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-4">
                     <div class="well">
-                        INFO o QUIZIE
+                        {{ quiz.name }}
                         <table class="table table-hover table-condensed table-stripped">
                             <tr>
                                 <th>%</th>
@@ -44,10 +44,10 @@
                 </div>
                 <div class="col-md-8">
                     <div class="well">
-                        <h2>[DANE UCZNIA] - [nazwa quizu]</h2>
-                        <h3>{{ points }}pkt/ilość_pkt</h3>
-                        <h4>Procentowo: TO DO</h4>
-                        <h5>twoja ocena to: <b>TO DO</b></h5>
+                        <h2>{{ quiz.name }}</h2>
+                        <h3>Zdobyte punkty: {{ result.points }}/{{ result.maxpoints }}</h3>
+                        <h4>{{ result.percent }} %</h4>
+                        {#<h5>twoja ocena to: <b>TO DO</b></h5>#}
 
                     </div>
                 </div>

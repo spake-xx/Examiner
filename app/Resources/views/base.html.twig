@@ -26,19 +26,21 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" >Exaskiser</a>
-                    <i class="navbar-text">tymczasowy navbar</i>
+                    <a class="navbar-brand" >
+
+                        NaOcene</a>
+                    <i class="navbar-text">Platforma dla szkół</i>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav pull-right">
                         {% if app.user %}
-                            <li><a href="{{ path('teacher_index') }}">PANEL TICZERA</a></li>
-                            <li><a href="{{ path('all_quizes') }}">QUIZY</a></li>
+                            <li><a href="{{ path('teacher_index') }}">Nauczyciel</a></li>
+                            {#<li><a href="{{ path('all_quizes') }}">QUIZY</a></li>#}
                             <li><a href="{{ path('fos_user_security_logout') }}">Wyloguj</a></li>
                         {% else %}
-                            <li><a href="{{ path('all_quizes') }}">QUIZY</a></li>
-                            <li><a href="{{ path('fos_user_security_login') }}">LOGOWANIE</a></li>
-                            <li><a href="{{ path('fos_user_registration_register') }}">REJESTRACJA</a></li>
+                            {#<li><a href="{{ path('all_quizes') }}">QUIZY</a></li>#}
+                            <li><a href="{{ path('fos_user_security_login') }}">Logowanie</a></li>
+                            <li><a href="{{ path('fos_user_registration_register') }}">Rejestracja</a></li>
                         {% endif %}
                     </ul>
                 </div>

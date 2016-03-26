@@ -1,0 +1,162 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Result
+ *
+ * @ORM\Table(name="results")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ResultRepository")
+ */
+class Result
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \stdClass
+     * @ORM\ManyToOne(targetEntity="Attempt")
+     * @ORM\JoinColumn(name="attempt", referencedColumnName="id")
+     */
+    private $attempt;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="points", type="integer")
+     */
+    private $points;
+
+    /**
+     * @ORM\Column(name="max_points", type="integer", nullable=true)
+     */
+    private $max_points;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="mark", type="integer", nullable=true)
+     */
+    private $mark;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set attempt
+     *
+     * @param \stdClass $attempt
+     * @return Result
+     */
+    public function setAttempt($attempt)
+    {
+        $this->attempt = $attempt;
+
+        return $this;
+    }
+
+    /**
+     * Get attempt
+     *
+     * @return \stdClass 
+     */
+    public function getAttempt()
+    {
+        return $this->attempt;
+    }
+
+    /**
+     * Set points
+     *
+     * @param integer $points
+     * @return Result
+     */
+    public function setPoints($points)
+    {
+        $this->points = $points;
+
+        return $this;
+    }
+
+    /**
+     * Get points
+     *
+     * @return integer 
+     */
+    public function getPoints()
+    {
+        return $this->points;
+    }
+
+    /**
+     * Get percent
+     *
+     * @return integer 
+     */
+    public function getPercent()
+    {
+        return ($this->points / $this->max_points) * 100;
+    }
+
+    /**
+     * Set mark
+     *
+     * @param integer $mark
+     * @return Result
+     */
+    public function setMark($mark)
+    {
+        $this->mark = $mark;
+
+        return $this;
+    }
+
+    /**
+     * Get mark
+     *
+     * @return integer 
+     */
+    public function getMark()
+    {
+        return $this->mark;
+    }
+
+    /**
+     * Set max_points
+     *
+     * @param integer $maxPoints
+     * @return Result
+     */
+    public function setMaxPoints($maxPoints)
+    {
+        $this->max_points = $maxPoints;
+
+        return $this;
+    }
+
+    /**
+     * Get max_points
+     *
+     * @return integer 
+     */
+    public function getMaxPoints()
+    {
+        return $this->max_points;
+    }
+}

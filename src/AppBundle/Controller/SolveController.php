@@ -96,72 +96,14 @@ class SolveController extends SystemController
 	 */
 	public function showResultsAction($attempt){
 		$em = $this->getDoctrine()->getManager();
-		$u_answers = $em->getRepository('AppBundle:UserAnswer')->findByAttempt($attempt);
-
-		$points = 0;
-		foreach($u_answers as $a){
-			$points += $a->getAnswer()->getPoints();
-		}
+		$attempt = $em->getRepository("AppBundle:Attempt")->find($attempt);
+		$result = $em->getRepository('AppBundle:Result')->findOneByAttempt($attempt);
+		$quiz = $attempt->getSession()->getQuiz();
 
 		return $this->render('solver/result.html.twig', array(
-			'points'=>$points,
+			'quiz'=>$quiz,
+			'result'=>$result,
 			'attempt'=>$attempt,
 		));
 	}
-
-
-
-//	/**
-//	 * @Route("/solve/answer/{answer_number}", name="solve_question")
-//	 */
-//	public function solveQuestionAction($answer_number, Request $request){
-//		$em = $this->getDoctrine()->getManager();
-//		$repo = $em->getRepository('AppBundle:Attempt');
-//		$repo_questions = $em->getRepository('AppBundle:Question');
-//		$session = $request->getSession();
-//
-//		$questions = $repo_questions->findAll();
-//		$question = $questions[$answer_number-1];
-//
-//		$attempt = $repo->find($session->get('attempt'));
-//
-//
-//		$answer = new Answer();
-//		$form = $this->createFormBuilder($answer)
-//					->add('answer', ChoiceType::class, array(
-//							'choices'=>array(
-//								'a)'.$question->getA()=>'a',
-//								'b)'.$question->getB()=>'b',
-//								'c)'.$question->getC()=>'c',
-//								'd)'.$question->getD()=>'d',
-//						),
-//						'choices_as_values'=>true,
-//						'expanded'=>true,
-//						'label'=>$question->getQuestion(),
-//						))
-//					->add('submit', SubmitType::class)
-//					->getForm();
-//
-//		$form->handleRequest($request);
-//		if($form->isValid()){
-//			$answer->setAttempt($attempt);
-//			$answer->setQuestionId($question);
-//			$em->persist($answer);
-//			$em->flush();
-//			$answer_number++;
-//			if(isset($questions[$answer_number-1])){
-//				return $this->redirect('/solve/answer/'.$answer_number);
-//			}else{
-//				return $this->redirectToRoute('result', array('attempt'=>$attempt->getId()));
-//			}
-//		}
-//
-//
-//
-//
-//		return $this->render('exam/solve_question.html.twig', array(
-//				'question'=>$question,
-//				'form'=>$form->createView(),
-//		));
-//	}
 }
