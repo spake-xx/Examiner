@@ -19,6 +19,10 @@ class PupilController extends Controller{
 
     public function pupilSidebarAction()
     {
-        return $this->render('pupil/sidebar.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:User')->find($this->getUser());
+        return $this->render('pupil/sidebar.html.twig', array(
+            'user'=>$user,
+        ));
     }
 }
