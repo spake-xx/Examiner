@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% endblock %}
 {% block body %}
-    <div class="container">
+    <div class="container" ng-app="teacher">
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="row">
@@ -29,3 +32,4 @@
         </div>
     </div>
 {% endblock %}
+{% block javascripts %}{{ parent() }}{% endblock %}

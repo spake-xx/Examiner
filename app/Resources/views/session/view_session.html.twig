@@ -1,29 +1,59 @@
 {% extends 'teacher_base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    {% endblock %}
 {% block heading %}
-    Widok konkretnej sesji skiz
+    Sesja sprawdzianu <b>{{ session.quiz.name }}</b>
 {% endblock %}
 {% block content %}
     {% for m in app.session.flashbag.get('notice') %}
         <div class="alert alert-success">{{ m }}</div>
     {% endfor %}
-    <table class="table table-stripped table-hover">
-        <tr>
-            <th>{{ session.quiz.name }}</th>
-            <th>{{ session.started|date('Y-m-d H:i:s') }}</th>
-            <th>{{ session.time }}</th>
-            <th>
+    <div class="row">
+        <div class="col-md-6">
+            <b>Rozpoczęta:</b> {{ session.started|date('Y-m-d H:i:s') }}
+        </div>
+        <div class="col-md-6">
+            <b>Limit czasu:</b> {{ session.time }}min.
                 {% if session.end == null %}
-                    <a href="{{ path('teacher_session_end',{'session':session.id}) }}" class="btn btn-default btn-block">FINISH</a>
+                    <a href="{{ path('teacher_session_end',{'session':session.id}) }}" class="btn btn-primary btn-block">Zakończ sesję</a>
                 {% else %}
-                    {{ session.end|date('Y-m-d H:i:s') }}
+                    Zakończona: {{ session.end|date('Y-m-d H:i:s') }}
                 {% endif %}
-            </th>
-        </tr>
-        <tr>
-            <th>Uczeń</th>
-            <th>Start</th>
-            <th>End</th>
-            <th>Wynik</th>
-        </tr>
-    </table>
+        </div>
+    </div>
+
+    <div ng-controller="pupils" ng-init="setSession({{ session.id }})">
+        <h2 class="text-center">W trakcie rozwiązywania</h2>
+        <table class="table">
+            <tr>
+                <th class="text-center">Uczeń</th>
+                {#<th>Start</th>#}
+                {#<th>End</th>#}
+                <th class="text-center">Wynik</th>
+            </tr>
+            <tr ng-repeat="pupil in pupils_logged">
+                <th class="text-center">{{ '{{ pupil.user.username }}' }}</th>
+                {#<th class="text-center">{{ '{{ pupil. }}' }}</th>#}
+            </tr>
+        </table>
+
+        <h2 class="text-center">Zakończyli</h2>
+        <table class="table">
+            <tr>
+                <th class="text-center">Uczeń</th>
+                {#<th>Start</th>#}
+                {#<th>End</th>#}
+                <th class="text-center">Wynik</th>
+            </tr>
+            <tr ng-repeat="result in pupils_ended">
+                <th class="text-center">{{ '{{ result.attempt.user.username }}' }}</th>
+                <th class="text-center">{{ '{{ result.points }}' }}</th>
+            </tr>
+        </table>
+    </div>
+{% endblock %}
+{% block javascripts %}{{ parent() }}
+
 {% endblock %}

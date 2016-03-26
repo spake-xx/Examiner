@@ -126,6 +126,40 @@ class DefaultController extends SystemController
         ));
     }
 
+    /**
+     * @Route("/API/session/getPupils/")
+     */
+    public function getSessionPupilsAction(){
+        $dane = json_decode(file_get_contents('php://input'), true);
+        $em = $this->getDoctrine()->getManager();
+        $pupils_logged = $em->getRepository("AppBundle:Attempt")->createQueryBuilder('a')
+            ->where('a.session='.$dane['session'])
+            ->andWhere('a.end IS NULL')
+            ->getQuery()->getResult();
+
+        $pupils_ended = $em->getRepository("AppBundle:Result")->createQueryBuilder('r');
+        $pupils_ended = $pupils_ended->innerJoin('r.attempt', 'a')
+                              ->innerJoin('a.session', 's')
+                              ->where('a.session='.$dane['session'])
+                                ->andWhere('a.end IS NOT NULL')
+                                ->getQuery()->getResult();
+
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+
+        $pupils_logged_json= $serializer->normalize($pupils_logged, 'json');
+        $pupils_ended_json= $serializer->normalize($pupils_ended, 'json');
+
+        $response = new JsonResponse();
+        $response->setData(array(
+            'pupils_logged' => $pupils_logged_json,
+            'pupils_ended'  => $pupils_ended_json,
+        ));
+
+        return $response;
+    }
 
     /**
      * @Route("/API/end/")

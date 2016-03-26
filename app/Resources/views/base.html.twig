@@ -50,6 +50,8 @@
     {% endblock %}
     {% block body %}
     {% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            <script src="{{ asset('js/pupils.js') }}"></script>
+        {% endblock %}
     </body>
 </html>
