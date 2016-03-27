@@ -1,4 +1,6 @@
+@import url(https://fonts.googleapis.com/css?family=Comfortaa:400,700);
 body {
+    font-family: 'Comfortaa';
     background-color: #F4F4F4;
 }
 .well-own {

@@ -46,6 +46,8 @@ class Attempt
      */
     protected $user;
 
+    public $answered;
+
     public function __construct()
     {
         $this->started = new \DateTime("now");

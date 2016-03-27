@@ -22,4 +22,5 @@ angular.module('teacher').controller('pupils', function ($scope, $http, $interva
     }
     refreshPupils();
     $interval(refreshPupils, 2500);
+    console.log($scope.pupils_logged);
 });

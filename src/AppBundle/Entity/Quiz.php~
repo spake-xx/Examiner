@@ -23,6 +23,8 @@ class Quiz
 
     protected $teacher;
 
+    protected $maxpoints;
+
     /**
      * Get id
      *

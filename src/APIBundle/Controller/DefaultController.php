@@ -137,6 +137,12 @@ class DefaultController extends SystemController
             ->andWhere('a.end IS NULL')
             ->getQuery()->getResult();
 
+        foreach($pupils_logged as $k=>$v){
+            $answered = $em->getRepository('AppBundle:UserAnswer')->createQueryBuilder('u');
+            $answered = $answered->select('count(u.id)')->where('u.attempt='.$v->getId())->getQuery()->getSingleScalarResult();
+            $pupils_logged[$k]->answered = (int)$answered;
+        }
+
         $pupils_ended = $em->getRepository("AppBundle:Result")->createQueryBuilder('r');
         $pupils_ended = $pupils_ended->innerJoin('r.attempt', 'a')
                               ->innerJoin('a.session', 's')
@@ -144,10 +150,10 @@ class DefaultController extends SystemController
                                 ->andWhere('a.end IS NOT NULL')
                                 ->getQuery()->getResult();
 
+
         $encoders = array(new XmlEncoder(), new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
         $serializer = new Serializer($normalizers, $encoders);
-
 
         $pupils_logged_json= $serializer->normalize($pupils_logged, 'json');
         $pupils_ended_json= $serializer->normalize($pupils_ended, 'json');
@@ -159,6 +165,16 @@ class DefaultController extends SystemController
         ));
 
         return $response;
+    }
+
+    /**
+     * @Route("/API/refresh_ended/")
+     */
+    public function refreshEndedAction(){
+        $em = $this->getDoctrine()->getManager();
+        $attempts = $em->getRepository("AppBundle:Attempt")->createQueryBuilder('a');
+        $attempts = $attempts->innerJoin("a.session", "s")
+                             ->where("a.end IS NULL");
     }
 
     /**

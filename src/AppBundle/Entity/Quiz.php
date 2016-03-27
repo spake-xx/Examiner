@@ -23,6 +23,8 @@ class Quiz
 
     protected $teacher;
 
+    protected $maxpoints;
+
     /**
      * Get id
      *
@@ -42,6 +44,16 @@ class Quiz
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getMaxPoints(){
+        return $this->maxpoints;
+    }
+
+    public function setMaxPoints($maxpoints){
+        $this->maxpoints = $maxpoints;
 
         return $this;
     }

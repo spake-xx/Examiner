@@ -10,6 +10,9 @@
     {% for m in app.session.flashbag.get('notice') %}
         <div class="alert alert-success">{{ m }}</div>
     {% endfor %}
+    <div class="row text-center">
+        Podaj uczniom <a href="http://localhost:8000/ajax/quiz/{{ session.id }}">ten link</a>
+    </div>
     <div class="row">
         <div class="col-md-6">
             <b>Rozpoczęta:</b> {{ session.started|date('Y-m-d H:i:s') }}
@@ -26,32 +29,27 @@
 
     <div ng-controller="pupils" ng-init="setSession({{ session.id }})">
         <h2 class="text-center">W trakcie rozwiązywania</h2>
-        <table class="table">
-            <tr>
-                <th class="text-center">Uczeń</th>
-                {#<th>Start</th>#}
-                {#<th>End</th>#}
-                <th class="text-center">Wynik</th>
-            </tr>
-            <tr ng-repeat="pupil in pupils_logged">
-                <th class="text-center">{{ '{{ pupil.user.username }}' }}</th>
-                {#<th class="text-center">{{ '{{ pupil. }}' }}</th>#}
-            </tr>
-        </table>
+        <div class="row text-center">
+            <div ng-repeat="pupil in pupils_logged">
+                <div class="clearfix" ng-if="$index % 3 == 0"></div>
+                <div class="col-sm-4 well">
+                    <h2>{{ '{{ pupil.user.username }}' }}</h2>
+                    Myśli nad {{ '{{ pupil.answered+1 }}' }}. pytaniem
+                </div>
+            </div>
+        </div>
 
         <h2 class="text-center">Zakończyli</h2>
-        <table class="table">
-            <tr>
-                <th class="text-center">Uczeń</th>
-                {#<th>Start</th>#}
-                {#<th>End</th>#}
-                <th class="text-center">Wynik</th>
-            </tr>
-            <tr ng-repeat="result in pupils_ended">
-                <th class="text-center">{{ '{{ result.attempt.user.username }}' }}</th>
-                <th class="text-center">{{ '{{ result.points }}' }}</th>
-            </tr>
-        </table>
+        <div class="row text-center">
+            <div ng-repeat="result in pupils_ended">
+                <div class="clearfix" ng-if="$index % 3 == 0"></div>
+                <div class="col-sm-4 well">
+                    <h2>{{ '{{ result.attempt.user.username }}' }}</h2>
+                    <h3>{{ '{{ result.points/'~ session.quiz.maxPoints ~ '*100 }}' }} % </h3>
+                    Punkty: {{ '{{ result.points }}' }} / {{ session.quiz.maxpoints }}
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 {% block javascripts %}{{ parent() }}
