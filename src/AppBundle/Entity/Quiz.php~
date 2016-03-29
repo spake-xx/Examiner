@@ -48,6 +48,16 @@ class Quiz
         return $this;
     }
 
+    public function getMaxPoints(){
+        return $this->maxpoints;
+    }
+
+    public function setMaxPoints($maxpoints){
+        $this->maxpoints = $maxpoints;
+
+        return $this;
+    }
+
     /**
      * Get name
      *

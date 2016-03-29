@@ -1,5 +1,50 @@
 {% extends 'pupil_base.html.twig' %}
 {% block heading %}Moje wyniki{% endblock %}
 {% block content %}
-     TO DO
+     {% if attempts %}
+          <table class="table table-stripped table-hover">
+               <tr>
+                    <th>Quiz</th>
+                    <th>Data</th>
+                    <th>Wynik</th>
+                    <th><a>MORE</a></th>
+               </tr>
+          {% for attempt in attempts %}
+               {% for result in results %}
+               {% if result.attempt == attempt %}
+               <tr>
+                    <td>{{ attempt.session.quiz.name }}</td>
+                    <td>{{ attempt.started|date('Y-m-d') }}</td>
+                    <td>{{ result.points/result.maxpoints*100 }}%</td>
+                    <td><a href="{{ path('pupil_view_attempt', {'attempt':attempt.id}) }}"><i class="fa fa-binoculars"></i></a></td>
+               </tr>
+               {% endif %}
+               {% endfor %}
+          {% endfor %}
+          </table>
+          <hr/>
+          <table class="table table-hover table-condensed table-stripped text-center">
+               <tr>
+                    <th>%</th>
+                    <td>0-39</td>
+                    <td>40-49</td>
+                    <td>50-69</td>
+                    <td>70-89</td>
+                    <td>90-99</td>
+                    <td>100</td>
+               </tr>
+               <tr>
+                    <th>Mark</th>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+               </tr>
+          </table>
+
+     {% else %}
+          <div class="alert alert-info">You haven't taken any exams yet!</div>
+     {% endif %}
 {% endblock %}
