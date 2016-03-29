@@ -22,9 +22,6 @@ class Attempt
      */
     protected $session;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
     protected $result;
 
     /**
@@ -64,12 +61,6 @@ class Attempt
         return $this->id;
     }
 
-    /**
-     * Set result
-     *
-     * @param integer $result
-     * @return Attempt
-     */
     public function setResult($result)
     {
         $this->result = $result;
@@ -77,11 +68,6 @@ class Attempt
         return $this;
     }
 
-    /**
-     * Get result
-     *
-     * @return integer 
-     */
     public function getResult()
     {
         return $this->result;
