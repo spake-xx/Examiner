@@ -76,23 +76,28 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
     }
 
     $scope.user_answer = {
-        id: 0
+        id: null
     }
 
     $scope.send = function(data){
-        if(!data){
-            alert("Wybierz odpowiedź chujku.");
+        if(!data.id){
+            $scope.bsAlert.msg = "Wybierz odpowiedź chujku";
             return 0;
         }
         $('#spinner').show();
+        $scope.bsAlert.msg = null;
         $http.post('/ajax/sendAnswer/', data)
             .then(function(response){
                 $('#spinner').hide();
-                console.log(response);
+                $scope.user_answer.id = null;
                 $scope.getAnswer();
             },function(response){
                 $('#spinner').hide();
             });
+    }
+
+    $scope.bsAlert = {
+        msg: null
     }
 
 });

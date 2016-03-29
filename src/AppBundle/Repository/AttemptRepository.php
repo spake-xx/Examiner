@@ -14,12 +14,18 @@ use Doctrine\ORM\EntityRepository;
 class AttemptRepository extends EntityRepository
 {
     public function getPointsByAttempt(Attempt $attempt){
-       return $this->getEntityManager()
+       $points = $this->getEntityManager()
             ->createQuery(
                 "SELECT SUM(answer.points) FROM AppBundle:UserAnswer u
                 INNER JOIN u.answer answer
                 WHERE u.attempt=".$attempt->getId()
             )
-            ->getResult()[0][1];
+            ->getSingleScalarResult();
+
+        if($points!=null){
+            return $points;
+        }else{
+            return 0;
+        }
     }
 }

@@ -1,16 +1,14 @@
 <table class="table table-stripped table-hover">
     <tr>
-        <th>Quiz</th>
-        <th>Start</th>
-        <th>End</th>
-        <th>More</th>
+        <th class="text-center">Quiz</th>
+        <th class="text-center">Czas</th>
+        <th class="text-center">More</th>
     </tr>
     {% for session in sessions %}
     <tr>
-        <td>{{ session.quiz.name }}</td>
-        <td>{{ session.started|date('Y-m-d H:i:s') }}</td>
-        <td>{{ session.time }}</td>
-        <td><a href="{{ path('teacher_session_view', {'session':session.id}) }}"><i class="fa fa-binoculars"></i></a></td>
+        <td class="text-center">{{ session.quiz.name }}</td>
+        <td class="text-center">{{ session.time }} min.</td>
+        <td class="text-center"><a href="{{ path('teacher_session_view', {'session':session.id}) }}"><i class="fa fa-binoculars"></i></a></td>
     </tr>
     {% endfor %}
 </table>

@@ -137,6 +137,12 @@ class DefaultController extends SystemController
             ->andWhere('a.end IS NULL')
             ->getQuery()->getResult();
 
+        foreach($pupils_logged as $k=>$v){
+            $answered = $em->getRepository('AppBundle:UserAnswer')->createQueryBuilder('u');
+            $answered = $answered->select('count(u.id)')->where('u.attempt='.$v->getId())->getQuery()->getSingleScalarResult();
+            $pupils_logged[$k]->answered = (int)$answered;
+        }
+
         $pupils_ended = $em->getRepository("AppBundle:Result")->createQueryBuilder('r');
         $pupils_ended = $pupils_ended->innerJoin('r.attempt', 'a')
                               ->innerJoin('a.session', 's')
@@ -144,10 +150,10 @@ class DefaultController extends SystemController
                                 ->andWhere('a.end IS NOT NULL')
                                 ->getQuery()->getResult();
 
+
         $encoders = array(new XmlEncoder(), new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
         $serializer = new Serializer($normalizers, $encoders);
-
 
         $pupils_logged_json= $serializer->normalize($pupils_logged, 'json');
         $pupils_ended_json= $serializer->normalize($pupils_ended, 'json');
@@ -159,6 +165,45 @@ class DefaultController extends SystemController
         ));
 
         return $response;
+    }
+
+    /**
+     * @Route("/API/refresh_ended/")
+     */
+    public function refreshEndedAction(){
+        $em = $this->getDoctrine()->getManager();
+        $attempts = $em->getRepository("AppBundle:Attempt")->createQueryBuilder('a');
+        $attempts = $attempts->innerJoin("a.session", "s")
+                             ->where("a.end IS NULL")->getQuery()->getResult();
+
+        foreach($attempts as $k=>$v) {
+            $session = $v->getSession();
+            $time = $session->getTime();
+            $time = $time * 60;
+
+            $now_timestamp = time();
+            $end_timestamp = $v->getStarted()->getTimestamp() + $time;
+
+            if ($now_timestamp > $end_timestamp) {
+                $end_date = new \DateTime();
+                $end_date->setTimestamp($end_timestamp);
+                print $v->getStarted()->format("H:i:s D")."<br />";
+
+                $attempts[$k]->setEnd($end_date);
+                $em->flush();
+
+                $result = new Result();
+                $result->setAttempt($v);
+                $result->setPoints($em->getRepository('AppBundle:Attempt')->getPointsByAttempt($v));
+                $result->setMaxPoints($em->getRepository('AppBundle:Quiz')->getPointsByQuiz($v->getSession()->getQuiz()));
+
+                $em->persist($result);
+                $em->flush();
+            }
+
+        }
+
+        return new Response(' ');
     }
 
     /**

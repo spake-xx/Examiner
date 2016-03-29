@@ -57,6 +57,7 @@ class TeacherSessionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $session = $em->getRepository('AppBundle:QuizSession')->find($session);
+        $session->getQuiz()->setMaxPoints($em->getRepository("AppBundle:Quiz")->getPointsByQuiz($session->getQuiz()));
 
         return $this->render('session/view_session.html.twig', array(
             'session'=>$session,

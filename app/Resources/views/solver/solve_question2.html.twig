@@ -17,6 +17,9 @@
 
                 </div>
                 <div class="col-md-8">
+                <div ng-show="bsAlert.msg" class="alert alert-warning ng-hide">
+                  <strong>Uwaga !</strong> {{ bsAlert.msg }}
+                </div>
                     <div class="well">
                         <h3>{{ question }}</h3>
                         <form name="myForm">
