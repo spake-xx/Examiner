@@ -28,7 +28,10 @@ class TeacherSessionController extends Controller
         $qb = $sessions_all->createQueryBuilder('s');
         
         $sessions = $qb
-            ->where('s.end is null')->getQuery()->getResult();
+            ->innerJoin('s.quiz', 'q')
+            ->where('s.end is null')
+            ->andWhere('q.teacher='.$this->getUser()->getId())
+            ->getQuery()->getResult();
 
 
         return $this->render('session/active_sessions.html.twig', array(
@@ -42,7 +45,8 @@ class TeacherSessionController extends Controller
     public function teacherAllSessionsAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $sessions = $em->getRepository("AppBundle:QuizSession")->findAll();
+        $sessions = $em->getRepository("AppBundle:QuizSession")->createQueryBuilder('s');
+        $sessions = $sessions->innerJoin('s.quiz', 'q')->where('q.teacher='.$this->getUser()->getId())->getQuery()->getResult();
 
 
         return $this->render('session/all_sessions.html.twig', array(

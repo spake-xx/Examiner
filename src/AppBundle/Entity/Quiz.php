@@ -21,6 +21,10 @@ class Quiz
      */
     protected $name;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="teacher", referencedColumnName="id")
+     */
     protected $teacher;
 
     protected $maxpoints;
@@ -66,5 +70,28 @@ class Quiz
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set teacher
+     *
+     * @param \AppBundle\Entity\User $teacher
+     * @return Quiz
+     */
+    public function setTeacher(\AppBundle\Entity\User $teacher = null)
+    {
+        $this->teacher = $teacher;
+
+        return $this;
+    }
+
+    /**
+     * Get teacher
+     *
+     * @return \AppBundle\Entity\User 
+     */
+    public function getTeacher()
+    {
+        return $this->teacher;
     }
 }
