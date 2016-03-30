@@ -1,10 +1,13 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{#{% extends "FOSUserBundle::layout.html.twig" %}#}
 
 {% trans_default_domain 'FOSUserBundle' %}
 
-{% block fos_user_content %}
-    <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
-    {% if targetUrl %}
-    <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
-    {% endif %}
-{% endblock fos_user_content %}
+{#{% block fos_user_content %}#}
+    {{ render(controller(
+    'AppBundle:Teacher:teacherIndex'
+    )) }}
+    {#<p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>#}
+    {#{% if targetUrl %}#}
+    {#<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>#}
+    {#{% endif %}#}
+{#{% endblock fos_user_content %}#}

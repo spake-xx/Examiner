@@ -61,7 +61,7 @@ class GradeController extends Controller{
     }
 
     /**
-     * @Route("/register/{grade}", name="pupil_register")
+     * @Route("/r/{grade}", name="pupil_register")
      */
     public function pupilRegisterAction(Request $request, $grade)
     {
