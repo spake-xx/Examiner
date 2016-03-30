@@ -71,4 +71,27 @@ class Quiz
     {
         return $this->name;
     }
+
+    /**
+     * Set teacher
+     *
+     * @param \AppBundle\Entity\User $teacher
+     * @return Quiz
+     */
+    public function setTeacher(\AppBundle\Entity\User $teacher = null)
+    {
+        $this->teacher = $teacher;
+
+        return $this;
+    }
+
+    /**
+     * Get teacher
+     *
+     * @return \AppBundle\Entity\User 
+     */
+    public function getTeacher()
+    {
+        return $this->teacher;
+    }
 }

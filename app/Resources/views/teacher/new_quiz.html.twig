@@ -1,5 +1,8 @@
 {% extends 'teacher_base.html.twig' %}
 {% block heading %}Tworzenie nowego sprawdzianu{% endblock %}
 {% block content %}
-{{ form(add_quiz) }}
+{{ form_start(add_quiz) }}
+    {{ form_widget(add_quiz.name, {attr: {'class':'form-control', 'placeholder':'Quiz name'}}) }}
+    {{ form_widget(add_quiz.save, { attr:{'class':'btn btn-default btn-block'}}) }}
+{{ form_end(add_quiz) }}
 {% endblock %}

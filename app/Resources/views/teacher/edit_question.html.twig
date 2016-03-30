@@ -37,7 +37,7 @@
         </div>
         <div class="col-md-8">
           <div class="well well-own">
-            <h2>{{ question.question }}</h2>
+            <h2>{{ question.question }}<a href="{{ path('editQuestionName',{'question':question.id}) }}"><i class="pull-right fa fa-pencil"></i></a><a href="{{ path('removeQuestion',{'question':question.id}) }}"><i class="pull-right fa fa-remove"></i></a></h2>
             <table class="table table-stripped table-condensed table-hover">
               <thead>
                 <tr>
@@ -52,8 +52,8 @@
                 <tr>
                   <td>{{ answer.answer }}</td>
                   <td>{% if answer.points>0 %}<i class="fa fa-check"></i> {{ answer.points }} pkt.{% endif %}</td>
-                  <td>TO DO</td>
-                  <td>TO DO</td>
+                  <td><a href="{{ path('editAnswer', {'answer':answer.id}) }}"><i class="fa fa-pencil"></i></a></td>
+                  <td><a href="{{ path('removeAnswer', {'answer':answer.id}) }}"><i class="fa fa-remove"></i></a></td>
                 </tr>
                 {% endfor %}
               </tbody>

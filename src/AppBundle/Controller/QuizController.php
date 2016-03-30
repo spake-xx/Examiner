@@ -159,6 +159,85 @@ class QuizController extends Controller
 	}
 
 	/**
+	 * @Route("/quiz/answer/{answer}/", name="editAnswer")
+	 */
+	public function editAnswerAction(Request $request, $answer){
+		$em = $this->getDoctrine()->getManager();
+		$answer = $em->getRepository('AppBundle:Answer')->find($answer);
+		$question = $answer->getQuestion();
+		$question = $em->getRepository('AppBundle:Question')->find($question);
+		$quiz = $answer->getQuestion()->getQuiz();
+		$questions = $em->getRepository('AppBundle:Question')->findByQuiz($quiz);
+
+//		$answer = new Answer();
+//		$answer->setQuestion($question);
+//
+//		$form = $this->createFormBuilder($answer)
+//			->add('answer')
+//			->add('points')
+//			->add('save', SubmitType::class, array('label'=>"Dodaj odpowiedź"))
+//			->getForm();
+//		$form->handleRequest($request);
+//		if($form->isValid()){
+//			$em->persist($answer);
+//			$em->flush();
+		$answers = $em->getRepository('AppBundle:Answer')->findByQuestion($question);
+//		}
+		$form = $this->createFormBuilder($answer)
+			->add('answer')
+			->add('points')
+			->add('save', SubmitType::class)
+			->getForm();
+		$form->handleRequest($request);
+		if($form->isValid()){
+			$em->persist($answer);
+			$em->flush();
+			return $this->redirectToRoute('editQuestion', array(
+				'question'=>$answer->getQuestion()->getId(),
+			));
+		}
+
+		$question_new = new Question();
+		$formq = $this->createFormBuilder($question_new)
+			->add('question', TextType::class)
+			->add('save', SubmitType::class, array('label'=>'Dodaj'))
+			->getForm();
+		$formq->handleRequest($request);
+		if($formq->isValid()) {
+			$question_new->setQuiz($quiz);
+			$em->persist($question_new);
+			$em->flush();
+			return $this->redirectToRoute('editQuestion', array(
+				'question'=>$question_new->getId(),
+			));
+		}
+
+		return $this->render('teacher/edit_answer.html.twig', array(
+			'question' => $question,
+			'questions' => $questions,
+			'quiz' => $quiz,
+			'answers'=>$answers,
+			'edit_answer'=>$form->createView(),
+			'add_question'=>$formq->createView(),
+		));
+	}
+
+	/**
+	 * @Route("/quiz/remove/answer/{answer}/", name="removeAnswer")
+	 */
+	public function removeAnswerAction($answer)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$answer = $em->getRepository('AppBundle:Answer')->find($answer);
+		$question = $answer->getQuestion()->getId();
+		$em->remove($answer);
+		$em->flush();
+		return $this->redirectToRoute('editQuestion', array(
+			'question'=>$question,
+		));
+	}
+
+	/**
 	 * @Route("/teacher/quiz/share/{quiz}", name="quiz_share")
 	 */
 	public function ShareToAction(Request $request, $quiz){
@@ -183,6 +262,73 @@ class QuizController extends Controller
 			'quiz'=>$quiz,
 			'form'=>$form->createView(),
 		));
+	}
+
+	/**
+	 * @Route("/quiz/edit/question/{question}", name="editQuestionName")
+	 */
+	public function editQuestionNameAction(Request $request, $question){
+		$em = $this->getDoctrine()->getManager();
+		$question = $em->getRepository('AppBundle:Question')->find($question);
+		$quiz = $question->getQuiz();
+		$questions = $em->getRepository('AppBundle:Question')->findByQuiz($quiz);
+
+		$editQuestionName = $this->createFormBuilder($question)
+			->add('question')
+			->add('save', SubmitType::class)
+			->getForm();
+		$editQuestionName->handleRequest($request);
+		if($editQuestionName->isValid()){
+			$em->persist($question);
+			$em->flush();
+			return $this->redirectToRoute('editQuestion', array(
+				'question'=>$question->getId(),
+			));
+		}
+
+		$question_new = new Question();
+		$formq = $this->createFormBuilder($question_new)
+			->add('question', TextType::class)
+			->add('save', SubmitType::class, array('label'=>'Dodaj'))
+			->getForm();
+		$formq->handleRequest($request);
+		if($formq->isValid()) {
+			$question_new->setQuiz($quiz);
+			$em->persist($question_new);
+			$em->flush();
+			return $this->redirectToRoute('editQuestion', array(
+				'question'=>$question_new->getId(),
+			));
+		}
+
+		return $this->render('teacher/edit_question_name.html.twig', array(
+			'question' => $question,
+			'questions' => $questions,
+			'quiz' => $quiz,
+			'editQuestion'=>$editQuestionName->createView(),
+			'add_question'=>$formq->createView(),
+		));
+	}
+
+	/**
+	 * @Route("/quiz/remove/question/{question}/", name="removeQuestion")
+	 */
+	public function removeQuestionAction($question)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$question = $em->getRepository('AppBundle:Question')->find($question);
+		$answers = $em->getRepository('AppBundle:Answer')->findByQuestion($question);
+		$len=count($answers);
+		for($i=0;$i<$len;$i++)
+		{
+			$em->remove($answers[$i]);
+		}
+		$em->remove($question);
+		$em->flush();
+		return $this->redirectToRoute('editQuiz', array(
+			'id'=>$question->getQuiz()->getId(),
+		));
+
 	}
 }
 ?>

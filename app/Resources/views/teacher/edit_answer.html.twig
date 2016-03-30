@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Edytuj pytanie</h2>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="well well-own">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title text-center">{{ quiz.name }}</h3>
+                                </div>
+                                <div class="panel-body panel-own">
+                                    <ul class="nav nav-pills nav-stacked">
+                                        {% for q in questions %}
+                                            <li {% if q.id == question.id %} class="active" {% endif %}><a href="{{ path('editQuestion', {'question':q.id}) }}">{{ q.question }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title text-center">Add question</h3>
+                                </div>
+                                <div class="panel-body panel-own">
+                                    {{ form_start(add_question) }}
+                                    {{ form_widget(add_question.question, { 'attr': {'class':'form-control', 'placeholder':'new question'} }) }}
+                                    {{ form_widget(add_question.save, { 'attr': {'class':'btn btn-default btn-block'} }) }}
+                                    {{ form_widget(add_question._token) }}
+                                    {{ form_end(add_question) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="well well-own">
+                            <h2>{{ question.question }}</h2>
+                            <table class="table table-stripped table-condensed table-hover">
+                                <thead>
+                                <tr>
+                                    <th>ODPOWIEDŹ</th>
+                                    <th>POPRAWNA</th>
+                                    <th>EDIT</th>
+                                    <th>USUŃ</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for answer in answers %}
+                                    <tr>
+                                        <td>{{ answer.answer }}</td>
+                                        <td>{% if answer.points>0 %}<i class="fa fa-check"></i> {{ answer.points }} pkt.{% endif %}</td>
+                                        <td><a href="{{ path('editAnswer', {'answer':answer.id}) }}"><i class="fa fa-pencil"></i></a></td>
+                                        <td>TO DO</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                {{ form_start(edit_answer) }}
+                                <div class="col-md-6">
+                                    {{ form_widget(edit_answer.answer, { 'attr': {'class':'form-control', 'placeholder':'new answer'} }) }}
+                                </div>
+                                <div class="col-md-3">
+                                    {{ form_widget(edit_answer.points, { 'attr': {'class':'form-control', 'placeholder':'points'} }) }}
+                                </div>
+                                <div class="col-md-3">
+                                    {{ form_widget(edit_answer.save, { 'attr': {'class':'btn btn-default btn-block'} }) }}
+                                    {{ form_widget(edit_answer._token) }}
+                                </div>
+                                {{ form_end(edit_answer) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
