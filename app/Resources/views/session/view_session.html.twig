@@ -11,7 +11,7 @@
         <div class="alert alert-success">{{ m }}</div>
     {% endfor %}
     <div class="row text-center well">
-        <a href="http://localhost:8000/ajax/quiz/{{ session.id }}">http://localhost:8000/ajax/quiz/{{ session.id }}</a>
+        <a href="{{ url('ajax_start', {'quizsession': session.id}) }}">{{ url('ajax_start', {'quizsession': session.id}) }}</a>
     </div>
     <div class="row">
         <div class="col-md-6">
