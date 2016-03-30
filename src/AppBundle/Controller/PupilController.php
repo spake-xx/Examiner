@@ -42,10 +42,12 @@ class PupilController extends Controller{
         $attempt = $em->getRepository('AppBundle:Attempt')->find($attempt);
         $result = $em->getRepository('AppBundle:Result')->find($attempt);
         $user_answers = $em->getRepository('AppBundle:UserAnswer')->findByAttempt($attempt);
+        $answers = $em->getRepository('AppBundle:Answer')->findAll();
         return $this->render('pupil/view_attempt.html.twig', array(
             'attempt'=>$attempt,
             'result' => $result,
             'user_answers'=>$user_answers,
+            'answers'=>$answers,
         ));
     }
 }
