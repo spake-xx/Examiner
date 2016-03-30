@@ -81,7 +81,7 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
 
     $scope.send = function(data){
         if(!data.id){
-            $scope.bsAlert.msg = "Wybierz odpowiedź chujku";
+            $scope.bsAlert.msg = "Zaznacz odpowiedź !";
             return 0;
         }
         $('#spinner').show();

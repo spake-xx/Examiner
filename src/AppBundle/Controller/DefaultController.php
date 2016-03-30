@@ -33,6 +33,6 @@ class DefaultController extends Controller
                 return $this->redirectToRoute("pupil_index");
             }
         }
-        return $this->redirectToRoute('all_quizes');
+        return $this->redirectToRoute('fos_user_security_login');
     }
 }

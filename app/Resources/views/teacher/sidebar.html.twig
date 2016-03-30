@@ -7,7 +7,7 @@
             {% for quiz in quizes %}
                 <a class="list-group-item list" href="{{ path('editQuiz', {'id': quiz.id}) }}">{{ quiz.name }}</a>
             {% endfor %}
-            <a class="list-group-item text-center" href="{{ path('all_quizes') }}"><i class="fa fa-plus"></i></a>
+            <a class="list-group-item text-center" href="{{ path('new_quiz') }}"><i class="fa fa-plus"></i></a>
         </ul>
     </div>
 </div>

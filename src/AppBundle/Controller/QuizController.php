@@ -17,6 +17,31 @@ use Symfony\Component\HttpFoundation\Request;
 
 class QuizController extends Controller
 {
+
+	/**
+	 * @Route("/quiz/new/", name="new_quiz")
+	 */
+	public function newQuizAction(Request $request){
+		$em = $this->getDoctrine()->getManager();
+		$quiz = new Quiz();
+
+		$quiz->setTeacher($this->getUser());
+		$form = $this->createFormBuilder($quiz)
+			->add('name', TextType::class)
+			->add('save', SubmitType::class, array('label'=>"Utwórz"))
+			->getForm();
+		$form->handleRequest($request);
+
+		if($form->isValid()){
+			$em->persist($quiz);
+			$em->flush();
+			return $this->redirect('/quiz/edit/'.$quiz->getId());
+		}
+
+		return $this->render('teacher/new_quiz.html.twig',array(
+			'add_quiz'=>$form->createView(),
+		));
+	}
     /**
 	 * @Route("/quizes/all", name="all_quizes")
 	 */

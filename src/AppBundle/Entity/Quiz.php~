@@ -21,6 +21,10 @@ class Quiz
      */
     protected $name;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="teacher", referencedColumnName="id")
+     */
     protected $teacher;
 
     protected $maxpoints;
