@@ -40,9 +40,12 @@
 <div  class="row" ng-app="myApp" ng-controller="attempt" ng-init="setAttempt({{ attempt.id }})">
     <div class="col-md-6">
         <div class="panel panel-default">
-            <div class="panel-heading">{{ '{{ question }}' }}</div>
+            <div class="panel-heading">{{ '{{ question.question.question }}' }}</div>
             <div class="panel-body panel-own">
-
+                <ul class="list-group list-group-own" ng-if="question">
+                    TU BEDO ODPOWIEDZI
+                    <li class="list-group-item"  ng-repeat="answer in answers"  ng-if="question.question.id == answer.question.id">{{ '{{ answer.answer }}' }}</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -52,7 +55,7 @@
             <div class="panel-body panel-own">
                 <ul class="list-group list-group-own">
                     {#{% for user_answer in user_answers %}#}
-                        <li ng-repeat="user_answer in user_answers" ng-click="getQuestion(user_answer.answer.question.id)" class="list-group-item">{{ '{{ user_answer.answer.question.question }}' }}</li>
+                        <li ng-repeat="user_answer in user_answers" ng-click="getQuestion(user_answer.answer)" class="list-group-item">{{ '{{ user_answer.answer.question.question }}' }}</li>
                     {#{% endfor %}#}
                 </ul>
             </div>

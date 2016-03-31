@@ -6,6 +6,7 @@ angular.module('myApp', []).controller('attempt', function ($scope, $http, $inte
         //var attempt = attempt;
         $scope.attempt = attempt;
         //attempt = attempt;
+
     };
 
     //tutaj defaultowe wartości
@@ -19,14 +20,15 @@ angular.module('myApp', []).controller('attempt', function ($scope, $http, $inte
         //},function(response){
         //    alert("Wystąpił błąd.");
         //});
-        
+        $scope.question = question;
+
     };
 
     getQuestions = function(attempt){
       $http.post('/attempt/ajax/attempt/', $scope.attempt).then(function(response){
-          //$scope.attempt = response.data.attempt
-          //$scope.answers = response.data.answers;
-          //$scope.result =  response.data.result;
+          $scope.attempt = response.data.attempt
+          $scope.answers = response.data.answers;
+          $scope.result =  response.data.result;
           $scope.user_answers = response.data.user_answers;
       },function(response){
           alert("Wystąpił błąd.");
