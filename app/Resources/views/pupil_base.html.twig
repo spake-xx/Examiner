@@ -1,4 +1,10 @@
 {% extends 'base.html.twig' %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="{{ asset('js/module.js') }}"></script>
+    <script src="{{ asset('js/attempt.js') }}"></script>
+{% endblock %}
 {% block body %}
     <div class="container">
         <div class="panel panel-default">
