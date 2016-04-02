@@ -69,28 +69,28 @@ class AttemptController extends Controller
         return $response;
     }
 
-
-    /**
-     * @Route("/attempt/ajax/question/")
-     */
-    public function attemptGetQuestion()
-    {
-        $question = json_decode(file_get_contents('php://input'),true);
-        $em = $this->getDoctrine()->getManager();
-        $question = $em->getRepository('AppBundle:Question')->find($question);
-
-
-        $encoders = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $serializer = new Serializer($normalizers, $encoders);
-
-        $question = $serializer->normalize($question, 'json');
-
-        $response = new JsonResponse();
-        $response->setData(array(
-            'question'=>$question,
-        ));
-        return $response;
-    }
+//  JEDNAK NIE POTRZEBNE
+//    /**
+//     * @Route("/attempt/ajax/question/")
+//     */
+//    public function attemptGetQuestion()
+//    {
+//        $question = json_decode(file_get_contents('php://input'),true);
+//        $em = $this->getDoctrine()->getManager();
+//        $question = $em->getRepository('AppBundle:Question')->find($question);
+//
+//
+//        $encoders = array(new XmlEncoder(), new JsonEncoder());
+//        $normalizers = array(new ObjectNormalizer());
+//        $serializer = new Serializer($normalizers, $encoders);
+//
+//        $question = $serializer->normalize($question, 'json');
+//
+//        $response = new JsonResponse();
+//        $response->setData(array(
+//            'question'=>$question,
+//        ));
+//        return $response;
+//    }
 }
 ?>

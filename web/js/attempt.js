@@ -6,17 +6,19 @@ angular.module('myApp', []).controller('attempt', function ($scope, $http, $inte
         //var attempt = attempt;
         $scope.attempt = attempt;
         //attempt = attempt;
+        getQuestions($scope.attempt);
+        $interval(getQuestions, 2500);
 
     };
 
     //tutaj defaultowe wartości
 
-    $scope.question = "Choose a question from the list on the right";
+    //$scope.question = "Choose a question from the list on the right";
          //end defaultowych wartości
     $scope.getQuestion = function(question){
         //$http.post('/attempt/ajax/question', question).then(function(response){
-        //    $scope.answers = response.data.answers;
-        //    $scope.user_answers = response.data.user_answers;
+        //    //$scope.answers = response.data.answers;
+        //    //$scope.user_answers = response.data.user_answers;
         //},function(response){
         //    alert("Wystąpił błąd.");
         //});
@@ -31,10 +33,9 @@ angular.module('myApp', []).controller('attempt', function ($scope, $http, $inte
           $scope.result =  response.data.result;
           $scope.user_answers = response.data.user_answers;
       },function(response){
-          alert("Wystąpił błąd.");
+          //alert("Wystąpił błąd.");
       });
     };
 
-    getQuestions($scope.attempt);
-    $interval(getQuestions, 2500);
+
 });

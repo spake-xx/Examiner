@@ -40,23 +40,28 @@
 <div  class="row" ng-app="myApp" ng-controller="attempt" ng-init="setAttempt({{ attempt.id }})">
     <div class="col-md-6">
         <div class="panel panel-default">
-            <div class="panel-heading">{{ '{{ question.question.question }}' }}</div>
+            <div class="panel-heading">Questions</div>
             <div class="panel-body panel-own">
-                <ul class="list-group list-group-own" ng-if="question">
-                    TU BEDO ODPOWIEDZI
-                    <li class="list-group-item"  ng-repeat="answer in answers"  ng-if="question.question.id == answer.question.id">{{ '{{ answer.answer }}' }}</li>
+                <ul class="list-group list-group-own">
+                    {#{% for user_answer in user_answers %}#}
+                        <li ng-repeat="user_answer in user_answers" ng-click="getQuestion(user_answer.answer)" class="list-group-item"><i class="fa fa-check-square-o" ng-if="user_answer.answer.points > 0"></i> <i class="fa fa-minus-square-o" ng-if="user_answer.answer.points == 0"></i> {{ '{{ user_answer.answer.question.question }}' }}</li>
+                    {#{% endfor %}#}
                 </ul>
             </div>
         </div>
     </div>
     <div class="col-md-6">
         <div class="panel panel-default">
-            <div class="panel-heading">Questions</div>
+            <div class="panel-heading">{{ '{{ question.question.question }}' }}</div>
             <div class="panel-body panel-own">
-                <ul class="list-group list-group-own">
-                    {#{% for user_answer in user_answers %}#}
-                        <li ng-repeat="user_answer in user_answers" ng-click="getQuestion(user_answer.answer)" class="list-group-item">{{ '{{ user_answer.answer.question.question }}' }}</li>
-                    {#{% endfor %}#}
+                <div class="alert alert-info" ng-if="question == null">Choose question from the list</div>
+                <ul class="list-group list-group-own" ng-if="question">
+                    <div ng-repeat="answer in answers" ng-if="question.question.id == answer.question.id">
+                        <li class="list-group-item list-group-item-success" ng-if="question.answer == answer.answer && answer.points > 0">{{ '{{ answer.answer }}' }}</li>
+                        <li class="list-group-item list-group-item-danger" ng-if="question.answer == answer.answer && answer.points == 0">{{ '{{ answer.answer }}' }}</li>
+                        <li class="list-group-item list-group-item-success" ng-if="question.answer != answer.answer && answer.points > 0">{{ '{{ answer.answer }}' }}</li>
+                        <li class="list-group-item" ng-if="question.answer != answer.answer && answer.points == 0">{{ '{{ answer.answer }}' }}</li>
+                    </div>
                 </ul>
             </div>
         </div>
