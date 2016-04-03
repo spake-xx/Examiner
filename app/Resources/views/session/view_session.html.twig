@@ -22,7 +22,7 @@
                 {% if session.end == null %}
                     <a href="{{ path('teacher_session_end',{'session':session.id}) }}" class="btn btn-primary btn-block">Zakończ sesję</a>
                 {% else %}
-                    Zakończona: {{ session.end|date('Y-m-d H:i:s') }}
+                    Finished: {{ session.end|date('Y-m-d H:i:s') }}
                 {% endif %}
         </div>
     </div>
@@ -34,19 +34,19 @@
                 <div class="clearfix" ng-if="$index % 3 == 0"></div>
                 <div class="col-sm-4 well">
                     <h2>{{ '{{ pupil.user.username }}' }}</h2>
-                    Myśli nad {{ '{{ pupil.answered+1 }}' }}. pytaniem
+                    Thinks about {{ '{{ pupil.answered+1 }}' }}. question.
                 </div>
             </div>
         </div>
 
-        <h2 class="text-center" ng-if="!pupilsEndedEmpty()">Zakończone</h2>
+        <h2 class="text-center" ng-if="!pupilsEndedEmpty()">Finished</h2>
         <div class="row text-center">
             <div ng-repeat="result in pupils_ended">
                 <div class="clearfix" ng-if="$index % 3 == 0"></div>
                 <div class="col-xs-4 well">
                     <h2>{{ '{{ result.attempt.user.username }}' }}</h2>
                     <h3>{{ '{{ result.points/'~ session.quiz.maxPoints ~ '*100 }}' }} % </h3>
-                    Punkty: {{ '{{ result.points }}' }} / {{ session.quiz.maxpoints }}
+                    Points: {{ '{{ result.points }}' }} / {{ session.quiz.maxpoints }}
                 </div>
             </div>
         </div>
