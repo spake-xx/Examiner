@@ -43,7 +43,7 @@
         <div class="row text-center">
             <div ng-repeat="result in pupils_ended">
                 <div class="clearfix" ng-if="$index % 3 == 0"></div>
-                <div class="col-sm-4 well">
+                <div class="col-xs-4 well">
                     <h2>{{ '{{ result.attempt.user.username }}' }}</h2>
                     <h3>{{ '{{ result.points/'~ session.quiz.maxPoints ~ '*100 }}' }} % </h3>
                     Punkty: {{ '{{ result.points }}' }} / {{ session.quiz.maxpoints }}

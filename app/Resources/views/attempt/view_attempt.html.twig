@@ -43,9 +43,7 @@
             <div class="panel-heading">Questions</div>
             <div class="panel-body panel-own">
                 <ul class="list-group list-group-own">
-                    {#{% for user_answer in user_answers %}#}
-                        <li ng-repeat="user_answer in user_answers" ng-click="getQuestion(user_answer.answer)" class="list-group-item"><i class="fa fa-check-square-o" ng-if="user_answer.answer.points > 0"></i> <i class="fa fa-minus-square-o" ng-if="user_answer.answer.points == 0"></i> {{ '{{ user_answer.answer.question.question }}' }}</li>
-                    {#{% endfor %}#}
+                    <li ng-repeat="user_answer in user_answers" ng-click="getQuestion(user_answer.answer)" class="list-group-item"><i class="fa fa-check-square-o" ng-if="user_answer.answer.points > 0"></i> <i class="fa fa-minus-square-o" ng-if="user_answer.answer.points == 0"></i> {{ '{{ user_answer.answer.question.question }}' }}</li>
                 </ul>
             </div>
         </div>
