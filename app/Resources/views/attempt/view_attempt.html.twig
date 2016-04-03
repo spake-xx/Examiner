@@ -37,7 +37,10 @@
         {#<th>{{ result.points/result.maxpoints*100 }}%</th>#}
     {#</tr>#}
 {#</table>#}
-<div  class="row" ng-app="myApp" ng-controller="attempt" ng-init="setAttempt({{ attempt.id }})">
+<div class="row" ng-app="myApp" ng-controller="attempt" ng-init="setAttempt({{ attempt.id }})">
+    <div class="col-md-12" ng-if="result != null">
+        <div class="alert alert-info">Result: {{ '{{ result.points }}' }} / {{ '{{ result.max_points }}' }}</div>
+    </div>
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">Questions</div>

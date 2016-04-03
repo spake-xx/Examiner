@@ -100,10 +100,13 @@ class SolveController extends SystemController
 		$result = $em->getRepository('AppBundle:Result')->findOneByAttempt($attempt);
 		$quiz = $attempt->getSession()->getQuiz();
 
-		return $this->render('solver/result.html.twig', array(
-			'quiz'=>$quiz,
-			'result'=>$result,
-			'attempt'=>$attempt,
+//		return $this->render('solver/result.html.twig', array(
+//			'quiz'=>$quiz,
+//			'result'=>$result,
+//			'attempt'=>$attempt,
+//		));
+		return $this->redirectToRoute('pupil_view_attempt', array(
+			'attempt'=>$attempt->getId(),
 		));
 	}
 }
