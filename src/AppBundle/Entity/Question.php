@@ -23,7 +23,7 @@ class Question
     protected $quiz;
     
     /**
-     * @ORM\Column(type="string", length=200)
+     * @ORM\Column(type="string", length=2000)
      */
     protected $question;
     
