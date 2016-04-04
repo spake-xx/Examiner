@@ -158,6 +158,7 @@ class QuizController extends Controller
 			$formfile->handleRequest($request);
 		}
 		if($formfile->isValid()){
+			$file->upload();
 			$em->persist($file);
 			$em->flush();
 			$this->addFlash('notice', 'Pomyślnie dodano obrazek do pytania.');
