@@ -1,4 +1,5 @@
 angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval){
+    $scope.image = null;
     $('#spinner').hide();
     $('#quiz-info').hide();
     server_time = 11;
@@ -68,6 +69,11 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
                 if(response.data!=false) {
                     $scope.answers = response.data.answers;
                     $scope.question = response.data.question;
+                    if(response.data.image){
+                        $scope.image = response.data.image;
+                    }else{
+                        $scope.image = null;
+                    }
                     $scope.user_answer.attempt = response.data.attempt;
                 }else{
                     endQuiz();
@@ -77,6 +83,13 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
 
     $scope.user_answer = {
         id: null
+    }
+
+    $scope.checkImg = function(){
+        if($scope.image != null){
+            return 1;
+        }
+        return 0;
     }
 
     $scope.send = function(data){

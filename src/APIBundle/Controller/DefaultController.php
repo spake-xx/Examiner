@@ -43,6 +43,13 @@ class DefaultController extends SystemController
 								->where('a.question='.$attempt->getQuestion()->getId())->getQuery();
         $answers = $query->getResult();
 
+        $image = $em->getRepository("AppBundle:QuestionImage")->findOneBy(array('question'=>$attempt->getQuestion()));
+        if($image!=null) {
+            $image_url = $image->getWebPath();
+        }else{
+            $image_url = null;
+        }
+
         $encoders = array(new XmlEncoder(), new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
 
@@ -55,6 +62,7 @@ class DefaultController extends SystemController
             'question' => $attempt->getQuestion()->getQuestion(),
             'answers'=>$answers_json,
             'attempt'=>$attempt->getId(),
+            'image'=>$image_url,
         ));
 
         return $response;
