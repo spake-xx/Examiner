@@ -1,5 +1,21 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+  <script>
+    $(document).ready(function(){
+      var check;
+      $('#form_points').val('0');
+      $("#checkbox").on("click", function(){
+        check = $("#checkbox").prop("checked");
+        if(check) {
+          $('#hidden').fadeIn('fast');
+          $('#form_points').val('1');
+        } else {
+          $('#hidden').fadeOut('fast');
+          $('#form_points').val('0');
+        }
+      });
+    });
+  </script>
 <div class="container">
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -63,7 +79,10 @@
               <div class="col-md-6">
                 {{ form_widget(add_answer.answer, { 'attr': {'class':'form-control', 'placeholder':'new answer'} }) }}
               </div>
-              <div class="col-md-3">
+              <div class="col-md-1">
+                <i class="fa fa-check"></i> <input type="checkbox" id="checkbox">
+              </div>
+              <div class="col-md-2" id="hidden" style="display:none">
                 {{ form_widget(add_answer.points, { 'attr': {'class':'form-control', 'placeholder':'points'} }) }}
               </div>
               <div class="col-md-3">
