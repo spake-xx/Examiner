@@ -4,12 +4,14 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Answer;
 use AppBundle\Entity\Question;
+use AppBundle\Entity\QuestionImage;
 use AppBundle\Entity\Quiz;
 use AppBundle\Entity\QuizSession;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
@@ -121,7 +123,7 @@ class QuizController extends Controller
 		$answer = new Answer();
 		$answer->setQuestion($question);
 
-		$form = $this->createFormBuilder($answer)
+		$form = $this->get('form.factory')->createNamedBuilder('answer', FormType::class, $answer)
 					->add('answer')
 					->add('points')
 					->add('save', SubmitType::class, array('label'=>"Dodaj odpowiedź"))
@@ -134,7 +136,7 @@ class QuizController extends Controller
 		}
 
 		$question_new = new Question();
-		$formq = $this->createFormBuilder($question_new)
+		$formq = $this->get('form.factory')->createNamedBuilder('question', FormType::class, $question_new)
 			->add('question', TextType::class)
 			->add('save', SubmitType::class, array('label'=>'Dodaj'))
 			->getForm();
@@ -148,6 +150,20 @@ class QuizController extends Controller
 			));
 		}
 
+		$file = new QuestionImage();
+		$formfile = $this->get('form.factory')->createNamedBuilder('image', FormType::class, $file)
+							->add('file')->getForm();
+		$file->setQuestion($question);
+		if($request->request->has('image')){
+			$formfile->handleRequest($request);
+		}
+		if($formfile->isValid()){
+			$em->persist($file);
+			$em->flush();
+			$this->addFlash('notice', 'Pomyślnie dodano obrazek do pytania.');
+		}
+
+
 		return $this->render('teacher/edit_question.html.twig', array(
 			'question' => $question,
 			'questions' => $questions,
@@ -155,6 +171,7 @@ class QuizController extends Controller
 			'answers'=>$answers,
 			'add_answer'=>$form->createView(),
 			'add_question'=>$formq->createView(),
+			'add_image'=>$formfile->createView(),
 		));
 	}
 

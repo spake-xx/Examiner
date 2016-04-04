@@ -41,10 +41,10 @@
             <table class="table table-stripped table-condensed table-hover">
               <thead>
                 <tr>
-                  <th>ODPOWIEDŹ</th>
-                  <th>POPRAWNA</th>
-                  <th>EDIT</th>
-                  <th>USUŃ</th>
+                  <th>Odpowiedź</th>
+                  <th>Poprawna</th>
+                  <th>Edytuj</th>
+                  <th>Usuń</th>
                 </tr>
               </thead>
               <tbody>
@@ -71,6 +71,11 @@
                 {{ form_widget(add_answer._token) }}
               </div>
               {{ form_end(add_answer) }}
+
+              {{ form_start(add_image) }}
+              {{ form_widget(add_image.file) }}
+              <input type="submit" value="Wyślij" />
+              {{ form_end(add_image) }}
             </div>
           </div>
         </div>
