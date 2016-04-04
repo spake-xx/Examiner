@@ -32,8 +32,6 @@ angular.module('myApp', []).controller('attempt', function ($scope, $http, $inte
           $scope.answers = response.data.answers;
           $scope.result =  response.data.result;
           $scope.user_answers = response.data.user_answers;
-      },function(response){
-          //alert("Wystąpił błąd.");
       });
     };
 

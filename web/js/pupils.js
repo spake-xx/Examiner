@@ -11,8 +11,6 @@ angular.module('teacher').controller('pupils', function ($scope, $http, $interva
                 $scope.pupils_logged = response.data.pupils_logged;
                 $scope.pupils_ended = response.data.pupils_ended;
                 console.log($scope.pupils_logged.length > 0);
-            },function(response){
-                alert("Wystąpił błąd.");
             });
     }
 
