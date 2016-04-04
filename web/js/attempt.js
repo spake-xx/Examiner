@@ -28,7 +28,7 @@ angular.module('myApp', []).controller('attempt', function ($scope, $http, $inte
 
     getQuestions = function(attempt){
       $http.post('/attempt/ajax/attempt/', $scope.attempt).then(function(response){
-          $scope.attempt = response.data.attempt
+          $scope.attempt = response.data.attempt;
           $scope.answers = response.data.answers;
           $scope.result =  response.data.result;
           $scope.user_answers = response.data.user_answers;

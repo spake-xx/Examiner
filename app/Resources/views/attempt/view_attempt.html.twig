@@ -55,7 +55,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">{{ '{{ question.question.question }}' }}</div>
             <div class="panel-body panel-own">
-                <div class="alert alert-info" ng-if="question == null">Choose question from the list</div>
+                <div class="alert alert-info" ng-if="question == null">Choose agit question from the list</div>
                 <ul class="list-group list-group-own" ng-if="question">
                     <div ng-repeat="answer in answers" ng-if="question.question.id == answer.question.id">
                         <li class="list-group-item list-group-item-success" ng-if="question.answer == answer.answer && answer.points > 0">{{ '{{ answer.answer }}' }}</li>
