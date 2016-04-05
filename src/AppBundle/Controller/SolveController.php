@@ -26,9 +26,12 @@ class SolveController extends SystemController
 		$em = $this->getDoctrine()->getManager();
 		$attempt = $em->getRepository('AppBundle:Attempt')->find($attempt);
 		$time = $attempt->getSession()->getTime()*60;
+//		$quiz = $attempt->getQuestion()->getQuiz();
+
 		return $this->render('solver/solve_question2.html.twig', array(
 			'attempt'=>$attempt->getId(),
 			'time'=>$time,
+//			'quiz'=>$quiz,
 		));
 	}
 	/**
