@@ -65,7 +65,7 @@
                 <div class="panel-body panel-own">
                   <ul class="nav nav-pills nav-stacked">
                     {% for q in questions %}
-                      <li><a href="{{ path('editQuestion', {'question':q.id}) }}">{{ q.question }}</a></li>
+                      <li><a href="{{ path('editQuestion', {'question':q.id}) }}">{{ q.shortname }}</a></li>
                     {% endfor %}
                   </ul>
                 </div>

@@ -1,6 +1,16 @@
 <div class="panel panel-default panel-own">
+    <div class="panel-body">
+        <ul class="list-group list-group-own">
+            <li class="list-group-item">{{ user.firstname }} {{ user.lastname }}</li>
+            <li class="list-group-item">{{ user.username }}</li>
+            <li class="list-group-item">{{ user.email }}</li>
+            <li class="list-group-item">{{ user.grade.name }}</li>
+        </ul>
+    </div>
+</div>
+<div class="panel panel-default panel-own">
     <div class="panel-heading">
-        {{ user.username }} - {{ user.grade.name }}
+        {{ user.firstname }} {{ user.lastname }} - {{ user.grade.name }}
     </div>
     <div class="panel-body panel-own">
         <ul class="list-group list-group-own">
