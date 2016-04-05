@@ -55,7 +55,7 @@ class TeacherSessionController extends Controller
     }
 
     /**
-     * @Route("teacher/index/session/view/{session}/", name="teacher_session_view")
+     * @Route("/teacher/index/session/view/{session}/", name="teacher_session_view")
      */
     public function teacherSessionViewAction($session)
     {

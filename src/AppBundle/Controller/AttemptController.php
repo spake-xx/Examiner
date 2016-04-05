@@ -38,36 +38,7 @@ class AttemptController extends Controller
         ));
     }
 
-    /**
-     * @Route("/attempt/ajax/attempt/")
-     */
-    public function attemptGetAttempt()
-    {
-        $attempt = json_decode(file_get_contents('php://input'),true);
-        $em = $this->getDoctrine()->getManager();
-        $attempt = $em->getRepository('AppBundle:Attempt')->find($attempt);
-        $result = $em->getRepository('AppBundle:Result')->find($attempt);
-        $user_answers = $em->getRepository('AppBundle:UserAnswer')->findByAttempt($attempt);
-        $answers = $em->getRepository('AppBundle:Answer')->findAll();
 
-        $encoders = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $serializer = new Serializer($normalizers, $encoders);
-
-        $attempt = $serializer->normalize($attempt, 'json');
-        $result = $serializer->normalize($result, 'json');
-        $user_answers = $serializer->normalize($user_answers, 'json');
-        $answers = $serializer->normalize($answers, 'json');
-
-        $response = new JsonResponse();
-        $response->setData(array(
-            'attempt'=>$attempt,
-            'result'=>$result,
-            'user_answers'=>$user_answers,
-            'answers'=>$answers,
-        ));
-        return $response;
-    }
 
 //  JEDNAK NIE POTRZEBNE
 //    /**

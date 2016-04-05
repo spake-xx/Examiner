@@ -97,44 +97,6 @@ class DefaultController extends SystemController
     }
 
     /**
-     * @Route("/ajax/solve/{attempt}", name="ajax_solve")
-     */
-    public function solveAjaxAction(Request $request, $attempt)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $attempt = $em->getRepository('AppBundle:Attempt')->find($attempt);
-        $time = $attempt->getSession()->getTime()*60;
-        return $this->render('solver/solve_question2.html.twig', array(
-            'attempt'=>$attempt->getId(),
-            'time'=>$time,
-        ));
-    }
-
-
-    /**
-     * @Route("/ajax/quiz/{quizsession}", name="ajax_start")
-     */
-    public function startQuizAction($quizsession, Request $request)
-    {
-        $session = $request->getSession();
-        $em = $this->getDoctrine()->getManager();
-        $quizsession = $em->getRepository('AppBundle:QuizSession')->find($quizsession);
-
-
-        $attempt = new Attempt();
-        $attempt->setSession($quizsession);
-        $attempt->setUser($this->getUser());
-
-        $em->persist($attempt);
-        $em->flush();
-
-        $session->set('attempt', $attempt->getId());
-        return $this->redirectToRoute('ajax_solve', array(
-            'attempt'=>$attempt->getId(),
-        ));
-    }
-
-    /**
      * @Route("/API/session/getPupils/")
      */
     public function getSessionPupilsAction(){
@@ -258,6 +220,37 @@ class DefaultController extends SystemController
         $response = new JsonResponse();
         $response->setData(array(
             'time'=>$remaining,
+        ));
+        return $response;
+    }
+
+    /**
+     * @Route("/attempt/ajax/attempt/")
+     */
+    public function attemptGetAttempt()
+    {
+        $attempt = json_decode(file_get_contents('php://input'),true);
+        $em = $this->getDoctrine()->getManager();
+        $attempt = $em->getRepository('AppBundle:Attempt')->find($attempt);
+        $result = $em->getRepository('AppBundle:Result')->find($attempt);
+        $user_answers = $em->getRepository('AppBundle:UserAnswer')->findByAttempt($attempt);
+        $answers = $em->getRepository('AppBundle:Answer')->findAll();
+
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $attempt = $serializer->normalize($attempt, 'json');
+        $result = $serializer->normalize($result, 'json');
+        $user_answers = $serializer->normalize($user_answers, 'json');
+        $answers = $serializer->normalize($answers, 'json');
+
+        $response = new JsonResponse();
+        $response->setData(array(
+            'attempt'=>$attempt,
+            'result'=>$result,
+            'user_answers'=>$user_answers,
+            'answers'=>$answers,
         ));
         return $response;
     }

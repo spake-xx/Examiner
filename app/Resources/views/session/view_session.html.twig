@@ -45,7 +45,7 @@
                 <div class="clearfix" ng-if="$index % 3 == 0"></div>
                 <div class="col-xs-4 well">
                     <h2>{{ '{{ result.attempt.user.username }}' }}</h2>
-                    <h3>{{ '{{ result.points/'~ session.quiz.maxPoints ~ '*100 }}' }} % </h3>
+                    <h3>{{ '{{ (result.points/'~ session.quiz.maxPoints ~ '*100)|number:2 }}' }} % </h3>
                     Points: {{ '{{ result.points }}' }} / {{ session.quiz.maxpoints }}
                 </div>
             </div>

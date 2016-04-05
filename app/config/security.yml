@@ -40,4 +40,6 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
-        - { path: ^/ajax/quiz/, role: ROLE_PUPIL }
+        - { path: ^/pupil/, role: ROLE_PUPIL }
+        - { path: ^/teacher/, role: ROLE_TEACHER }
+        - { path: ^/ajax/, role: ROLE_PUPIL }

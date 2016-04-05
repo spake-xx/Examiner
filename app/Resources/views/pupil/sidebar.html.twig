@@ -1,16 +1,10 @@
-<div class="panel panel-default panel-own">
-    <div class="panel-body">
-        <ul class="list-group list-group-own">
-            <li class="list-group-item">{{ user.firstname }} {{ user.lastname }}</li>
-            <li class="list-group-item">{{ user.username }}</li>
-            <li class="list-group-item">{{ user.email }}</li>
-            <li class="list-group-item">{{ user.grade.name }}</li>
-        </ul>
-    </div>
+<div class="well well-sm well-own text-center">
+            <h4>{{ user.grade.name }}</h4>
+            <h5>{{ user.firstname }} {{ user.lastname }}</h5>
 </div>
 <div class="panel panel-default panel-own">
     <div class="panel-heading">
-        {{ user.firstname }} {{ user.lastname }} - {{ user.grade.name }}
+        Menu ucznia
     </div>
     <div class="panel-body panel-own">
         <ul class="list-group list-group-own">
