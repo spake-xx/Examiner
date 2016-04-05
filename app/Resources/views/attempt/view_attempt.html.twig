@@ -39,7 +39,7 @@
 {#</table>#}
 <div class="row" ng-app="myApp" ng-controller="attempt" ng-init="setAttempt({{ attempt.id }})">
     <div class="col-md-12" ng-if="result != null">
-        <div class="alert alert-info">Result: {{ '{{ result.points }}' }} / {{ '{{ result.max_points }}' }}</div>
+        <div class="alert alert-info">Result: {{ result.points }} / {{ result.maxpoints  }}</div>
     </div>
     <div class="col-md-6">
         <div class="panel panel-default">
@@ -55,7 +55,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">{{ '{{ question.question.question }}' }}</div>
             <div class="panel-body panel-own">
-                <div class="alert alert-info" ng-if="question == null">Choose agit question from the list</div>
+                <div class="alert alert-info" ng-if="question == null">Choose a question from the list</div>
                 <ul class="list-group list-group-own" ng-if="question">
                     <div ng-repeat="answer in answers" ng-if="question.question.id == answer.question.id">
                         <li class="list-group-item list-group-item-success" ng-if="question.answer == answer.answer && answer.points > 0">{{ '{{ answer.answer }}' }}</li>
