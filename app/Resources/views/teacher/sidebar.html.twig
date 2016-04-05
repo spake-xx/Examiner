@@ -2,10 +2,10 @@
     <h3>{{ user.firstname }} {{ user.lastname }}</h3>
 </div>
 <div class="panel panel-default">
-    <div class="panel-heading">
-        Moje sprawdziany
+    <div class="panel-heading" {% if quizes|length>5 %}data-toggle="collapse" data-target="#sprawdziany"{% endif %}>
+        Moje sprawdziany {% if quizes|length>5 %}<i class="fa fa-bars fa-lg pull-right"></i>{% endif %}
     </div>
-    <div class="panel-body panel-own">
+    <div class="panel-body panel-own {% if quizes|length>5 %}collapse{% endif %}" id="sprawdziany">
         <ul class="list-group list-group-own">
             {% for quiz in quizes %}
                 <a class="list-group-item list" href="{{ path('editQuiz', {'id': quiz.id}) }}">{{ quiz.name }}</a>
@@ -15,10 +15,10 @@
     </div>
 </div>
 <div class="panel panel-default">
-    <div class="panel-heading">
-        Moje klasy
+    <div class="panel-heading" {% if classes|length>5 %}data-toggle="collapse" data-target="#klasy"{% endif %}>
+        Moje klasy {% if classes|length>5 %}<i class="fa fa-bars fa-lg pull-right"></i>{% endif %}
     </div>
-    <div class="panel-body panel-own">
+    <div class="panel-body panel-own {% if classes|length>5 %}collapse{% endif %}" id="klasy">
         <ul class="list-group list-group-own">
             {% for class in classes %}
                 <a class="list-group-item list" href="{{ path('teacher_grade_register', {'grade':class.id}) }}">{{ class.name }}</a>
