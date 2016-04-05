@@ -75,6 +75,8 @@ class GradeController extends Controller{
         $form = $this->createFormBuilder($user)
             ->add('username')
             ->add('email')
+            ->add('firstname')
+            ->add('lastname')
             ->add('plainPassword', PasswordType::class)
             ->getForm();
         $form->handleRequest($request);
