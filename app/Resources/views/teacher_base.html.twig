@@ -4,18 +4,29 @@
     {% endblock %}
 {% block body %}
     <div class="container" ng-app="teacher">
+        {% set route = app.request.attributes.get('_route') %}
+        <ol class="breadcrumb well">
+            {% if route=="teacher_index" %}
+            <li class="active">Panel Nauczyciela</li>
+            {% else %}
+            <li><a href="{{ path('teacher_index') }}">Panel Nauczyciela</a></li>
+            {% endif %}
+            {% if route=="teacher_grade_register" %}
+                <li class="active">Rejestracja klasy</li>
+            {% endif %}
+            {% if route=="teacher_session_view" %}
+                <li class="active">Podgląd sesji</li>
+            {% endif %}
+        </ol>
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="well well-own">
                             {% block sidebar %}
                                 {% render(controller('AppBundle:Teacher:teacherSidebar')) %}
                             {% endblock %}
-                        </div>
                     </div>
                     <div class="col-md-8">
-                        <div class="well well-own">
                             <div class="panel panel-default panel-own">
                                 <div class="panel-heading">
                                     {% block heading %}{% endblock %}
@@ -25,7 +36,6 @@
                                     {% endblock %}
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>

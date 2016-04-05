@@ -34,9 +34,11 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav pull-right">
                         {% if app.user %}
-                            <li><a href="{{ path('pupil_index') }}">Uczeń</a></li>
-                            <li><a href="{{ path('teacher_index') }}">Nauczyciel</a></li>
-                            {#<li><a href="{{ path('all_quizes') }}">QUIZY</a></li>#}
+                            {% if is_granted('ROLE_PUPIL') %}
+                                <li><a href="{{ path('pupil_index') }}">Panel ucznia</a></li>
+                            {% elseif is_granted('ROLE_TEACHER') %}
+                                <li><a href="{{ path('teacher_index') }}">Panel nauczyciela</a></li>
+                            {% endif %}
                             <li><a href="{{ path('fos_user_security_logout') }}">Wyloguj</a></li>
                         {% else %}
                             {#<li><a href="{{ path('all_quizes') }}">QUIZY</a></li>#}

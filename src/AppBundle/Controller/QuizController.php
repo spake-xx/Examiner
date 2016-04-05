@@ -21,7 +21,7 @@ class QuizController extends Controller
 {
 
 	/**
-	 * @Route("/quiz/new/", name="new_quiz")
+	 * @Route("/teacher/quiz/new/", name="new_quiz")
 	 */
 	public function newQuizAction(Request $request){
 		$em = $this->getDoctrine()->getManager();
@@ -44,35 +44,9 @@ class QuizController extends Controller
 			'add_quiz'=>$form->createView(),
 		));
 	}
-    /**
-	 * @Route("/quizes/all", name="all_quizes")
-	 */
-	public function AllQuizesAction(Request $request){
-		$em = $this->getDoctrine()->getManager();
-		$quiz = new Quiz();
-
-		$form = $this->createFormBuilder($quiz)
-					 ->add('name', TextType::class)
-					 ->add('save', SubmitType::class, array('label'=>"Utwórz"))
-					 ->getForm();
-		$form->handleRequest($request);
-
-		if($form->isValid()){
-			$em->persist($quiz);
-			$em->flush();
-			return $this->redirect('/quiz/edit/'.$quiz->getId());
-		}
-
-		$quizes = $em->getRepository('AppBundle:Quiz')->findAll();
-		return $this->render('teacher/all.html.twig',array(
-				'quizes'=>$quizes,
-				'add_quiz'=>$form->createView(),
-
-		));
-	}
 
 	/**
-	 * @Route("/quiz/edit/{id}", name="editQuiz")
+	 * @Route("/teacher/quiz/edit/{id}", name="editQuiz")
 	 */
 	public function editQuizAction($id, Request $request){
 		$em = $this->getDoctrine()->getManager();
@@ -111,7 +85,7 @@ class QuizController extends Controller
 
 
 	/**
-	 * @Route("/quiz/question/{question}", name="editQuestion")
+	 * @Route("/teacher/quiz/question/{question}", name="editQuestion")
 	 */
 	public function editQuestionAction(Request $request, $question){
 		$em = $this->getDoctrine()->getManager();
@@ -177,7 +151,7 @@ class QuizController extends Controller
 	}
 
 	/**
-	 * @Route("/quiz/answer/{answer}/", name="editAnswer")
+	 * @Route("/teacher/quiz/answer/{answer}/", name="editAnswer")
 	 */
 	public function editAnswerAction(Request $request, $answer){
 		$em = $this->getDoctrine()->getManager();
@@ -241,7 +215,7 @@ class QuizController extends Controller
 	}
 
 	/**
-	 * @Route("/quiz/remove/answer/{answer}/", name="removeAnswer")
+	 * @Route("/teacher/quiz/remove/answer/{answer}/", name="removeAnswer")
 	 */
 	public function removeAnswerAction($answer)
 	{
@@ -256,34 +230,7 @@ class QuizController extends Controller
 	}
 
 	/**
-	 * @Route("/teacher/quiz/share/{quiz}", name="quiz_share")
-	 */
-	public function ShareToAction(Request $request, $quiz){
-		$em = $this->getDoctrine()->getManager();
-		$quiz = $em->getRepository("AppBundle:Quiz")->find($quiz);
-
-		$session = new QuizSession();
-
-		$form = $this->createFormBuilder($session)
-					->add('minutes')->getForm();
-		$form->handleRequest($request);
-
-		if($form->isValid()){
-			$session->setQuiz($quiz);
-			$minutes = $session->minutes;
-			$session->setEnd(new \DateTime("+$minutes minutes"));
-			$em->persist($session);
-			$em->flush();
-		}
-
-		return $this->render("teacher/quiz_share.html.twig", array(
-			'quiz'=>$quiz,
-			'form'=>$form->createView(),
-		));
-	}
-
-	/**
-	 * @Route("/quiz/edit/question/{question}", name="editQuestionName")
+	 * @Route("/teacher/quiz/edit/question/{question}", name="editQuestionName")
 	 */
 	public function editQuestionNameAction(Request $request, $question){
 		$em = $this->getDoctrine()->getManager();
@@ -329,7 +276,7 @@ class QuizController extends Controller
 	}
 
 	/**
-	 * @Route("/quiz/remove/question/{question}/", name="removeQuestion")
+	 * @Route("/teacher/quiz/remove/question/{question}/", name="removeQuestion")
 	 */
 	public function removeQuestionAction($question)
 	{

@@ -24,9 +24,11 @@ angular.module('myApp', []).controller('attempt', function ($scope, $http, $inte
                 $scope.image = response.data.image;
                 $scope.result = response.data.result;
                 $scope.question = response.data.question;
+                console.log(response.data.image);
         },function(response){
             alert(response.data);
         });
+        //alert(question);
         //$scope.question = question;
 
     };

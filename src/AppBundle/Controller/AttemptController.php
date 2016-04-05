@@ -75,6 +75,7 @@ class AttemptController extends Controller
         return $response;
     }
 
+
 //  JEDNAK NIE POTRZEBNE
     /**
      * @Route("/attempt/ajax/question/")
@@ -88,17 +89,19 @@ class AttemptController extends Controller
         $attempt = $em->getRepository('AppBundle:Attempt')->find($dane['attempt']);
 
 //        $question = $em->getRepository('AppBundle:Question')->find($question);
-        $question_image = $em->getRepository('AppBundle:QuestionImage')->findByQuestion($question->getId());
+        $image = $em->getRepository('AppBundle:QuestionImage')->findOneByQuestion($question);
         $result = $em->getRepository('AppBundle:Result')->find($attempt);
         $user_answers = $em->getRepository('AppBundle:UserAnswer')->findByAttempt($attempt);
-        $answers = $em->getRepository('AppBundle:Answer')->findByQuestion();
+        $answers = $em->getRepository('AppBundle:Answer')->findByQuestion($question);
 
         $encoders = array(new XmlEncoder(), new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
         $serializer = new Serializer($normalizers, $encoders);
-
+        if($image){
+            $image = $image->getWebPath();
+        }
         $question = $serializer->normalize($question, 'json');
-        $image = $serializer->normalize($question_image, 'json');
+        $image = $serializer->normalize($image, 'json');
         $result = $serializer->normalize($result, 'json');
         $user_answers = $serializer->normalize($user_answers, 'json');
         $answers = $serializer->normalize($answers, 'json');
@@ -114,4 +117,4 @@ class AttemptController extends Controller
         return $response;
     }
 }
-?>git 
+?>

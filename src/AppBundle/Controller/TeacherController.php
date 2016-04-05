@@ -53,6 +53,7 @@ class TeacherController extends Controller{
         return $this->render('teacher/sidebar.html.twig', array(
             'quizes'=>$quizes,
             'classes'=>$classes,
+            'user'=>$this->getUser(),
         ));
     }
 }
