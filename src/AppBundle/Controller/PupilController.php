@@ -16,7 +16,14 @@ class PupilController extends Controller{
     public function pupilIndexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $attempts = $em->getRepository('AppBundle:Attempt')->findByUser($this->getUser());
+        $attempt = $em->getRepository("AppBundle:Attempt");
+        $attempts = $attempt->findByUser($this->getUser());
+        $active_attempts = $attempt->createQueryBuilder('a')
+                            ->where('a.user='.$this->getUser()->getId())
+                            ->andWhere('a.end is NULL')->getQuery()->getResult();
+        if($active_attempts!=null){
+            return $this->redirectToRoute('ajax_solve', array('attempt'=>$active_attempts[0]->getId()));
+        }
         $results = $em->getRepository('AppBundle:Result')->findAll();
         return $this->render('pupil/view_index.html.twig', array(
             'attempts' => $attempts,
