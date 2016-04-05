@@ -17,10 +17,12 @@
     });
   </script>
 <div class="container">
+  <ol class="breadcrumb well">
+    <li><a href="{{ path('teacher_index') }}">Panel Nauczyciela</a></li>
+    <li><a href="{{ path('editQuiz', {'id':quiz.id}) }}">Edycja sprawdzianu</a></li>
+    <li class="active">Edycja pytania</li>
+  </ol>
   <div class="panel panel-default">
-    <div class="panel-heading">
-      <h2 class="panel-title">Edytuj pytanie</h2>
-    </div>
     <div class="panel-body">
       <div class="row">
         <div class="col-md-4">

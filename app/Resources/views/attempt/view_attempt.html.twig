@@ -1,42 +1,3 @@
-{#<table class="table table-hover table-stripped">#}
-    {#<tr>#}
-        {#<th>Pytanie</th>#}
-        {#<th>Odpowiedź</th>#}
-        {#<th>Poprawna</th>#}
-        {#<th>PKT</th>#}
-    {#</tr>#}
-    {#{% for user_answer in user_answers %}#}
-        {#<tr>#}
-            {#<td>{{ user_answer.answer.question.question }}</td>#}
-            {#{% if user_answer.answer.points != 0 %}#}
-                {#<td class="text-success">{{ user_answer.answer.answer }}</td>#}
-                {#<td class="text-success"><i class="fa fa-check-square-o"></i></td>#}
-                {#<td class="text-success">{{ user_answer.answer.points }}</td>#}
-            {#{% else %}#}
-                {#<td class="text-danger">{{ user_answer.answer.answer }}</td>#}
-                {#<td class="text-danger"><i class="fa fa-minus-square-o"></i></td>#}
-                {#<td class="text-danger">{{ user_answer.answer.points }}</td>#}
-            {#{% endif %}#}
-        {#<tr>#}
-        {#{% for answer in answers %}#}
-            {#{% if answer.question.id == user_answer.answer.question.id %}#}
-                {#<tr>#}
-                    {#<td></td>#}
-                    {#<td>{{ answer.answer }}</td>#}
-                    {#<td></td>#}
-                    {#<td>{{ answer.points }}</td>#}
-                {#</tr>#}
-            {#{% endif %}#}
-        {#{% endfor %}#}
-        {#</tr>#}
-        {#</tr>#}
-    {#{% endfor %}#}
-    {#<tr class="info">#}
-        {#<th colspan="2">Wynik</th>#}
-        {#<th>{{ result.points}}/{{ result.maxpoints }} pkt</th>#}
-        {#<th>{{ result.points/result.maxpoints*100 }}%</th>#}
-    {#</tr>#}
-{#</table>#}
 <div class="row" ng-app="myApp" ng-controller="attempt" ng-init="setAttempt({{ attempt.id }})">
     <div class="col-md-12" ng-if="result != null">
         {#<div class="alert alert-info">Result: {{ result }} / {{ result.maxpoints  }}</div>#}
@@ -46,7 +7,10 @@
             <div class="panel-heading">Questions</div>
             <div class="panel-body panel-own">
                 <ul class="list-group list-group-own">
-                    <li ng-repeat="user_answer in user_answers" ng-click="getQuestion(user_answer.answer)" class="list-group-item"><i class="fa fa-check-square-o" ng-if="user_answer.answer.points > 0"></i> <i class="fa fa-minus-square-o" ng-if="user_answer.answer.points == 0"></i> {{ '{{ user_answer.answer.question.question | limitTo:40 }}{{ user_answer.answer.question.question.length > 40 ? "..." : "" }}' }}</li>
+                    <li ng-repeat="user_answer in user_answers" ng-click="getQuestion(user_answer.answer)" class="list-group-item">
+                        <i class="fa fa-check" ng-if="user_answer.answer.points > 0"></i>
+                        <i class="fa fa-times" ng-if="user_answer.answer.points == 0"></i>
+                        {{ '{{ user_answer.answer.question.question | limitTo:40 }}{{ user_answer.answer.question.question.length > 40 ? "..." : "" }}' }}</li>
                 </ul>
             </div>
         </div>

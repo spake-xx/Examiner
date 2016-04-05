@@ -4,6 +4,20 @@
     {% endblock %}
 {% block body %}
     <div class="container" ng-app="teacher">
+        {% set route = app.request.attributes.get('_route') %}
+        <ol class="breadcrumb well">
+            {% if route=="teacher_index" %}
+            <li class="active">Panel Nauczyciela</li>
+            {% else %}
+            <li><a href="{{ path('teacher_index') }}">Panel Nauczyciela</a></li>
+            {% endif %}
+            {% if route=="teacher_grade_register" %}
+                <li class="active">Rejestracja klasy</li>
+            {% endif %}
+            {% if route=="teacher_session_view" %}
+                <li class="active">Podgląd sesji</li>
+            {% endif %}
+        </ol>
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="row">
