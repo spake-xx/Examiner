@@ -46,7 +46,7 @@
             <div class="panel-heading">Questions</div>
             <div class="panel-body panel-own">
                 <ul class="list-group list-group-own">
-                    <li ng-repeat="user_answer in user_answers" ng-click="getQuestion(user_answer.answer)" class="list-group-item"><i class="fa fa-check-square-o" ng-if="user_answer.answer.points > 0"></i> <i class="fa fa-minus-square-o" ng-if="user_answer.answer.points == 0"></i> {{ '{{ user_answer.answer.question.question | limitTo:40 }}{{ user_answer.answer.question.question.length > 40 ? "..." : "" }}' }}</li>
+                    <li ng-repeat="user_answer in user_answers" ng-click="getQuestion(user_answer.answer.question)" class="list-group-item"><i class="fa fa-check-square-o" ng-if="user_answer.answer.points > 0"></i> <i class="fa fa-minus-square-o" ng-if="user_answer.answer.points == 0"></i> {{ '{{ user_answer.answer.question.question | limitTo:40 }}{{ user_answer.answer.question.question.length > 40 ? "..." : "" }}' }}</li>
                 </ul>
             </div>
         </div>
@@ -57,6 +57,7 @@
             <div class="panel-body panel-own">
                 <div class="alert alert-info alert-own" ng-if="!question">Choose a question from the list</div>
                 <ul class="list-group list-group-own" ng-if="question">
+                    {#<img ng-repeat="image in question_image"  ng-if="image.question.id == question.question.id" ng-src="/image.path" class="img-responsive" />#}
                     <div ng-repeat="answer in answers" ng-if="question.question.id == answer.question.id">
                         <li class="list-group-item list-group-item-success" ng-if="question.answer == answer.answer && answer.points > 0">{{ '{{ answer.answer }}' }}</li>
                         <li class="list-group-item list-group-item-danger" ng-if="question.answer == answer.answer && answer.points == 0">{{ '{{ answer.answer }}' }}</li>

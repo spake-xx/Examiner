@@ -8,6 +8,7 @@ use AppBundle\Entity\Question;
 use AppBundle\Entity\Quiz;
 use AppBundle\Entity\QuizSession;
 use AppBundle\Entity\UserAnswer;
+use AppBundle\Entity\QuestionImage;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -29,12 +30,14 @@ class AttemptController extends Controller
         $result = $em->getRepository('AppBundle:Result')->find($attempt);
         $user_answers = $em->getRepository('AppBundle:UserAnswer')->findByAttempt($attempt);
         $answers = $em->getRepository('AppBundle:Answer')->findAll();
+//        $question_image = $em->getRepository('AppBundle:QuestionImage')->findAll();
 
         return $this->render('/attempt/view_attempt.html.twig', array(
             'result'=>$result,
             'user_answers'=>$user_answers,
             'answers'=>$answers,
             'attempt'=>$attempt,
+//            'question_image'=>$question_image,
         ));
     }
 
@@ -49,6 +52,7 @@ class AttemptController extends Controller
         $result = $em->getRepository('AppBundle:Result')->find($attempt);
         $user_answers = $em->getRepository('AppBundle:UserAnswer')->findByAttempt($attempt);
         $answers = $em->getRepository('AppBundle:Answer')->findAll();
+        $question_image = $em->getRepository('AppBundle:QuestionImage')->findAll();
 
         $encoders = array(new XmlEncoder(), new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
@@ -58,39 +62,56 @@ class AttemptController extends Controller
         $result = $serializer->normalize($result, 'json');
         $user_answers = $serializer->normalize($user_answers, 'json');
         $answers = $serializer->normalize($answers, 'json');
+        $question_image = $serializer->normalize($question_image, 'json');
 
         $response = new JsonResponse();
         $response->setData(array(
             'attempt'=>$attempt,
+//            'result'=>$result,
+            'user_answers'=>$user_answers,
+//            'answers'=>$answers,
+//            'question_image'=>$question_image,
+        ));
+        return $response;
+    }
+
+//  JEDNAK NIE POTRZEBNE
+    /**
+     * @Route("/attempt/ajax/question/")
+     */
+    public function attemptGetQuestion()
+    {
+        $dane = json_decode(file_get_contents('php://input'),true);
+        $em = $this->getDoctrine()->getManager();
+
+        $question = $em->getRepository('AppBundle:Question')->find($dane['question']);
+        $attempt = $em->getRepository('AppBundle:Attempt')->find($dane['attempt']);
+
+//        $question = $em->getRepository('AppBundle:Question')->find($question);
+        $question_image = $em->getRepository('AppBundle:QuestionImage')->findByQuestion($question->getId());
+        $result = $em->getRepository('AppBundle:Result')->find($attempt);
+        $user_answers = $em->getRepository('AppBundle:UserAnswer')->findByAttempt($attempt);
+        $answers = $em->getRepository('AppBundle:Answer')->findByQuestion();
+
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $question = $serializer->normalize($question, 'json');
+        $image = $serializer->normalize($question_image, 'json');
+        $result = $serializer->normalize($result, 'json');
+        $user_answers = $serializer->normalize($user_answers, 'json');
+        $answers = $serializer->normalize($answers, 'json');
+
+        $response = new JsonResponse();
+        $response->setData(array(
+            'question'=>$question,
+            'image'=>$image,
             'result'=>$result,
             'user_answers'=>$user_answers,
             'answers'=>$answers,
         ));
         return $response;
     }
-
-//  JEDNAK NIE POTRZEBNE
-//    /**
-//     * @Route("/attempt/ajax/question/")
-//     */
-//    public function attemptGetQuestion()
-//    {
-//        $question = json_decode(file_get_contents('php://input'),true);
-//        $em = $this->getDoctrine()->getManager();
-//        $question = $em->getRepository('AppBundle:Question')->find($question);
-//
-//
-//        $encoders = array(new XmlEncoder(), new JsonEncoder());
-//        $normalizers = array(new ObjectNormalizer());
-//        $serializer = new Serializer($normalizers, $encoders);
-//
-//        $question = $serializer->normalize($question, 'json');
-//
-//        $response = new JsonResponse();
-//        $response->setData(array(
-//            'question'=>$question,
-//        ));
-//        return $response;
-//    }
 }
-?>
+?>git 
