@@ -110,4 +110,13 @@ class Question
     {
         return $this->quiz;
     }
+
+    public function getShortName(){
+        $question = $this->question;
+        if(strlen($question)>40) {
+            return substr($question, 0, 40) . "...";
+        }else{
+            return $question;
+        }
+    }
 }
