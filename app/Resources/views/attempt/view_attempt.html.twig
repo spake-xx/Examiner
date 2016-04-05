@@ -8,7 +8,7 @@
             <div class="panel-body panel-own">
                 <ul class="list-group list-group-own">
 
-                    <li ng-repeat="user_answer in user_answers" ng-click="getQuestion(user_answer.answer.question)" class="list-group-item"><i class="fa fa-check-square-o" ng-if="user_answer.answer.points > 0"></i> <i class="fa fa-minus-square-o" ng-if="user_answer.answer.points == 0"></i> {{ '{{ user_answer.answer.question.question | limitTo:40 }}{{ user_answer.answer.question.question.length > 40 ? "..." : "" }}' }}</li>
+                    {#<li ng-repeat="user_answer in user_answers" ng-click="getQuestion(user_answer.answer.question)" class="list-group-item"><i class="fa fa-check-square-o" ng-if="user_answer.answer.points > 0"></i> <i class="fa fa-minus-square-o" ng-if="user_answer.answer.points == 0"></i> {{ '{{ user_answer.answer.question.question | limitTo:40 }}{{ user_answer.answer.question.question.length > 40 ? "..." : "" }}' }}</li>#}
 
                     <li ng-repeat="user_answer in user_answers" ng-click="getQuestion(user_answer.answer.question.id)" class="list-group-item">
                         <i class="fa fa-check" ng-if="user_answer.answer.points > 0"></i>
