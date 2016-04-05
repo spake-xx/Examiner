@@ -55,7 +55,15 @@
         </div>
         <div class="col-md-8">
           <div class="well well-own">
-            <h2>{{ question.question }}<a href="{{ path('editQuestionName',{'question':question.id}) }}"><i class="pull-right fa fa-pencil"></i></a><a href="{{ path('removeQuestion',{'question':question.id}) }}"><i class="pull-right fa fa-remove"></i></a></h2>
+            <h2>{{ question.question }}<a class="btn btn-primary btn-sm pull-right" data-toggle="collapse" data-target="#addimg">Dodaj zdjęcie</a> <a href="{{ path('editQuestionName',{'question':question.id}) }}"><i class="pull-right fa fa-pencil"></i></a><a href="{{ path('removeQuestion',{'question':question.id}) }}"> <i class="pull-right fa fa-remove"></i></a></h2>
+            {{ form_start(add_image) }}
+
+                <div class="col-md-6 collapse pull-right alert alert-success" id="addimg">
+                {{ form_widget(add_image.file) }}
+                <input type="submit" class="btn btn-block btn-primary btn-sm" value="Wyślij" />
+                </div>
+
+            {{ form_end(add_image) }}
             <table class="table table-stripped table-condensed table-hover">
               <thead>
                 <tr>
@@ -93,10 +101,7 @@
               </div>
               {{ form_end(add_answer) }}
 
-              {{ form_start(add_image) }}
-              {{ form_widget(add_image.file) }}
-              <input type="submit" value="Wyślij" />
-              {{ form_end(add_image) }}
+
             </div>
           </div>
         </div>
