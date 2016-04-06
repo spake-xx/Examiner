@@ -10,11 +10,11 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-4">
-                    <div class="well text-center">Pytanie 4 z 40</div>
+                    <div class="well text-center">Pytanie {{answered+1}} z {{questions_count}}</div>
                     <div class="well" id="quiz-info">
                        <h1 class="text-center"><i id="spinner" class="fa fa-circle-o-notch fa-spin"></i></h1>
                        <h2 class="text-center">
-                       <timer autostart="false" countdown="{% endverbatim %}{{ time }}{% verbatim %}" interval="1000">{{mminutes}} min {{sseconds}} s</timer></h2>
+                       <timer autostart="false" countdown="{% endverbatim %}{{ time }}{% verbatim %}" interval="1000"><div ng-show="hours">{{hours}} h</div> {{mminutes}} min {{sseconds}} s</timer></h2>
                     </div>
 
                 </div>
