@@ -1,14 +1,11 @@
-<table class="table table-stripped table-hover">
-    <tr>
-        <th class="text-center">Quiz</th>
-        <th class="text-center">Czas</th>
-        <th class="text-center">More</th>
-    </tr>
-    {% for session in sessions %}
-    <tr>
-        <td class="text-center">{{ session.quiz.name }}</td>
-        <td class="text-center">{{ session.time }} min.</td>
-        <td class="text-center"><a href="{{ path('teacher_session_view', {'session':session.id}) }}"><i class="fa fa-binoculars"></i></a></td>
-    </tr>
-    {% endfor %}
-</table>
+{% for session in sessions %}
+    <div class="col-md-4">
+        <div class="well well-own text-center">
+            <a href="{{ path('teacher_session_view', {'session':session.id}) }}">
+                <h4>{{ session.quiz.name }}</h4>
+                <i class="fa fa-search fa-lg"></i>
+            </a>
+            <h5>{{ session.time }} min. <i class="fa fa-clock-o"></i></h5>
+        </div>
+    </div>
+{% endfor %}
