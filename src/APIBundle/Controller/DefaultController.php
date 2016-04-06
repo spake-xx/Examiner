@@ -119,6 +119,13 @@ class DefaultController extends SystemController
             ->andWhere('a.end IS NULL')
             ->getQuery()->getResult();
 
+        if($dane['time']) {
+            $session_repo = $em->getRepository('AppBundle:QuizSession');
+            $session = $session_repo->find($dane['session']);
+            $session->setTime($dane['time']);
+            $em->flush();
+        }
+
         foreach($pupils_logged as $k=>$v){
             $answered = $em->getRepository('AppBundle:UserAnswer')->createQueryBuilder('u');
             $answered = $answered->select('count(u.id)')->where('u.attempt='.$v->getId())->getQuery()->getSingleScalarResult();
