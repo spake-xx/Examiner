@@ -49,7 +49,7 @@ class AttemptController extends Controller
         $attempt = json_decode(file_get_contents('php://input'),true);
         $em = $this->getDoctrine()->getManager();
         $attempt = $em->getRepository('AppBundle:Attempt')->find($attempt);
-        $result = $em->getRepository('AppBundle:Result')->find($attempt);
+        $result = $em->getRepository('AppBundle:Result')->findByAttempt($attempt);
         $user_answers = $em->getRepository('AppBundle:UserAnswer')->findByAttempt($attempt);
         $answers = $em->getRepository('AppBundle:Answer')->findAll();
         $question_image = $em->getRepository('AppBundle:QuestionImage')->findAll();
@@ -67,7 +67,7 @@ class AttemptController extends Controller
         $response = new JsonResponse();
         $response->setData(array(
             'attempt'=>$attempt,
-//            'result'=>$result,
+            'result'=>$result,
             'user_answers'=>$user_answers,
 //            'answers'=>$answers,
 //            'question_image'=>$question_image,
@@ -110,7 +110,7 @@ class AttemptController extends Controller
         $response->setData(array(
             'question'=>$question,
             'image'=>$image,
-            'result'=>$result,
+//            'result'=>$result,
             'user_answers'=>$user_answers,
             'answers'=>$answers,
         ));

@@ -1,6 +1,6 @@
 <div class="row" ng-app="myApp" ng-controller="attempt" ng-init="setAttempt({{ attempt.id }})">
-    <div class="col-md-12" ng-if="result != null">
-        {#<div class="alert alert-info">Result: {{ result }} / {{ result.maxpoints  }}</div>#}
+    <div class="col-md-12" ng-if="result">
+        <div class="alert alert-info">Wynik: {{ '{{ result.points }}' }} / {{ '{{ result.maxPoints }}'  }}</div>
     </div>
     <div class="col-md-6">
         <div class="panel panel-default">
