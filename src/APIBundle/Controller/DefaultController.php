@@ -50,6 +50,16 @@ class DefaultController extends SystemController
             $image_url = null;
         }
 
+        $answered = $em->getRepository('AppBundle:UserAnswer')->createQueryBuilder('u');
+        $answered = $answered->select('count(u.id)')->where('u.attempt='.$attempt->getId())->getQuery()->getSingleScalarResult();
+        $answered = (int)$answered;
+
+        $quest_repo = $em->getRepository('AppBundle:Question');
+        $questions_count = $quest_repo->createQueryBuilder('q')
+            ->select('count(q.id)')
+            ->where('q.quiz='.$attempt->getSession()->getQuiz()->getId())
+            ->getQuery()->getSingleScalarResult();
+
         $encoders = array(new XmlEncoder(), new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
 
@@ -62,6 +72,8 @@ class DefaultController extends SystemController
             'question' => $attempt->getQuestion()->getQuestion(),
             'answers'=>$answers_json,
             'attempt'=>$attempt->getId(),
+            'questions_count'=>$questions_count,
+            'answered'=>$answered,
             'image'=>$image_url,
         ));
 

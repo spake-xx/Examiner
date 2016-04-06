@@ -69,6 +69,9 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
                 if(response.data!=false) {
                     $scope.answers = response.data.answers;
                     $scope.question = response.data.question;
+                    $scope.answered = response.data.answered;
+                    $scope.questions_count = response.data.questions_count;
+
                     if(response.data.image){
                         $scope.image = response.data.image;
                     }else{
