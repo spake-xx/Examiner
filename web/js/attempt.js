@@ -20,7 +20,7 @@ angular.module('myApp', []).controller('attempt', function ($scope, $http, $inte
         $http.post('/attempt/ajax/question/', {'attempt':$scope.attempt, 'question':question})
             .then(function(response){
                 $scope.answers = response.data.answers;
-                $scope.user_answers = response.data.user_answers;
+                //$scope.user_answers = response.data.user_answers;
                 $scope.image = response.data.image;
                 $scope.result = response.data.result;
                 $scope.question = response.data.question;

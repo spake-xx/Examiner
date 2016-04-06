@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -55,7 +56,7 @@ class QuizController extends Controller
 		$question = new Question();
 
 		$form = $this->createFormBuilder($question)
-					->add('question', TextType::class)
+					->add('question', TextareaType::class)
 					->add('save', SubmitType::class, array('label'=>'Dodaj'))
 					->getForm();
 
@@ -111,7 +112,7 @@ class QuizController extends Controller
 
 		$question_new = new Question();
 		$formq = $this->get('form.factory')->createNamedBuilder('question', FormType::class, $question_new)
-			->add('question', TextType::class)
+			->add('question', TextareaType::class)
 			->add('save', SubmitType::class, array('label'=>'Dodaj'))
 			->getForm();
 		$formq->handleRequest($request);
@@ -191,7 +192,7 @@ class QuizController extends Controller
 
 		$question_new = new Question();
 		$formq = $this->createFormBuilder($question_new)
-			->add('question', TextType::class)
+			->add('question', TextareaType::class)
 			->add('save', SubmitType::class, array('label'=>'Dodaj'))
 			->getForm();
 		$formq->handleRequest($request);
@@ -239,7 +240,7 @@ class QuizController extends Controller
 		$questions = $em->getRepository('AppBundle:Question')->findByQuiz($quiz);
 
 		$editQuestionName = $this->createFormBuilder($question)
-			->add('question')
+			->add('question', TextareaType::class)
 			->add('save', SubmitType::class)
 			->getForm();
 		$editQuestionName->handleRequest($request);
@@ -253,7 +254,7 @@ class QuizController extends Controller
 
 		$question_new = new Question();
 		$formq = $this->createFormBuilder($question_new)
-			->add('question', TextType::class)
+			->add('question', TextareaType::class)
 			->add('save', SubmitType::class, array('label'=>'Dodaj'))
 			->getForm();
 		$formq->handleRequest($request);

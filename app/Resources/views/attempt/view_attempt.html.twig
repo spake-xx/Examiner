@@ -32,11 +32,18 @@
                 <div class="alert alert-info alert-own" ng-if="!question">Choose a question from the list</div>
                 <ul class="list-group list-group-own" ng-if="question">
                     <img src="/{{ '{{ image }}' }}" class="img-responsive" alt="img" ng-if="image != null"/>
-                    <div ng-repeat="answer in answers" >
-                        <li class="list-group-item list-group-item-success" ng-if="question.answer == answer.answer && answer.points > 0">{{ '{{ answer.answer }}' }}</li>
-                        <li class="list-group-item list-group-item-danger" ng-if="question.answer == answer.answer && answer.points == 0">{{ '{{ answer.answer }}' }}</li>
-                        <li class="list-group-item list-group-item-success" ng-if="question.answer != answer.answer && answer.points > 0">{{ '{{ answer.answer }}' }}</li>
-                        <li class="list-group-item" ng-if="question.answer != answer.answer && answer.points == 0">{{ '{{ answer.answer }}' }}</li>
+                    <div ng-repeat="answer in answers">
+                        <div ng-repeat="user in user_answers">
+                            <div ng-if="answer.question.id == user.answer.question.id">
+                                <li class="list-group-item list-group-item-success" ng-if="answer.id == user.answer.id && user.answer.points > 0" >{{ '{{ answer.answer }}' }}</li>
+                                <li class="list-group-item list-group-item-danger" ng-if="answer.id == user.answer.id && user.answer.points == 0">{{ '{{ answer.answer }}' }}</li>
+                                <li class="list-group-item list-group-item-info" ng-if="answer.id != user.answer.id && answer.points > 0">{{ '{{ answer.answer }}' }}</li>
+                                <li class="list-group-item" ng-if="answer.id != user.answer.id && answer.points == 0">{{ '{{ answer.answer }}' }}</li>
+                            </div>
+                            {#<div ng-if="answer != user.answer">#}
+                                {#<li class="list-group-item">{{ '{{ answer.answer }}' }}</li>#}
+                            {#</div>#}
+                        </div>
                     </div>
                 </ul>
             </div>
