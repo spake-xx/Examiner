@@ -55,6 +55,9 @@
         </div>
         <div class="col-md-8">
           <div class="well well-own">
+            {% if image %}
+            <img class="img-responsive" href="/{{ image }}" alt="img" />
+            {% endif %}
             <h2>{{ question.question }}<a class="btn btn-primary btn-sm pull-right" data-toggle="collapse" data-target="#addimg">Dodaj zdjęcie</a> <a href="{{ path('editQuestionName',{'question':question.id}) }}"><i class="pull-right fa fa-pencil"></i></a><a href="{{ path('removeQuestion',{'question':question.id}) }}"> <i class="pull-right fa fa-remove"></i></a></h2>
             {{ form_start(add_image) }}
 

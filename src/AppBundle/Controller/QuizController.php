@@ -36,6 +36,7 @@ class QuizController extends Controller
 		$form->handleRequest($request);
 
 		if($form->isValid()){
+			$quiz->setEnabled(1);
 			$em->persist($quiz);
 			$em->flush();
 			return $this->redirect('/quiz/edit/'.$quiz->getId());
@@ -94,8 +95,13 @@ class QuizController extends Controller
 		$answers = $em->getRepository('AppBundle:Answer')->findByQuestion($question);
 		$quiz = $question->getQuiz();
 		$questions = $em->getRepository('AppBundle:Question')->findByQuiz($quiz);
+		$image = $em->getRepository('AppBundle:QuestionImage')->findOneByQuestion($question);
+		if($image){
+			$image=$image->getWebPath();
+		}
 
 		$answer = new Answer();
+		$answer->setEnabled(1);
 		$answer->setQuestion($question);
 
 		$form = $this->get('form.factory')->createNamedBuilder('answer', FormType::class, $answer)
@@ -117,6 +123,7 @@ class QuizController extends Controller
 			->getForm();
 		$formq->handleRequest($request);
 		if($formq->isValid()) {
+			$question_new->setEnabled(1);
 			$question_new->setQuiz($quiz);
 			$em->persist($question_new);
 			$em->flush();
@@ -148,6 +155,7 @@ class QuizController extends Controller
 			'add_answer'=>$form->createView(),
 			'add_question'=>$formq->createView(),
 			'add_image'=>$formfile->createView(),
+			'image'=>$image,
 		));
 	}
 
@@ -183,6 +191,7 @@ class QuizController extends Controller
 			->getForm();
 		$form->handleRequest($request);
 		if($form->isValid()){
+			$answer->setEnabled(1);
 			$em->persist($answer);
 			$em->flush();
 			return $this->redirectToRoute('editQuestion', array(
@@ -198,6 +207,7 @@ class QuizController extends Controller
 		$formq->handleRequest($request);
 		if($formq->isValid()) {
 			$question_new->setQuiz($quiz);
+			$question_new->setEnabled(1);
 			$em->persist($question_new);
 			$em->flush();
 			return $this->redirectToRoute('editQuestion', array(
@@ -223,7 +233,8 @@ class QuizController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$answer = $em->getRepository('AppBundle:Answer')->find($answer);
 		$question = $answer->getQuestion()->getId();
-		$em->remove($answer);
+		$answer->setEnabled(0);
+		$em->persist($answer);
 		$em->flush();
 		return $this->redirectToRoute('editQuestion', array(
 			'question'=>$question,
@@ -260,6 +271,7 @@ class QuizController extends Controller
 		$formq->handleRequest($request);
 		if($formq->isValid()) {
 			$question_new->setQuiz($quiz);
+			$question_new->setEnabled(1);
 			$em->persist($question_new);
 			$em->flush();
 			return $this->redirectToRoute('editQuestion', array(
@@ -287,9 +299,11 @@ class QuizController extends Controller
 		$len=count($answers);
 		for($i=0;$i<$len;$i++)
 		{
-			$em->remove($answers[$i]);
+			$answers[$i]->setEnabled(0);
+			$em->persist($answers[$i]);
 		}
-		$em->remove($question);
+		$question->setEnabled(0);
+		$em->persist($question);
 		$em->flush();
 		return $this->redirectToRoute('editQuiz', array(
 			'id'=>$question->getQuiz()->getId(),

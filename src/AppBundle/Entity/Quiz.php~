@@ -27,6 +27,11 @@ class Quiz
      */
     protected $teacher;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $enabled;
+
     protected $maxpoints;
 
     /**
