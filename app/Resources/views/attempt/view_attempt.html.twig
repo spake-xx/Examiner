@@ -37,7 +37,7 @@
                             <div ng-if="answer.question.id == user.answer.question.id">
                                 <li class="list-group-item list-group-item-success" ng-if="answer.id == user.answer.id && user.answer.points > 0" >{{ '{{ answer.answer }}' }}</li>
                                 <li class="list-group-item list-group-item-danger" ng-if="answer.id == user.answer.id && user.answer.points == 0">{{ '{{ answer.answer }}' }}</li>
-                                <li class="list-group-item list-group-item-info" ng-if="answer.id != user.answer.id && answer.points > 0">{{ '{{ answer.answer }}' }}</li>
+                                <li class="list-group-item list-group-item-success" ng-if="answer.id != user.answer.id && answer.points > 0">{{ '{{ answer.answer }}' }}</li>
                                 <li class="list-group-item" ng-if="answer.id != user.answer.id && answer.points == 0">{{ '{{ answer.answer }}' }}</li>
                             </div>
                             {#<div ng-if="answer != user.answer">#}
