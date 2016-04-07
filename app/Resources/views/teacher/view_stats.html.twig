@@ -27,7 +27,7 @@
             {% set lp = lp + 1 %}
         {% endfor %}
         <tr>
-            <td colspan="4" class="text-right"><h4>Średnia: {{ (p/lp*100)|round(2) }}%</h4></td>
+            <td colspan="4" class="text-right"><h4>Średnia: {{ (p/(lp-1)*100)|round(2) }}%</h4></td>
         </tr>
     </table>
 {% endblock %}
