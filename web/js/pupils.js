@@ -41,10 +41,13 @@ angular.module('teacher').controller('pupils', function ($scope, $http, $interva
         $scope.attempt = attempt;
         //attempt = attempt;
         getQuestions($scope.attempt);
-        $interval(getQuestions, 2000);
+        //$interval(getQuestions, 2000);
 
     };
-
+    $scope.refreshQuestions = function(attempt){
+        $scope.attempt = attempt;
+        getQuestions($scope.attempt);
+    };
     //tutaj defaultowe wartości
 
     //$scope.question = "Choose a question from the list on the right";
