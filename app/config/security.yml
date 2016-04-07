@@ -25,6 +25,7 @@ security:
             form_login:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
+                default_target_path: /redirect
                 # if you are using Symfony < 2.8, use the following config instead:
                 # csrf_provider: form.csrf_provider
 
@@ -45,3 +46,4 @@ security:
         - { path: ^/pupil/, role: ROLE_PUPIL }
         - { path: ^/teacher/, role: ROLE_TEACHER }
         - { path: ^/ajax/, role: ROLE_PUPIL }
+        - { path: ^/q/, role: ROLE_PUPIL }
