@@ -20,11 +20,12 @@ angular.module('myApp', []).controller('attempt', function ($scope, $http, $inte
         $http.post('/attempt/ajax/question/', {'attempt':$scope.attempt, 'question':question})
             .then(function(response){
                 $scope.answers = response.data.answers;
-                //$scope.user_answers = response.data.user_answers;
+                //$scope.users = response.data.user_answers;
                 $scope.image = response.data.image;
                 //$scope.result = response.data.result;
                 $scope.question = response.data.question;
-                //console.log(response.data.image);
+                //console.log(response.data.answers);
+                console.log(response.data.user_answers);
         },function(response){
             alert(response.data);
         });
@@ -39,7 +40,7 @@ angular.module('myApp', []).controller('attempt', function ($scope, $http, $inte
           //$scope.answers = response.data.answers;
           $scope.result =  response.data.result;
           $scope.user_answers = response.data.user_answers;
-          console.log(response.data.user_answers);
+          //console.log(response.data.user_answers);
           //$scope.question_image = response.data.question_image;
           //console.log(response.data.result);
       }, function(response){

@@ -86,7 +86,7 @@ class GradeController extends Controller{
             $user->setRoles(array('ROLE_PUPIL'));
             $user->setGrade($grade);
             $userManager->updateUser($user);
-            $this->addFlash('notice', 'Your account has been successfully registered, now you can log in ;)');
+            $this->addFlash('notice', 'Twoje konto zostało pomyslnie zarejestrowane, teraz możesz sie zalogować ;)');
             return $this->redirectToRoute('fos_user_security_login');
         }
 

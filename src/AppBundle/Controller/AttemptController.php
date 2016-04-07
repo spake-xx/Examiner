@@ -29,6 +29,7 @@ class AttemptController extends Controller
         $attempt = $em->getRepository('AppBundle:Attempt')->find($attempt);
         $result = $em->getRepository('AppBundle:Result')->find($attempt);
         $user_answers = $em->getRepository('AppBundle:UserAnswer')->findByAttempt($attempt);
+
         $answers = $em->getRepository('AppBundle:Answer')->findAll();
 //        $question_image = $em->getRepository('AppBundle:QuestionImage')->findAll();
 
