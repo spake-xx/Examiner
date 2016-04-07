@@ -31,7 +31,7 @@ angular.module('teacher').controller('pupils', function ($scope, $http, $interva
             $scope.modal_attempt = attempt;
             //$scope.modal_content = response.data;
             $scope.modal_username = username;
-        setAttempt(attempt);
+            setAttempt(attempt);
 
             //console.log(response.data);
       //});

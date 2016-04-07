@@ -35,7 +35,7 @@
                 <div class="col-sm-4 well">
                     <h2>{{ '{{ pupil.user.username }}' }}</h2>
                     Thinks about {{ '{{ pupil.answered+1 }}' }}. question.
-                    <button type="button" class="fa  fa-search" data-toggle="modal" data-target="#myModal" ng-click="getAttemptView(result.attempt.id, result.attempt.user.username)"> Podgląd</button>
+                    <button type="button" class="fa  fa-search" data-toggle="modal" data-target="#myModal" ng-click="getAttemptView(pupil.id, pupil.user.username)"> Podgląd</button>
                 </div>
             </div>
         </div>
