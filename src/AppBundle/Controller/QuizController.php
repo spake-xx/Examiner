@@ -280,7 +280,12 @@ class QuizController extends Controller
 			}
 			$em->persist($answer);
 			$em->flush();
-			$answers = $em->getRepository('AppBundle:Answer')->findByQuestion($question);
+			$answers = $em->getRepository('AppBundle:Answer')->createQueryBuilder('a');
+			$answers = $answers
+				->where('a.question='.$question->getId())
+				->andWhere('a.enabled = 1')
+				->getQuery()
+				->getResult();
 		}
 
 		return $this->render('teacher/edit_answer.html.twig', array(
