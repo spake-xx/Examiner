@@ -42,7 +42,7 @@
                 <div class="col-sm-4 well">
                     <h2>{{ '{{ pupil.user.firstname }} {{ pupil.user.lastname }}' }}</h2>
                     <h4>Myśli nad {{ '{{ pupil.answered+1 }}' }}. pytaniem.</h4>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" ng-click="getAttemptView(pupil.id, pupil.user.firstname, pupil.user.lastname, result.attempt.user.grade.name)"><i class="fa fa-search"></i> Podgląd</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" ng-click="getAttemptView(pupil.id, pupil.user.firstname, pupil.user.lastname, pupil.user.grade.name)"><i class="fa fa-search"></i> Podgląd</button>
                 </div>
             </div>
         </div>
@@ -78,7 +78,7 @@
                             {#</div>#}
                             <div class="col-md-6">
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">Questions</div>
+                                    <div class="panel-heading">Pytania</div>
                                     <div class="panel-body panel-own">
                                         <ul class="list-group list-group-own pytania">
 
