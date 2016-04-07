@@ -69,7 +69,7 @@
                                         <td>{{ answer.answer }}</td>
                                         <td>{% if answer.points>0 %}<i class="fa fa-check"></i> {{ answer.points }} pkt.{% endif %}</td>
                                         <td><a href="{{ path('editAnswer', {'answer':answer.id}) }}"><i class="fa fa-pencil"></i></a></td>
-                                        <td>TO DO</td>
+                                        <td><i class="fa fa-remove"></i></td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
