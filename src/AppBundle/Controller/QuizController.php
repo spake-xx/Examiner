@@ -96,7 +96,7 @@ class QuizController extends Controller
 		$answers = $em->getRepository('AppBundle:Answer')->createQueryBuilder('a');
 		$answers = $answers
 			->where('a.question='.$question->getId())
-			->andWhere('a.enabled != 0')
+			->andWhere('a.enabled = 1')
 			->getQuery()
 			->getResult();
 		$quiz = $question->getQuiz();
@@ -109,7 +109,7 @@ class QuizController extends Controller
 		$correct = $correct
 			->where('c.points > 0')
 			->andWhere('c.question='.$question->getId())
-			->andWhere('c.enabled != 0')
+			->andWhere('c.enabled = 1')
 			->getQuery()
 			->getResult();
 		$answer = new Answer();
@@ -187,7 +187,12 @@ class QuizController extends Controller
 			}
 			$em->persist($answer);
 			$em->flush();
-			$answers = $em->getRepository('AppBundle:Answer')->findByQuestion($question);
+			$answers = $em->getRepository('AppBundle:Answer')->createQueryBuilder('a');
+			$answers = $answers
+				->where('a.question='.$question->getId())
+				->andWhere('a.enabled = 1')
+				->getQuery()
+				->getResult();
 		}
 
 		return $this->render('teacher/edit_question.html.twig', array(
