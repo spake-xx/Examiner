@@ -62,6 +62,39 @@ class AttemptController extends Controller
 //            'question_image'=>$question_image,
         ));
     }
+    /**
+     * @Route("/attempt/ajax/attempt/")
+     */
+    public function attemptGetAttempt()
+    {
+        $attempt = json_decode(file_get_contents('php://input'),true);
+        $em = $this->getDoctrine()->getManager();
+        $attempt = $em->getRepository('AppBundle:Attempt')->find($attempt);
+        $result = $em->getRepository('AppBundle:Result')->findByAttempt($attempt);
+        $user_answers = $em->getRepository('AppBundle:UserAnswer')->findByAttempt($attempt);
+        $answers = $em->getRepository('AppBundle:Answer')->findAll();
+        $question_image = $em->getRepository('AppBundle:QuestionImage')->findAll();
+
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $attempt = $serializer->normalize($attempt, 'json');
+        $result = $serializer->normalize($result, 'json');
+        $user_answers = $serializer->normalize($user_answers, 'json');
+        $answers = $serializer->normalize($answers, 'json');
+        $question_image = $serializer->normalize($question_image, 'json');
+
+        $response = new JsonResponse();
+        $response->setData(array(
+            'attempt'=>$attempt,
+            'result'=>$result,
+            'user_answers'=>$user_answers,
+//            'answers'=>$answers,
+//            'question_image'=>$question_image,
+        ));
+        return $response;
+    }
 
 
 
@@ -74,16 +107,13 @@ class AttemptController extends Controller
     {
         $dane = json_decode(file_get_contents('php://input'),true);
         $em = $this->getDoctrine()->getManager();
-
         $question = $em->getRepository('AppBundle:Question')->find($dane['question']);
         $attempt = $em->getRepository('AppBundle:Attempt')->find($dane['attempt']);
-
 //        $question = $em->getRepository('AppBundle:Question')->find($question);
         $image = $em->getRepository('AppBundle:QuestionImage')->findOneByQuestion($question);
         $result = $em->getRepository('AppBundle:Result')->find($attempt);
         $user_answers = $em->getRepository('AppBundle:UserAnswer')->findByAttempt($attempt);
         $answers = $em->getRepository('AppBundle:Answer')->findByQuestion($question);
-
         $encoders = array(new XmlEncoder(), new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
         $serializer = new Serializer($normalizers, $encoders);
@@ -95,7 +125,6 @@ class AttemptController extends Controller
         $result = $serializer->normalize($result, 'json');
         $user_answers = $serializer->normalize($user_answers, 'json');
         $answers = $serializer->normalize($answers, 'json');
-
         $response = new JsonResponse();
         $response->setData(array(
             'question'=>$question,
@@ -106,5 +135,6 @@ class AttemptController extends Controller
         ));
         return $response;
     }
+
 }
 ?>

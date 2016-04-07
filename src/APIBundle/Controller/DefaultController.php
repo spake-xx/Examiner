@@ -250,41 +250,6 @@ class DefaultController extends SystemController
         return $response;
     }
 
-    /**
-     * @Route("/attempt/ajax/attempt/")
-     */
-    public function attemptGetAttempt()
-    {
-        $attempt = json_decode(file_get_contents('php://input'),true);
-        $em = $this->getDoctrine()->getManager();
-        $attempt = $em->getRepository('AppBundle:Attempt')->find($attempt);
-        $result = $em->getRepository('AppBundle:Result')->findByAttempt($attempt);
-        $user_answers_repo = $em->getRepository('AppBundle:UserAnswer');
-        $user_answers = $user_answers_repo->createQueryBuilder('u');
-        $user_answers = $user_answers
-//            ->select('a.question')->distinct()
-            ->where('u.attempt='.$attempt->getId())
-            ->innerJoin('u.answer', 'a')
-            ->groupBy('a.question')
-            ->getQuery()
-            ->getResult();
 
-
-        $encoders = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $serializer = new Serializer($normalizers, $encoders);
-
-        $attempt = $serializer->normalize($attempt, 'json');
-        $result = $serializer->normalize($result, 'json');
-        $user_answers = $serializer->normalize($user_answers, 'json');
-
-        $response = new JsonResponse();
-        $response->setData(array(
-            'attempt'=>$attempt,
-            'result'=>$result,
-            'user_answers'=>$user_answers,
-        ));
-        return $response;
-    }
 
 }
