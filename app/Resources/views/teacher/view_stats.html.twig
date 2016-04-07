@@ -1,0 +1,33 @@
+{% extends 'teacher_base.html.twig' %}
+{% block heading %}
+    {{ session.quiz.name }}  - Statystyki sesji
+{% endblock %}
+{% block content %}
+    <table class="table table-hover table-stripped">
+        <tr>
+            <th>LP</th>
+            <th>Uczeń</th>
+            <th>Ilość punktów</th>
+            <th>Procent</th>
+        </tr>
+        {% set lp = 1 %}
+        {% set p = 0 %}
+        {% for a in attempt %}
+            {% for r in result %}
+                {% if r.attempt == a %}
+        <tr>
+            <td>{{ lp }}</td>
+            <td>{{ a.user.lastname }} {{ a.user.firstname }}</td>
+            <td>{{ r.points }}/{{ r.maxPoints }}</td>
+            <td>{{ (r.points/r.maxPoints*100)|round(2) }}%</td>
+        </tr>
+                    {% set p = p + r.points/r.maxPoints %}
+                {% endif %}
+            {% endfor %}
+            {% set lp = lp + 1 %}
+        {% endfor %}
+        <tr>
+            <td colspan="4" class="text-right"><h4>Średnia: {{ (p/lp*100)|round(2) }}%</h4></td>
+        </tr>
+    </table>
+{% endblock %}
