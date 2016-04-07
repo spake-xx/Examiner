@@ -62,6 +62,7 @@ class AttemptController extends Controller
 //            'question_image'=>$question_image,
         ));
     }
+
     /**
      * @Route("/attempt/ajax/attempt/")
      */

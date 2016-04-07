@@ -93,7 +93,12 @@ class QuizController extends Controller
 	public function editQuestionAction(Request $request, $question){
 		$em = $this->getDoctrine()->getManager();
 		$question = $em->getRepository('AppBundle:Question')->find($question);
-		$answers = $em->getRepository('AppBundle:Answer')->findByQuestion($question);
+		$answers = $em->getRepository('AppBundle:Answer')->createQueryBuilder('a');
+		$answers = $answers
+			->where('a.question='.$question->getId())
+			->andWhere('a.enabled = 1')
+			->getQuery()
+			->getResult();
 		$quiz = $question->getQuiz();
 		$questions = $em->getRepository('AppBundle:Question')->findByQuiz($quiz);
 		$image = $em->getRepository('AppBundle:QuestionImage')->findOneByQuestion($question);
@@ -104,6 +109,7 @@ class QuizController extends Controller
 		$correct = $correct
 			->where('c.points > 0')
 			->andWhere('c.question='.$question->getId())
+			->andWhere('c.enabled = 1')
 			->getQuery()
 			->getResult();
 		$answer = new Answer();
@@ -181,7 +187,12 @@ class QuizController extends Controller
 			}
 			$em->persist($answer);
 			$em->flush();
-			$answers = $em->getRepository('AppBundle:Answer')->findByQuestion($question);
+			$answers = $em->getRepository('AppBundle:Answer')->createQueryBuilder('a');
+			$answers = $answers
+				->where('a.question='.$question->getId())
+				->andWhere('a.enabled = 1')
+				->getQuery()
+				->getResult();
 		}
 
 		return $this->render('teacher/edit_question.html.twig', array(
@@ -219,22 +230,26 @@ class QuizController extends Controller
 //		if($form->isValid()){
 //			$em->persist($answer);
 //			$em->flush();
-		$answers = $em->getRepository('AppBundle:Answer')->findByQuestion($question);
-//		}
+		$answers = $em->getRepository('AppBundle:Answer')->createQueryBuilder('a');
+		$answers = $answers
+			->where('a.question='.$question->getId())
+			->andWhere('a.enabled != 0')
+			->getQuery()
+			->getResult();
+		$correct = $em->getRepository('AppBundle:Answer')->createQueryBuilder('c');
+		$correct = $correct
+			->where('c.points > 0')
+			->andWhere('c.question='.$question->getId())
+			->andWhere('c.enabled != 0')
+			->getQuery()
+			->getResult();
 		$form = $this->createFormBuilder($answer)
 			->add('answer')
 			->add('points')
 			->add('save', SubmitType::class)
 			->getForm();
 		$form->handleRequest($request);
-		if($form->isValid()){
-			$answer->setEnabled(1);
-			$em->persist($answer);
-			$em->flush();
-			return $this->redirectToRoute('editQuestion', array(
-				'question'=>$answer->getQuestion()->getId(),
-			));
-		}
+
 
 		$question_new = new Question();
 		$formq = $this->createFormBuilder($question_new)
@@ -250,6 +265,27 @@ class QuizController extends Controller
 			return $this->redirectToRoute('editQuestion', array(
 				'question'=>$question_new->getId(),
 			));
+		}
+		if($form->isValid()){
+			if($answer->getPoints()>=1 && $correct){
+				$this->addFlash('notice','W tym pytaniu istnieje już poprawna odpowiedź!');
+				return $this->render('teacher/edit_answer.html.twig', array(
+					'question' => $question,
+					'questions' => $questions,
+					'quiz' => $quiz,
+					'answers'=>$answers,
+					'edit_answer'=>$form->createView(),
+					'add_question'=>$formq->createView(),
+				));
+			}
+			$em->persist($answer);
+			$em->flush();
+			$answers = $em->getRepository('AppBundle:Answer')->createQueryBuilder('a');
+			$answers = $answers
+				->where('a.question='.$question->getId())
+				->andWhere('a.enabled = 1')
+				->getQuery()
+				->getResult();
 		}
 
 		return $this->render('teacher/edit_answer.html.twig', array(
