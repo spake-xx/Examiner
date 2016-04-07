@@ -13,9 +13,9 @@
                     {#<li ng-repeat="user_answer in user_answers" ng-click="getQuestion(user_answer.answer.question.id)" ng-if="user_answer.answer.question.id != question.id" class="list-group-item">#}
                     <div  ng-repeat="user_answer in user_answers">
                         <li ng-click="getQuestion(user_answer.answer.question.id)" ng-if="user_answer.answer.question.id != question.id" class="list-group-item">
-                        <i class="fa fa-check" ng-if="user_answer.answer.points > 0"></i>
-                        <i class="fa fa-times" ng-if="user_answer.answer.points == 0"></i>
-                        {{ '{{ user_answer.answer.question.question | limitTo:40 }}{{ user_answer.answer.question.question.length > 40 ? "..." : "" }}' }}</li>
+                            <i class="fa fa-check" ng-if="user_answer.answer.points > 0"></i>
+                            <i class="fa fa-times" ng-if="user_answer.answer.points == 0"></i>
+                            {{ '{{ user_answer.answer.question.question | limitTo:40 }}{{ user_answer.answer.question.question.length > 40 ? "..." : "" }}' }}</li>
                         <li ng-click="getQuestion(user_answer.answer.question.id)" ng-if="user_answer.answer.question.id == question.id" class="list-group-item active">
                             <i class="fa fa-check" ng-if="user_answer.answer.points > 0"></i>
                             <i class="fa fa-times" ng-if="user_answer.answer.points == 0"></i>
@@ -41,7 +41,7 @@
                                 <li class="list-group-item" ng-if="answer.id != user.answer.id && answer.points == 0">{{ '{{ answer.answer }}' }}</li>
                             </div>
                             {#<div ng-if="answer != user.answer">#}
-                                {#<li class="list-group-item">{{ '{{ answer.answer }}' }}</li>#}
+                            {#<li class="list-group-item">{{ '{{ answer.answer }}' }}</li>#}
                             {#</div>#}
                         </div>
                     </div>
@@ -50,3 +50,8 @@
         </div>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+<script src="//code.angularjs.org/1.2.20/angular-sanitize.min.js"></script>
+<script src="{{ asset('js/module.js') }}"></script>
+<script src="{{ asset('js/pupils.js') }}"></script>
+<script src="{{ asset('js/teacher_attempt.js') }}"></script>

@@ -1,13 +1,22 @@
-{#{% extends "FOSUserBundle::layout.html.twig" %}#}
+{% extends "::base.html.twig" %}
 
 {% trans_default_domain 'FOSUserBundle' %}
 
 {#{% block fos_user_content %}#}
-    {{ render(controller(
-    'AppBundle:Teacher:teacherIndex'
-    )) }}
+    {#{{ render(controller(#}
+    {#'AppBundle:Teacher:teacherIndex'#}
+    {#)) }}#}
     {#<p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>#}
     {#{% if targetUrl %}#}
     {#<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>#}
     {#{% endif %}#}
 {#{% endblock fos_user_content %}#}
+{% block body %}
+<div class="container">
+    <div class="well text-center">
+        <div><i class="fa fa-check fa-5x" style="color:lightgreen"></i></div>
+        <h3>Rejestracja pomyślna</h3>
+        <div><a href="{{ path('teacher_index') }}">Przejdź do panelu</a></div>
+    </div>
+</div>
+{% endblock %}
