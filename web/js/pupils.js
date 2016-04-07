@@ -48,7 +48,7 @@ angular.module('teacher').controller('pupils', function ($scope, $http, $interva
         $scope.attempt = attempt;
         //attempt = attempt;
         getQuestions($scope.attempt);
-        $interval(getQuestions, 1000);
+        $interval(getQuestions, 2000);
 
     };
 
@@ -66,7 +66,7 @@ angular.module('teacher').controller('pupils', function ($scope, $http, $interva
                 //$scope.result = response.data.result;
                 $scope.question = response.data.question;
                 console.log(response.data.question);
-                $interval(getQuestion, 1000);
+                //$interval(getQuestion, 1000);
             },function(response){
                 alert(response.data);
             });
