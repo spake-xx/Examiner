@@ -31,7 +31,7 @@
                         {% endif %}
                     </div>
                     <div class="col-md-6">
-                        {{ form_widget(form.username, { 'attr': {'placeholder': 'username', 'class':'form-control'} }) }}
+                        {{ form_widget(form.username, { 'attr': {'placeholder': 'Nazwa użytkownika', 'class':'form-control'} }) }}
                         {% if form_errors(form.username) %}
                             <div class="alert alert-danger">{{ form_errors(form.username) }}</div>
                         {% endif %}
