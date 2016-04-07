@@ -9,6 +9,7 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
     $scope.ile = 1;
 
     $scope.$on('timer-tick', function (event, data) {
+
         client_time = data.millis / 1000;
         $scope.checkTime($scope.attempt);
         console.log(server_time);
@@ -59,7 +60,8 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
                 $('#spinner').hide();
                 window.location.assign('/quiz/result/'+$scope.attempt)
             },function(response){
-                alert("Wystąpił błąd.");
+                alert("Wystąpił błąd w trakcie kończenia sprawdzianu(endQuiz())! Serwer zwrócił błąd");
+                console.log('BŁĄD:'.response);
             });
     }
 
@@ -77,7 +79,7 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
                     }else{
                         $scope.image = null;
                     }
-                    $scope.user_answer.attempt = response.data.attempt;
+                    //$scope.user_answer.attempt = response.data.attempt;
                 }else{
                     endQuiz();
                 }
@@ -85,7 +87,6 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
     }
 
     $scope.user_answer = {
-        id: null
     }
 
     $scope.checkImg = function(){
@@ -95,19 +96,24 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
         return 0;
     }
 
-    $scope.send = function(data){
-        if(!data.id){
+    $scope.send = function(answer){
+        if(!answer){
             $scope.bsAlert.msg = "Zaznacz odpowiedź !";
             return 0;
+        }
+        data = {
+            answer: answer,
+            attempt: $scope.attempt
         }
         $('#spinner').show();
         $scope.bsAlert.msg = null;
         $http.post('/ajax/sendAnswer/', data)
             .then(function(response){
                 $('#spinner').hide();
-                $scope.user_answer.id = null;
+                $scope.user_answer = null;
                 $scope.getAnswer();
             },function(response){
+                console.log(response);
                 $('#spinner').hide();
             });
     }
@@ -115,6 +121,10 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
     $scope.bsAlert = {
         msg: null
     }
+
+    $scope.random = function(){
+        return 0.5 - Math.random();
+    };
 
 });
 

@@ -3,9 +3,10 @@ angular.module('teacher').controller('pupils', function ($scope, $http, $interva
     $scope.pupils_logged = [];
     $scope.pupils_ended = [];
     $scope.session = null;
+    $scope.time = null;
 
     refreshPupils = function(){
-        data = {session:$scope.session}
+        data = {session:$scope.session, time:$scope.time}
         $http.post('/API/session/getPupils/', data)
             .then(function(response){
                 $scope.pupils_logged = response.data.pupils_logged;
@@ -21,10 +22,16 @@ angular.module('teacher').controller('pupils', function ($scope, $http, $interva
         return !($scope.pupils_ended.length > 0);
     }
 
-    $scope.setSession = function(session){
+    $scope.setSession = function(session, time){
         $scope.session = session;
+        $scope.time = time;
         refreshPupils();
-        $interval(refreshPupils, 2500);
+        $interval(refreshPupils, 800);
+    }
+
+    $scope.setTime = function(time){
+        $scope.time = time;
+        refreshPupils();
     }
     $scope.getAttemptView = function(attempt, username){
       //$http.get('/attempt/view/teacher_attempt/'+attempt).then(function(response){

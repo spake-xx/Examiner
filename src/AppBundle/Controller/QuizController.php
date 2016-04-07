@@ -39,7 +39,7 @@ class QuizController extends Controller
 			$quiz->setEnabled(1);
 			$em->persist($quiz);
 			$em->flush();
-			return $this->redirect('/quiz/edit/'.$quiz->getId());
+			return $this->redirectToRoute('editQuiz', array('id'=>$quiz->getId()));
 		}
 
 		return $this->render('teacher/new_quiz.html.twig',array(

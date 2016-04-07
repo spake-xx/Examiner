@@ -42,6 +42,7 @@ class DefaultController extends SystemController
         $query = $answers->createQueryBuilder('a')
 								->where('a.question='.$attempt->getQuestion()->getId())->getQuery();
         $answers = $query->getResult();
+        shuffle($answers);
 
         $image = $em->getRepository("AppBundle:QuestionImage")->findOneBy(array('question'=>$attempt->getQuestion()));
         if($image!=null) {
@@ -51,7 +52,12 @@ class DefaultController extends SystemController
         }
 
         $answered = $em->getRepository('AppBundle:UserAnswer')->createQueryBuilder('u');
-        $answered = $answered->select('count(u.id)')->where('u.attempt='.$attempt->getId())->getQuery()->getSingleScalarResult();
+        $answered = $answered
+            ->select('count(DISTINCT a.question)')
+            ->where('u.attempt='.$attempt->getId())
+            ->innerJoin('u.answer', 'a')
+            ->getQuery()
+            ->getSingleScalarResult();
         $answered = (int)$answered;
 
         $quest_repo = $em->getRepository('AppBundle:Question');
@@ -88,14 +94,15 @@ class DefaultController extends SystemController
         $dane = json_decode(file_get_contents('php://input'), true);
         $em = $this->getDoctrine()->getManager();
         $attempt = $em->getRepository('AppBundle:Attempt')->find($dane['attempt']);
-        $answer = $em->getRepository('AppBundle:Answer')->find($dane['id']);
 
-        $u_answer = new UserAnswer();
-        $u_answer->setAttempt($attempt);
-        $u_answer->setAnswer($answer);
-        $em->persist($u_answer);
-        $em->flush();
-
+        foreach($dane['answer'] as $k=>$v) {
+            $answer = $em->getRepository('AppBundle:Answer')->find($k);
+            $u_answer = new UserAnswer();
+            $u_answer->setAttempt($attempt);
+            $u_answer->setAnswer($answer);
+            $em->persist($u_answer);
+            $em->flush();
+        }
         $attempt->setQuestion(null);
         $em->flush();
 
@@ -118,6 +125,13 @@ class DefaultController extends SystemController
             ->where('a.session='.$dane['session'])
             ->andWhere('a.end IS NULL')
             ->getQuery()->getResult();
+
+        if($dane['time']) {
+            $session_repo = $em->getRepository('AppBundle:QuizSession');
+            $session = $session_repo->find($dane['session']);
+            $session->setTime($dane['time']);
+            $em->flush();
+        }
 
         foreach($pupils_logged as $k=>$v){
             $answered = $em->getRepository('AppBundle:UserAnswer')->createQueryBuilder('u');
@@ -244,9 +258,17 @@ class DefaultController extends SystemController
         $attempt = json_decode(file_get_contents('php://input'),true);
         $em = $this->getDoctrine()->getManager();
         $attempt = $em->getRepository('AppBundle:Attempt')->find($attempt);
-        $result = $em->getRepository('AppBundle:Result')->find($attempt);
-        $user_answers = $em->getRepository('AppBundle:UserAnswer')->findByAttempt($attempt);
-        $answers = $em->getRepository('AppBundle:Answer')->findAll();
+        $result = $em->getRepository('AppBundle:Result')->findByAttempt($attempt);
+        $user_answers_repo = $em->getRepository('AppBundle:UserAnswer');
+        $user_answers = $user_answers_repo->createQueryBuilder('u');
+        $user_answers = $user_answers
+//            ->select('a.question')->distinct()
+            ->where('u.attempt='.$attempt->getId())
+            ->innerJoin('u.answer', 'a')
+            ->groupBy('a.question')
+            ->getQuery()
+            ->getResult();
+
 
         $encoders = array(new XmlEncoder(), new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
@@ -255,14 +277,12 @@ class DefaultController extends SystemController
         $attempt = $serializer->normalize($attempt, 'json');
         $result = $serializer->normalize($result, 'json');
         $user_answers = $serializer->normalize($user_answers, 'json');
-        $answers = $serializer->normalize($answers, 'json');
 
         $response = new JsonResponse();
         $response->setData(array(
             'attempt'=>$attempt,
             'result'=>$result,
             'user_answers'=>$user_answers,
-            'answers'=>$answers,
         ));
         return $response;
     }

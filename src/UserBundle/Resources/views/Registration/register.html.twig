@@ -11,6 +11,20 @@
             {{ form_start(form) }}
                 <div class="row form-group">
                     <div class="col-md-6">
+                        {{ form_widget(form.firstname, { 'attr': {'placeholder': 'Imię', 'class':'form-control'} }) }}
+                        {% if form_errors(form.firstname) %}
+                            <div class="alert alert-danger">{{ form_errors(form.firstanem) }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_widget(form.lastname, { 'attr': {'placeholder': 'Nazwisko', 'class':'form-control'} }) }}
+                        {% if form_errors(form.lastname) %}
+                            <div class="alert alert-danger">{{ form_errors(form.lastname) }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-6">
                         {{ form_widget(form.email, { 'attr': {'placeholder': 'email', 'class':'form-control'} }) }}
                         {% if form_errors(form.email) %}
                             <div class="alert alert-danger">{{ form_errors(form.email) }}</div>
