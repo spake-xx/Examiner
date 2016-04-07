@@ -1,5 +1,5 @@
 {% extends 'pupil_base.html.twig' %}
-{% block heading %}Test overview - {{ attempt.session.quiz.name }}{% endblock %}
+{% block heading %}Podgląd odpowiedzi- {{ attempt.session.quiz.name }}{% endblock %}
 {% block content %}
     {% render(controller('AppBundle:Attempt:attemptView',{'attempt':attempt.id})) %}
 {% endblock %}

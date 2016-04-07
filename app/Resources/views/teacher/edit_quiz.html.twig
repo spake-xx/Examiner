@@ -24,11 +24,11 @@
               </div>
               <div class="panel panel-default">
                 <div class="panel-heading">
-                  <h3 class="panel-title text-center">Add question</h3>
+                  <h3 class="panel-title text-center">Dodaj pytanie</h3>
                 </div>
                 <div class="panel-body panel-own">
                   {{ form_start(add_question) }}
-                  {{ form_widget(add_question.question, { 'attr': {'class':'form-control', 'placeholder':'new question'} }) }}
+                  {{ form_widget(add_question.question, { 'attr': {'class':'form-control', 'placeholder':'Nowe pytanie'} }) }}
                   {{ form_widget(add_question.save, { 'attr': {'class':'btn btn-default btn-block'} }) }}
                   {{ form_widget(add_question._token) }}
                   {{ form_end(add_question) }}
@@ -39,7 +39,7 @@
           <div class="col-md-8">
             <div class="well well-own">
               <h2>{{ quiz.name }}</h2>
-              <p>select question to edit answers or add a one</p>
+              <p>Wybierz pytanie, aby edytować lub dodaj nowe.</p>
 
             </div>
           </div>
