@@ -55,6 +55,7 @@ class QuizController extends Controller
 		$quiz = $em->getRepository('AppBundle:Quiz')->find($id);
 
 		$question = new Question();
+		$question->setEnabled(1);
 
 		$form = $this->createFormBuilder($question)
 					->add('question', TextareaType::class)

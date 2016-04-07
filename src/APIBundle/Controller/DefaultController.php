@@ -60,6 +60,13 @@ class DefaultController extends SystemController
             ->getSingleScalarResult();
         $answered = (int)$answered;
 
+        $poprawne = $em->getRepository('AppBundle:Answer')->createQueryBuilder('a');
+        $poprawne = $poprawne
+            ->select('count(a.id)')
+            ->where('a.question='.$attempt->getQuestion()->getId())
+            ->andWhere('a.points>0')
+            ->getQuery()
+            ->getSingleScalarResult();
         $quest_repo = $em->getRepository('AppBundle:Question');
         $questions_count = $quest_repo->createQueryBuilder('q')
             ->select('count(q.id)')
@@ -81,6 +88,7 @@ class DefaultController extends SystemController
             'questions_count'=>$questions_count,
             'answered'=>$answered,
             'image'=>$image_url,
+            'poprawne'=>$poprawne,
         ));
 
         return $response;

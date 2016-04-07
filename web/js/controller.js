@@ -7,6 +7,7 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
 
     $scope.attempt = null;
     $scope.ile = 1;
+    $scope.poprawne = null;
 
     $scope.$on('timer-tick', function (event, data) {
 
@@ -73,7 +74,7 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
                     $scope.question = response.data.question;
                     $scope.answered = response.data.answered;
                     $scope.questions_count = response.data.questions_count;
-
+                    $scope.poprawne =  response.data.poprawne;
                     if(response.data.image){
                         $scope.image = response.data.image;
                     }else{
@@ -86,8 +87,7 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
             });
     }
 
-    $scope.user_answer = {
-    }
+    $scope.user_answer = null;
 
     $scope.checkImg = function(){
         if($scope.image != null){
@@ -97,12 +97,15 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
     }
 
     $scope.send = function(answer){
-        if(!answer){
+        ans = {};
+        ans[answer] = true;
+        console.log(ans);
+        if(answer==null){
             $scope.bsAlert.msg = "Zaznacz odpowiedź !";
             return 0;
         }
         data = {
-            answer: answer,
+            answer: ans,
             attempt: $scope.attempt
         }
         $('#spinner').show();
