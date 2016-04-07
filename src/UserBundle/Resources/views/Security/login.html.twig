@@ -11,6 +11,9 @@
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
+            {% for m in app.session.flashbag.get('notice') %}
+                <div class="alert alert-success">{{ m }}</div>
+            {% endfor %}
 
             <form action="{{ path("fos_user_security_check") }}" method="post">
                     <div class="row form-group">
