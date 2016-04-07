@@ -1,44 +1,5 @@
 {% extends 'pupil_base.html.twig' %}
 {% block heading %}Test overview - {{ attempt.session.quiz.name }}{% endblock %}
 {% block content %}
-    {#<table class="table table-hover table-stripped">#}
-        {#<tr>#}
-            {#<th>Pytanie</th>#}
-            {#<th>Odpowiedź</th>#}
-            {#<th>Poprawna</th>#}
-            {#<th>PKT</th>#}
-        {#</tr>#}
-        {#{% for user_answer in user_answers %}#}
-            {#<tr>#}
-                {#<td>{{ user_answer.answer.question.question }}</td>#}
-                {#{% if user_answer.answer.points != 0 %}#}
-                    {#<td class="text-success">{{ user_answer.answer.answer }}</td>#}
-                    {#<td class="text-success"><i class="fa fa-check-square-o"></i></td>#}
-                    {#<td class="text-success">{{ user_answer.answer.points }}</td>#}
-                {#{% else %}#}
-                    {#<td class="text-danger">{{ user_answer.answer.answer }}</td>#}
-                    {#<td class="text-danger"><i class="fa fa-minus-square-o"></i></td>#}
-                    {#<td class="text-danger">{{ user_answer.answer.points }}</td>#}
-                {#{% endif %}#}
-            {#<tr>#}
-                {#{% for answer in answers %}#}
-                    {#{% if answer.question.id == user_answer.answer.question.id %}#}
-                    {#<tr>#}
-                        {#<td></td>#}
-                        {#<td>{{ answer.answer }}</td>#}
-                        {#<td></td>#}
-                        {#<td>{{ answer.points }}</td>#}
-                        {#</tr>#}
-                    {#{% endif %}#}
-                {#{% endfor %}#}
-            {#</tr>#}
-            {#</tr>#}
-        {#{% endfor %}#}
-        {#<tr class="info">#}
-            {#<th colspan="2">Wynik</th>#}
-            {#<th>{{ result.points}}/{{ result.maxpoints }} pkt</th>#}
-            {#<th>{{ result.points/result.maxpoints*100 }}%</th>#}
-        {#</tr>#}
-    {#</table>#}
     {% render(controller('AppBundle:Attempt:attemptView',{'attempt':attempt.id})) %}
 {% endblock %}

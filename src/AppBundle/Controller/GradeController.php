@@ -69,22 +69,29 @@ class GradeController extends Controller{
         $grade = $em->getRepository('AppBundle:Grade')->find($grade);
 
         $userManager = $this->get('fos_user.user_manager');
+        $formFactory = $this->get('fos_user.registration.form.factory');
+        $dispatcher = $this->get('event_dispatcher');
+
         $user = $userManager->createUser();
+        $user->setEnabled(1);
+        $user->setRoles(array('ROLE_PUPIL'));
+        $user->setGrade($grade);
 
+//        $form = $this->createFormBuilder($user)
+//            ->add('username')
+//            ->add('email')
+//            ->add('firstname')
+//            ->add('lastname')
+//            ->add('plainPassword', PasswordType::class)
+//            ->getForm();
+//        $form->handleRequest($request);
 
-        $form = $this->createFormBuilder($user)
-            ->add('username')
-            ->add('email')
-            ->add('firstname')
-            ->add('lastname')
-            ->add('plainPassword', PasswordType::class)
-            ->getForm();
+        $form = $formFactory->createForm();
+        $form->setData($user);
+
         $form->handleRequest($request);
-
         if($form->isValid()){
-            $user->setEnabled(1);
-            $user->setRoles(array('ROLE_PUPIL'));
-            $user->setGrade($grade);
+//            $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
             $userManager->updateUser($user);
             $this->addFlash('notice', 'Twoje konto zostało pomyslnie zarejestrowane, teraz możesz sie zalogować ;)');
             return $this->redirectToRoute('fos_user_security_login');
