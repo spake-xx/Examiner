@@ -5,14 +5,44 @@ Aktywne sesje
 {% block body %}
     <div class="container">
         <div class="panel panel-default">
+           <div class="panel-heading"><h2>Dlaczego warto używać NaOcene.pl?</h2>
+            </div>
             <div class="panel-body">
-                <div class="col-md-3 text-center">
-                <i class="fa fa-clock-o fa-5x"></i><br />Szybkie działanie</div>
-                </div>
-                <div class="col-md-3 text-center">
-                    <i class="fa fa-clock-o fa-5x"></i><br />Szybkie działanie</div>
+                <div class="row">
+                    <div class="col-md-3 text-center">
+                        <i class="fa fa-bolt fa-5x"></i><br />
+                        <h3>Szybkie działanie</h3>
+                        <h5>Nasza platforma działa szybko nawet na starszych komputerach.</h5>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <i class="fa fa-android fa-5x"></i><br />
+                        <h3>Wsparcie smartfonów</h3>
+                        <h5>Uczniowie mogą rozwiązywać testy na urządzeniach mobilnych.</h5>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <i class="fa fa-adjust fa-5x"></i><br />
+                        <h3>Stonowane kolory</h3>
+                        <h5>Dzięki minimalistycznemu designowi oraz odpowiednim doborze kolorów, umysł może lepiej skupić się na treści pytania.</h5>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <i class="fa fa-magic fa-5x"></i><br /><h3>Prostota</h3>
+                        <h5>Pomimo zaawansowanej technologii,
+                            korzystanie z portalu jest bardzo łatwe i intuicyjne.</h5>
+                    </div>
                 </div>
             </div>
+            <div class="panel-heading"></div>
+            <div class="panel-body">
+                <div class="col-md-6 text-center">
+                    <i class="fa fa-tree fa-5x"></i><br />
+                    <h5>
+                        NaOcene cechuje się tym, że jest stworzone przede wszystkim dla nauczycieli, aby przeprowadzali testy w bardziej ekologiczny sposób.
+                    </h5>
+                </div>
+                <div class="col-md-6 text-center"><i class="fa fa-usd fa-5x"></i><br /><h5>W przeciwieństwie do innych rozwiązań, korzystanie jest całkowicie darmowe.</h5> <a class="btn btn-primary" href="{{ url('fos_user_registration_register') }}">Zarejestruj się już teraz</a>
+                </div>
+            </div>
+
         </div>
     </div>
 {% endblock %}
