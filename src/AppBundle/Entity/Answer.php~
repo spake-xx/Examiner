@@ -33,6 +33,11 @@ class Answer
     protected $points;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $enabled;
+
+    /**
      * Get id
      *
      * @return integer 

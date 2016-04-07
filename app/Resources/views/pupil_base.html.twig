@@ -7,6 +7,22 @@
 {% endblock %}
 {% block body %}
     <div class="container">
+        {% set route = app.request.attributes.get('_route') %}
+        <ol class="breadcrumb well">
+        {% if route=="pupil_index" %}
+            <li>Panel Ucznia</li>
+            <li class="active">Moje wyniki</li>
+        {% else %}
+            <li><a href="{{ path('pupil_index') }}">Panel Ucznia</a></li>
+        {% endif %}
+        {% if route=="pupil_view_attempt" %}
+            <li>Moje wyniki</li>
+            <li class="active">Podgląd podejścia</li>
+        {% endif %}
+        {% if route=="teacher_session_view" %}
+            <li class="active">Podgląd sesji</li>
+        {% endif %}
+        </ol>
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="row">

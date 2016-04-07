@@ -33,6 +33,11 @@ class Question
     protected $image;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $enabled;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -118,5 +123,28 @@ class Question
         }else{
             return $question;
         }
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param integer $enabled
+     * @return Question
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return integer 
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
     }
 }

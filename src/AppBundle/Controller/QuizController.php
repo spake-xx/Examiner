@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -35,6 +36,7 @@ class QuizController extends Controller
 		$form->handleRequest($request);
 
 		if($form->isValid()){
+			$quiz->setEnabled(1);
 			$em->persist($quiz);
 			$em->flush();
 			return $this->redirect('/quiz/edit/'.$quiz->getId());
@@ -55,7 +57,7 @@ class QuizController extends Controller
 		$question = new Question();
 
 		$form = $this->createFormBuilder($question)
-					->add('question', TextType::class)
+					->add('question', TextareaType::class)
 					->add('save', SubmitType::class, array('label'=>'Dodaj'))
 					->getForm();
 
@@ -93,8 +95,13 @@ class QuizController extends Controller
 		$answers = $em->getRepository('AppBundle:Answer')->findByQuestion($question);
 		$quiz = $question->getQuiz();
 		$questions = $em->getRepository('AppBundle:Question')->findByQuiz($quiz);
+		$image = $em->getRepository('AppBundle:QuestionImage')->findOneByQuestion($question);
+		if($image){
+			$image=$image->getWebPath();
+		}
 
 		$answer = new Answer();
+		$answer->setEnabled(1);
 		$answer->setQuestion($question);
 
 		$form = $this->get('form.factory')->createNamedBuilder('answer', FormType::class, $answer)
@@ -111,11 +118,12 @@ class QuizController extends Controller
 
 		$question_new = new Question();
 		$formq = $this->get('form.factory')->createNamedBuilder('question', FormType::class, $question_new)
-			->add('question', TextType::class)
+			->add('question', TextareaType::class)
 			->add('save', SubmitType::class, array('label'=>'Dodaj'))
 			->getForm();
 		$formq->handleRequest($request);
 		if($formq->isValid()) {
+			$question_new->setEnabled(1);
 			$question_new->setQuiz($quiz);
 			$em->persist($question_new);
 			$em->flush();
@@ -147,6 +155,7 @@ class QuizController extends Controller
 			'add_answer'=>$form->createView(),
 			'add_question'=>$formq->createView(),
 			'add_image'=>$formfile->createView(),
+			'image'=>$image,
 		));
 	}
 
@@ -182,6 +191,7 @@ class QuizController extends Controller
 			->getForm();
 		$form->handleRequest($request);
 		if($form->isValid()){
+			$answer->setEnabled(1);
 			$em->persist($answer);
 			$em->flush();
 			return $this->redirectToRoute('editQuestion', array(
@@ -191,12 +201,13 @@ class QuizController extends Controller
 
 		$question_new = new Question();
 		$formq = $this->createFormBuilder($question_new)
-			->add('question', TextType::class)
+			->add('question', TextareaType::class)
 			->add('save', SubmitType::class, array('label'=>'Dodaj'))
 			->getForm();
 		$formq->handleRequest($request);
 		if($formq->isValid()) {
 			$question_new->setQuiz($quiz);
+			$question_new->setEnabled(1);
 			$em->persist($question_new);
 			$em->flush();
 			return $this->redirectToRoute('editQuestion', array(
@@ -222,7 +233,8 @@ class QuizController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$answer = $em->getRepository('AppBundle:Answer')->find($answer);
 		$question = $answer->getQuestion()->getId();
-		$em->remove($answer);
+		$answer->setEnabled(0);
+		$em->persist($answer);
 		$em->flush();
 		return $this->redirectToRoute('editQuestion', array(
 			'question'=>$question,
@@ -239,7 +251,7 @@ class QuizController extends Controller
 		$questions = $em->getRepository('AppBundle:Question')->findByQuiz($quiz);
 
 		$editQuestionName = $this->createFormBuilder($question)
-			->add('question')
+			->add('question', TextareaType::class)
 			->add('save', SubmitType::class)
 			->getForm();
 		$editQuestionName->handleRequest($request);
@@ -253,12 +265,13 @@ class QuizController extends Controller
 
 		$question_new = new Question();
 		$formq = $this->createFormBuilder($question_new)
-			->add('question', TextType::class)
+			->add('question', TextareaType::class)
 			->add('save', SubmitType::class, array('label'=>'Dodaj'))
 			->getForm();
 		$formq->handleRequest($request);
 		if($formq->isValid()) {
 			$question_new->setQuiz($quiz);
+			$question_new->setEnabled(1);
 			$em->persist($question_new);
 			$em->flush();
 			return $this->redirectToRoute('editQuestion', array(
@@ -286,9 +299,11 @@ class QuizController extends Controller
 		$len=count($answers);
 		for($i=0;$i<$len;$i++)
 		{
-			$em->remove($answers[$i]);
+			$answers[$i]->setEnabled(0);
+			$em->persist($answers[$i]);
 		}
-		$em->remove($question);
+		$question->setEnabled(0);
+		$em->persist($question);
 		$em->flush();
 		return $this->redirectToRoute('editQuiz', array(
 			'id'=>$question->getQuiz()->getId(),

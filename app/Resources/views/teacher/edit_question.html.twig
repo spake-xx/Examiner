@@ -34,7 +34,7 @@
               <div class="panel-body panel-own">
                 <ul class="nav nav-pills nav-stacked">
                   {% for q in questions %}
-                    <li {% if q.id == question.id %} class="active" {% endif %}><a href="{{ path('editQuestion', {'question':q.id}) }}">{{ q.question }}</a></li>
+                    <li {% if q.id == question.id %} class="active" {% endif %}><a href="{{ path('editQuestion', {'question':q.id}) }}">{{ q.shortname }}</a></li>
                   {% endfor %}
                 </ul>
               </div>
@@ -64,6 +64,9 @@
               <a class="btn btn-default btn-sm pull-right" data-toggle="collapse" data-target="#addimg">
                 Dodaj zdjęcie</a>
             </h2>
+            {% if image %}
+            <img class="img-responsive" src="/{{ image }}" alt="img" />
+            {% endif %}
             {{ form_start(add_image) }}
 
                 <div class="col-md-6 collapse pull-right alert alert-success" id="addimg">

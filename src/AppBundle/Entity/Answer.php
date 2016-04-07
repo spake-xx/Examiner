@@ -33,6 +33,11 @@ class Answer
     protected $points;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $enabled;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -109,5 +114,28 @@ class Answer
     public function getPoints()
     {
         return $this->points;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param integer $enabled
+     * @return Answer
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return integer 
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
     }
 }

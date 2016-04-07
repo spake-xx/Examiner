@@ -27,6 +27,11 @@ class Quiz
      */
     protected $teacher;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $enabled;
+
     protected $maxpoints;
 
     /**
@@ -93,5 +98,28 @@ class Quiz
     public function getTeacher()
     {
         return $this->teacher;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param integer $enabled
+     * @return Quiz
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return integer 
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
     }
 }

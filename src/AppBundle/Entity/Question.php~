@@ -23,7 +23,7 @@ class Question
     protected $quiz;
     
     /**
-     * @ORM\Column(type="string", length=200)
+     * @ORM\Column(type="string", length=2000)
      */
     protected $question;
     
@@ -31,6 +31,11 @@ class Question
      * @ORM\Column(type="string", length=5, nullable=true)
      */
     protected $image;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $enabled;
 
     /**
      * Get id
@@ -109,5 +114,14 @@ class Question
     public function getQuiz()
     {
         return $this->quiz;
+    }
+
+    public function getShortName(){
+        $question = $this->question;
+        if(strlen($question)>50) {
+            return substr($question, 0, 35) . "...";
+        }else{
+            return $question;
+        }
     }
 }
