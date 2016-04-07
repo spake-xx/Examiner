@@ -26,10 +26,16 @@
                         <img class="img-responsive" src="/{{ image }}" ng-show="checkImg()" />
                         <h3>{{ question }}</h3>
                         <form name="myForm">
+                        <!--<label ng-repeat="x in answers" class="btn btn-primary btn-block"-->
+                               <!--ng-model="$parent.user_answer.id"-->
+                               <!--uib-btn-radio="x.id" style="">{{x.answer}}-->
+                        <!--</label>-->
                         <label ng-repeat="x in answers" class="btn btn-primary btn-block"
-                               ng-model="$parent.user_answer.id"
-                               uib-btn-radio="x.id" style="">{{x.answer}}
+                               ng-model="$parent.user_answer[x.id]"
+                               uib-btn-checkbox="true" style="">{{x.answer}}
                         </label>
+
+                        Zaznaczono: {{user_answer}}
 
                             <div class="form-group" style="margin-top: 20px;">
                                 <input type="submit" class='btn btn-default btn-block' value="Następne pytanie" ng-click="send(user_answer)" />

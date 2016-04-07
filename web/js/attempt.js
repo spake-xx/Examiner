@@ -39,8 +39,11 @@ angular.module('myApp', []).controller('attempt', function ($scope, $http, $inte
           //$scope.answers = response.data.answers;
           $scope.result =  response.data.result;
           $scope.user_answers = response.data.user_answers;
+          console.log(response.data.user_answers);
           //$scope.question_image = response.data.question_image;
           //console.log(response.data.result);
+      }, function(response){
+          console.log(response.data);
       });
     };
 
