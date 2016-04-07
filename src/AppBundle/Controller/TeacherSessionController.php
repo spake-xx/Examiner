@@ -78,7 +78,7 @@ class TeacherSessionController extends Controller
         $session->setEnd(new \DateTime(date('Y-m-d H:i:s')));
         $em->persist($session);
         $em->flush();
-        $this->addFlash('notice','Finished');
+        $this->addFlash('notice','Zakończono sesję.');
         return $this->redirectToRoute('teacher_session_view', array(
            'session'=>$session->getID(),
         ));
