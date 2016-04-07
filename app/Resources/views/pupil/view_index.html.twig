@@ -16,7 +16,7 @@
                     <td>{{ attempt.session.quiz.name }}</td>
                     <td>{{ attempt.started|date('Y-m-d') }}</td>
                     <td>{{ (result.points/result.maxpoints*100)|round(2) }}%</td>
-                    <td><a href="{{ path('pupil_view_attempt', {'attempt':attempt.id}) }}"><i class="fa fa-binoculars"></i></a></td>
+                    <td><a href="{{ path('pupil_view_attempt', {'attempt':attempt.id}) }}"><i class="fa fa-search"></i></a></td>
                </tr>
                {% endif %}
                {% endfor %}
