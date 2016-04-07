@@ -37,12 +37,11 @@ class DefaultController extends SystemController
             return new JsonResponse(false);
         }
 
-        
+
         $answers = $em->getRepository('AppBundle:Answer');
         $query = $answers->createQueryBuilder('a')
-								->where('a.question='.$attempt->getQuestion()->getId())->getQuery();
+            ->where('a.question='.$attempt->getQuestion()->getId())->getQuery();
         $answers = $query->getResult();
-        shuffle($answers);
 
         $image = $em->getRepository("AppBundle:QuestionImage")->findOneBy(array('question'=>$attempt->getQuestion()));
         if($image!=null) {
@@ -52,21 +51,9 @@ class DefaultController extends SystemController
         }
 
         $answered = $em->getRepository('AppBundle:UserAnswer')->createQueryBuilder('u');
-        $answered = $answered
-            ->select('count(DISTINCT a.question)')
-            ->where('u.attempt='.$attempt->getId())
-            ->innerJoin('u.answer', 'a')
-            ->getQuery()
-            ->getSingleScalarResult();
+        $answered = $answered->select('count(u.id)')->where('u.attempt='.$attempt->getId())->getQuery()->getSingleScalarResult();
         $answered = (int)$answered;
 
-        $poprawne = $em->getRepository('AppBundle:Answer')->createQueryBuilder('a');
-        $poprawne = $poprawne
-            ->select('count(a.id)')
-            ->where('a.question='.$attempt->getQuestion()->getId())
-            ->andWhere('a.points>0')
-            ->getQuery()
-            ->getSingleScalarResult();
         $quest_repo = $em->getRepository('AppBundle:Question');
         $questions_count = $quest_repo->createQueryBuilder('q')
             ->select('count(q.id)')
@@ -78,7 +65,7 @@ class DefaultController extends SystemController
 
         $serializer = new Serializer($normalizers, $encoders);
 
-            $answers_json = $serializer->normalize($answers, 'json');
+        $answers_json = $serializer->normalize($answers, 'json');
 
         $response = new JsonResponse();
         $response->setData(array(
@@ -88,7 +75,6 @@ class DefaultController extends SystemController
             'questions_count'=>$questions_count,
             'answered'=>$answered,
             'image'=>$image_url,
-            'poprawne'=>$poprawne,
         ));
 
         return $response;
@@ -102,15 +88,14 @@ class DefaultController extends SystemController
         $dane = json_decode(file_get_contents('php://input'), true);
         $em = $this->getDoctrine()->getManager();
         $attempt = $em->getRepository('AppBundle:Attempt')->find($dane['attempt']);
+        $answer = $em->getRepository('AppBundle:Answer')->find($dane['id']);
 
-        foreach($dane['answer'] as $k=>$v) {
-            $answer = $em->getRepository('AppBundle:Answer')->find($k);
-            $u_answer = new UserAnswer();
-            $u_answer->setAttempt($attempt);
-            $u_answer->setAnswer($answer);
-            $em->persist($u_answer);
-            $em->flush();
-        }
+        $u_answer = new UserAnswer();
+        $u_answer->setAttempt($attempt);
+        $u_answer->setAnswer($answer);
+        $em->persist($u_answer);
+        $em->flush();
+
         $attempt->setQuestion(null);
         $em->flush();
 
@@ -149,10 +134,10 @@ class DefaultController extends SystemController
 
         $pupils_ended = $em->getRepository("AppBundle:Result")->createQueryBuilder('r');
         $pupils_ended = $pupils_ended->innerJoin('r.attempt', 'a')
-                              ->innerJoin('a.session', 's')
-                              ->where('a.session='.$dane['session'])
-                                ->andWhere('a.end IS NOT NULL')
-                                ->getQuery()->getResult();
+            ->innerJoin('a.session', 's')
+            ->where('a.session='.$dane['session'])
+            ->andWhere('a.end IS NOT NULL')
+            ->getQuery()->getResult();
 
 
         $encoders = array(new XmlEncoder(), new JsonEncoder());
@@ -178,7 +163,7 @@ class DefaultController extends SystemController
         $em = $this->getDoctrine()->getManager();
         $attempts = $em->getRepository("AppBundle:Attempt")->createQueryBuilder('a');
         $attempts = $attempts->innerJoin("a.session", "s")
-                             ->where("a.end IS NULL")->getQuery()->getResult();
+            ->where("a.end IS NULL")->getQuery()->getResult();
 
         foreach($attempts as $k=>$v) {
             $session = $v->getSession();
@@ -266,17 +251,9 @@ class DefaultController extends SystemController
         $attempt = json_decode(file_get_contents('php://input'),true);
         $em = $this->getDoctrine()->getManager();
         $attempt = $em->getRepository('AppBundle:Attempt')->find($attempt);
-        $result = $em->getRepository('AppBundle:Result')->findByAttempt($attempt);
-        $user_answers_repo = $em->getRepository('AppBundle:UserAnswer');
-        $user_answers = $user_answers_repo->createQueryBuilder('u');
-        $user_answers = $user_answers
-//            ->select('a.question')->distinct()
-            ->where('u.attempt='.$attempt->getId())
-            ->innerJoin('u.answer', 'a')
-            ->groupBy('a.question')
-            ->getQuery()
-            ->getResult();
-
+        $result = $em->getRepository('AppBundle:Result')->find($attempt);
+        $user_answers = $em->getRepository('AppBundle:UserAnswer')->findByAttempt($attempt);
+        $answers = $em->getRepository('AppBundle:Answer')->findAll();
 
         $encoders = array(new XmlEncoder(), new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
@@ -285,12 +262,14 @@ class DefaultController extends SystemController
         $attempt = $serializer->normalize($attempt, 'json');
         $result = $serializer->normalize($result, 'json');
         $user_answers = $serializer->normalize($user_answers, 'json');
+        $answers = $serializer->normalize($answers, 'json');
 
         $response = new JsonResponse();
         $response->setData(array(
             'attempt'=>$attempt,
             'result'=>$result,
             'user_answers'=>$user_answers,
+            'answers'=>$answers,
         ));
         return $response;
     }

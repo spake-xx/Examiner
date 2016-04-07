@@ -7,10 +7,8 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
 
     $scope.attempt = null;
     $scope.ile = 1;
-    $scope.poprawne = null;
 
     $scope.$on('timer-tick', function (event, data) {
-
         client_time = data.millis / 1000;
         $scope.checkTime($scope.attempt);
         console.log(server_time);
@@ -27,18 +25,18 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
         }
     });
 
-        $scope.setAttempt = function(attempt){
-            $scope.attempt = attempt;
-            $scope.getAnswer();
-            $http.get("/API/time/"+$scope.attempt)
-                .then(function (response) {
-                    server_time = response.data.time;
-                    $scope.ile = server_time;
-                    //$scope.$broadcast('timer-add-cd-seconds', server_time);
-                    $scope.$broadcast('timer-start');
-                    $('#quiz-info').show();
-                });
-        }
+    $scope.setAttempt = function(attempt){
+        $scope.attempt = attempt;
+        $scope.getAnswer();
+        $http.get("/API/time/"+$scope.attempt)
+            .then(function (response) {
+                server_time = response.data.time;
+                $scope.ile = server_time;
+                //$scope.$broadcast('timer-add-cd-seconds', server_time);
+                $scope.$broadcast('timer-start');
+                $('#quiz-info').show();
+            });
+    }
 
     $scope.checkTime = function(){
         $http.get("/API/time/"+$scope.attempt)
@@ -61,8 +59,7 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
                 $('#spinner').hide();
                 window.location.assign('/quiz/result/'+$scope.attempt)
             },function(response){
-                alert("Wystąpił błąd w trakcie kończenia sprawdzianu(endQuiz())! Serwer zwrócił błąd");
-                console.log('BŁĄD:'.response);
+                alert("Wystąpił błąd.");
             });
     }
 
@@ -74,20 +71,24 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
                     $scope.question = response.data.question;
                     $scope.answered = response.data.answered;
                     $scope.questions_count = response.data.questions_count;
-                    $scope.poprawne =  response.data.poprawne;
+
                     if(response.data.image){
                         $scope.image = response.data.image;
                     }else{
                         $scope.image = null;
                     }
-                    //$scope.user_answer.attempt = response.data.attempt;
+                    $scope.user_answer.attempt = response.data.attempt;
                 }else{
                     endQuiz();
                 }
+            }, function(response){
+                alert(response.data);
             });
     }
 
-    $scope.user_answer = null;
+    $scope.user_answer = {
+        id: null
+    }
 
     $scope.checkImg = function(){
         if($scope.image != null){
@@ -96,27 +97,19 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
         return 0;
     }
 
-    $scope.send = function(answer){
-        ans = {};
-        ans[answer] = true;
-        console.log(ans);
-        if(answer==null){
+    $scope.send = function(data){
+        if(!data.id){
             $scope.bsAlert.msg = "Zaznacz odpowiedź !";
             return 0;
-        }
-        data = {
-            answer: ans,
-            attempt: $scope.attempt
         }
         $('#spinner').show();
         $scope.bsAlert.msg = null;
         $http.post('/ajax/sendAnswer/', data)
             .then(function(response){
                 $('#spinner').hide();
-                $scope.user_answer = null;
+                $scope.user_answer.id = null;
                 $scope.getAnswer();
             },function(response){
-                console.log(response);
                 $('#spinner').hide();
             });
     }
@@ -125,9 +118,4 @@ angular.module('myApp').controller('myCtrl', function ($scope, $http, $interval)
         msg: null
     }
 
-    $scope.random = function(){
-        return 0.5 - Math.random();
-    };
-
 });
-
