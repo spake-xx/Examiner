@@ -42,6 +42,27 @@ class AttemptController extends Controller
     }
 
     /**
+     * @Route("/attempt/view/teacher_attempt/{attempt}/", name="teacherAttemptView")
+     */
+    public function teacherAttemptViewAction($attempt)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $attempt = $em->getRepository('AppBundle:Attempt')->find($attempt);
+        $result = $em->getRepository('AppBundle:Result')->find($attempt);
+        $user_answers = $em->getRepository('AppBundle:UserAnswer')->findByAttempt($attempt);
+        $answers = $em->getRepository('AppBundle:Answer')->findAll();
+//        $question_image = $em->getRepository('AppBundle:QuestionImage')->findAll();
+
+        return $this->render('/attempt/view_teacher_attempt.html.twig', array(
+            'result'=>$result,
+            'user_answers'=>$user_answers,
+            'answers'=>$answers,
+            'attempt'=>$attempt,
+//            'question_image'=>$question_image,
+        ));
+    }
+
+    /**
      * @Route("/attempt/ajax/attempt/")
      */
     public function attemptGetAttempt()

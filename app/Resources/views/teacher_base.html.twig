@@ -2,6 +2,15 @@
 {% block stylesheets %}
     {{ parent() }}
     {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="//code.angularjs.org/1.2.20/angular-sanitize.min.js"></script>
+    <script src="{{ asset('js/module.js') }}"></script>
+    <script src="{{ asset('js/pupils.js') }}"></script>
+    <script src="{{ asset('js/teacher_attempt.js') }}"></script>
+
+    {% endblock %}
 {% block body %}
     <div class="container" ng-app="teacher">
         {% set route = app.request.attributes.get('_route') %}
@@ -42,4 +51,10 @@
         </div>
     </div>
 {% endblock %}
-{% block javascripts %}{{ parent() }}{% endblock %}
+{#{% block javascripts %}{{ parent() }}#}
+    {#<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>#}
+    {#<script src="//code.angularjs.org/1.2.20/angular-sanitize.min.js"></script>#}
+    {#<script src="{{ asset('js/attempt.js') }}"></script>#}
+    {#<script src="{{ asset('js/module.js') }}"></script>#}
+    {#<script src="{{ asset('js/attempt.js') }}"></script>#}
+{#{% endblock %}#}

@@ -56,4 +56,22 @@ class TeacherController extends Controller{
             'user'=>$this->getUser(),
         ));
     }
+
+    /**
+     * @Route("/teacher/view/attempt/{attempt}/", name="teacher_view_attempt")
+     */
+    public function teacherViewAttemptAction($attempt)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $attempt = $em->getRepository('AppBundle:Attempt')->find($attempt);
+        $result = $em->getRepository('AppBundle:Result')->find($attempt);
+        $user_answers = $em->getRepository('AppBundle:UserAnswer')->findByAttempt($attempt);
+        $answers = $em->getRepository('AppBundle:Answer')->findAll();
+        return $this->render('teacher/view_attempt.html.twig', array(
+            'attempt'=>$attempt,
+            'result' => $result,
+            'user_answers'=>$user_answers,
+            'answers'=>$answers,
+        ));
+    }
 }
