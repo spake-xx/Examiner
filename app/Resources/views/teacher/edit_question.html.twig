@@ -3,15 +3,15 @@
   <script>
     $(document).ready(function(){
       var check;
-      $("#form_points").val('2');
+      $("#answer_points").val(0);
       $("#checkbox").on("click", function(){
         check = $("#checkbox").prop("checked");
         if(check) {
-          $('#hidden').fadeIn('fast');
-          $('#form_points').val(1);
+//          $('#hidden').fadeIn('fast');
+          $('#answer_points').val(1);
         } else {
-          $('#hidden').fadeOut('fast');
-          $('#form_points').val(0);
+//          $('#hidden').fadeOut('fast');
+          $('#answer_points').val(0);
         }
       });
     });
