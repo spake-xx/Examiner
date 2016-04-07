@@ -29,7 +29,7 @@
                 {% if session.end == null %}
                     <a href="{{ path('teacher_session_end',{'session':session.id}) }}" class="btn btn-primary btn-lg btn-block">Zakończ sesję</a>
                 {% else %}
-                    Finished: {{ session.end|date('Y-m-d H:i:s') }}
+                    Zakończono: {{ session.end|date('Y-m-d H:i:s') }}
                 {% endif %}
         </div>
     </div>
@@ -39,19 +39,19 @@
             <div ng-repeat="pupil in pupils_logged">
                 <div class="clearfix" ng-if="$index % 3 == 0"></div>
                 <div class="col-sm-4 well">
-                    <h2>{{ '{{ pupil.user.username }}' }}</h2>
+                    <h2>{{ '{{ pupil.user.firstname }} {{ pupil.user.lastname }}' }}</h2>
                     Thinks about {{ '{{ pupil.answered+1 }}' }}. question.
                     <button type="button" class="fa  fa-search" data-toggle="modal" data-target="#myModal" ng-click="getAttemptView(pupil.id, pupil.user.username)"> Podgląd</button>
                 </div>
             </div>
         </div>
 
-        <h2 class="text-center" ng-if="!pupilsEndedEmpty()">Finished</h2>
+        <h2 class="text-center" ng-if="!pupilsEndedEmpty()">Zakończone</h2>
         <div class="row text-center">
             <div ng-repeat="result in pupils_ended">
                 <div class="clearfix" ng-if="$index % 3 == 0"></div>
                 <div class="col-xs-4 well">
-                    <h2>{{ '{{ result.attempt.user.username }}' }}</h2>
+                    <h2>{{ '{{ result.attempt.user.firstname }} {{ result.attempt.user.lastname }}' }}</h2>
                     <h3>{{ '{{ (result.points/'~ session.quiz.maxPoints ~ '*100)|number:2 }}' }} % </h3>
                     Points: {{ '{{ result.points }}' }} / {{ session.quiz.maxpoints }}
                     <button type="button" class="fa  fa-search" data-toggle="modal" data-target="#myModal" ng-click="getAttemptView(result.attempt.id, result.attempt.user.username)"> Podgląd</button>

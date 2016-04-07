@@ -4,7 +4,7 @@
      {% if attempts %}
           <table class="table table-stripped table-hover">
                <tr>
-                    <th>Quiz</th>
+                    <th>Sprawdzian</th>
                     <th>Data</th>
                     <th>Wynik</th>
                     <th>Szczegóły</th>
@@ -23,28 +23,8 @@
           {% endfor %}
           </table>
           <hr/>
-          {#<table class="table table-hover table-condensed table-stripped text-center">#}
-               {#<tr>#}
-                    {#<th>%</th>#}
-                    {#<td>0-39</td>#}
-                    {#<td>40-49</td>#}
-                    {#<td>50-69</td>#}
-                    {#<td>70-89</td>#}
-                    {#<td>90-99</td>#}
-                    {#<td>100</td>#}
-               {#</tr>#}
-               {#<tr>#}
-                    {#<th>Mark</th>#}
-                    {#<td>1</td>#}
-                    {#<td>2</td>#}
-                    {#<td>3</td>#}
-                    {#<td>4</td>#}
-                    {#<td>5</td>#}
-                    {#<td>6</td>#}
-               {#</tr>#}
-          {#</table>#}
 
      {% else %}
-          <div class="alert alert-info">You haven't taken any exams yet!</div>
+          <div class="alert alert-info">Nie rozwiązałeś jeszcze żadnego sprawdzianu!</div>
      {% endif %}
 {% endblock %}

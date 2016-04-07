@@ -41,11 +41,11 @@
             </div>
             <div class="panel panel-default">
               <div class="panel-heading">
-                <h3 class="panel-title text-center">Add question</h3>
+                <h3 class="panel-title text-center">Dodaj pytanie</h3>
               </div>
               <div class="panel-body panel-own">
                 {{ form_start(add_question) }}
-                {{ form_widget(add_question.question, { 'attr': {'class':'form-control', 'placeholder':'new question'} }) }}
+                {{ form_widget(add_question.question, { 'attr': {'class':'form-control', 'placeholder':'Treść pytania'} }) }}
                 {{ form_widget(add_question.save, { 'attr': {'class':'btn btn-default btn-block'} }) }}
                 {{ form_widget(add_question._token) }}
                 {{ form_end(add_question) }}
@@ -101,7 +101,7 @@
             <div class="row">
               {{ form_start(add_answer) }}
               <div class="col-md-6">
-                {{ form_widget(add_answer.answer, { 'attr': {'class':'form-control', 'placeholder':'new answer'} }) }}
+                {{ form_widget(add_answer.answer, { 'attr': {'class':'form-control', 'placeholder':'Treść odpowiedzi'} }) }}
               </div>
               <div class="col-md-1">
                 <i class="fa fa-check"></i> <input type="checkbox" id="checkbox">

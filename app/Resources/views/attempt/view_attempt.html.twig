@@ -5,7 +5,7 @@
     </div>
     <div class="col-md-6">
         <div class="panel panel-default">
-            <div class="panel-heading">Questions</div>
+            <div class="panel-heading">Pytania</div>
             <div class="panel-body panel-own">
                 <ul class="list-group list-group-own pytania">
 
@@ -30,7 +30,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">{{ '{{ question.question }}' }}</div>
             <div class="panel-body panel-own">
-                <div class="alert alert-info alert-own" ng-if="!question">Choose a question from the list</div>
+                <div class="alert alert-info alert-own" ng-if="!question">Wybierz pytanie z listy</div>
                 <ul class="list-group list-group-own" ng-if="question">
                     <img src="/{{ '{{ image }}' }}" class="img-responsive" alt="img" ng-if="image != null"/>
                     <div ng-repeat="answer in answers">

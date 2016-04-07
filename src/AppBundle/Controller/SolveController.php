@@ -35,7 +35,7 @@ class SolveController extends SystemController
 		));
 	}
 	/**
-	 * @Route("/ajax/quiz/{quizsession}", name="ajax_start")
+	 * @Route("/q/{quizsession}", name="ajax_start")
 	 */
 	public function startQuizAction($quizsession, Request $request)
 	{
