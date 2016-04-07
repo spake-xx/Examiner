@@ -33,11 +33,11 @@ angular.module('teacher').controller('pupils', function ($scope, $http, $interva
         $scope.time = time;
         refreshPupils();
     }
-    $scope.getAttemptView = function(attempt, username){
+    $scope.getAttemptView = function(attempt, firstname, lastname, grade){
       //$http.get('/attempt/view/teacher_attempt/'+attempt).then(function(response){
             $scope.modal_attempt = attempt;
             //$scope.modal_content = response.data;
-            $scope.modal_username = username;
+            $scope.modal_name = firstname + " " + lastname + " - " + grade;
             setAttempt(attempt);
 
             //console.log(response.data);

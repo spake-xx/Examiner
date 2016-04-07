@@ -74,4 +74,20 @@ class TeacherController extends Controller{
             'answers'=>$answers,
         ));
     }
+    /**
+     * @Route("/teacher/view/stats/session/{session}/", name="teacher_view_stats")
+     */
+    public function teacherViewStatsAction($session)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $session = $em->getRepository('AppBundle:QuizSession')->find($session);
+        $attempt = $em->getRepository('AppBundle:Attempt')->findBySession($session);
+        $result = $em->getRepository('AppBundle:Result')->findByAttempt($attempt);
+
+        return $this->render('teacher/view_stats.html.twig', array(
+            'session'=>$session,
+            'attempt'=>$attempt,
+            'result'=>$result,
+        ));
+    }
 }

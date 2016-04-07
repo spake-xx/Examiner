@@ -30,6 +30,7 @@
                     <a href="{{ path('teacher_session_end',{'session':session.id}) }}" class="btn btn-primary btn-lg btn-block">Zakończ sesję</a>
                 {% else %}
                     Zakończono: {{ session.end|date('Y-m-d H:i:s') }}
+                    <a href="{{ path('teacher_view_stats', {'session':session.id}) }}" class="btn btn-primary btn-lg btn-block">Statystyki</a>
                 {% endif %}
         </div>
     </div>
@@ -41,7 +42,7 @@
                 <div class="col-sm-4 well">
                     <h2>{{ '{{ pupil.user.firstname }} {{ pupil.user.lastname }}' }}</h2>
                     Thinks about {{ '{{ pupil.answered+1 }}' }}. question.
-                    <button type="button" class="fa  fa-search" data-toggle="modal" data-target="#myModal" ng-click="getAttemptView(pupil.id, pupil.user.username)"> Podgląd</button>
+                    <button type="button" class="fa  fa-search" data-toggle="modal" data-target="#myModal" ng-click="getAttemptView(pupil.id, pupil.user.firstname, pupil.user.lastname, result.attempt.user.grade.name)"> Podgląd</button>
                 </div>
             </div>
         </div>
@@ -54,7 +55,7 @@
                     <h2>{{ '{{ result.attempt.user.firstname }} {{ result.attempt.user.lastname }}' }}</h2>
                     <h3>{{ '{{ (result.points/'~ session.quiz.maxPoints ~ '*100)|number:2 }}' }} % </h3>
                     Points: {{ '{{ result.points }}' }} / {{ session.quiz.maxpoints }}
-                    <button type="button" class="fa  fa-search" data-toggle="modal" data-target="#myModal" ng-click="getAttemptView(result.attempt.id, result.attempt.user.username)"> Podgląd</button>
+                    <button type="button" class="fa  fa-search" data-toggle="modal" data-target="#myModal" ng-click="getAttemptView(result.attempt.id, result.attempt.user.firstname, result.attempt.user.lastname, result.attempt.user.grade.name)"> Podgląd</button>
                 </div>
             </div>
 
@@ -66,15 +67,15 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">{{ '{{ modal_username }}' }}</h4>
+                        <h4 class="modal-title">{{ '{{ modal_name }}' }}</h4>
                     </div>
                     {#<div class="modal-body" ng-bind-html="modal_content">#}
                         {#{{ '{{ modal_content }}' }}#}
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-12" ng-if="result">
-                                <div class="alert alert-info">Wynik: {{ '{{ result.points }}' }} / {{ '{{ result.maxPoints }}'  }}</div>
-                            </div>
+                            {#<div class="col-md-12" ng-if="result">#}
+                                {#<div class="alert alert-info">Wynik: {{ '{{ result }}' }} / {{ '{{ result.maxPoints }}'  }}</div>#}
+                            {#</div>#}
                             <div class="col-md-6">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">Questions</div>
