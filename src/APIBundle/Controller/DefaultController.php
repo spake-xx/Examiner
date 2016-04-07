@@ -29,35 +29,35 @@ class DefaultController extends SystemController
     {
         $em = $this->getDoctrine()->getManager();
         $attempt = $em->getRepository('AppBundle:Attempt')->find($attempt);
-        if(empty($attempt->getQuestion())) {
+        if (empty($attempt->getQuestion())) {
             $attempt->setQuestion($this->getNextQuestion($attempt));
             $em->flush();
         }
-        if(empty($attempt->getQuestion())){
+        if (empty($attempt->getQuestion())) {
             return new JsonResponse(false);
         }
 
 
         $answers = $em->getRepository('AppBundle:Answer');
         $query = $answers->createQueryBuilder('a')
-            ->where('a.question='.$attempt->getQuestion()->getId())->getQuery();
+            ->where('a.question=' . $attempt->getQuestion()->getId())->getQuery();
         $answers = $query->getResult();
 
-        $image = $em->getRepository("AppBundle:QuestionImage")->findOneBy(array('question'=>$attempt->getQuestion()));
-        if($image!=null) {
+        $image = $em->getRepository("AppBundle:QuestionImage")->findOneBy(array('question' => $attempt->getQuestion()));
+        if ($image != null) {
             $image_url = $image->getWebPath();
-        }else{
+        } else {
             $image_url = null;
         }
 
         $answered = $em->getRepository('AppBundle:UserAnswer')->createQueryBuilder('u');
-        $answered = $answered->select('count(u.id)')->where('u.attempt='.$attempt->getId())->getQuery()->getSingleScalarResult();
+        $answered = $answered->select('count(u.id)')->where('u.attempt=' . $attempt->getId())->getQuery()->getSingleScalarResult();
         $answered = (int)$answered;
 
         $quest_repo = $em->getRepository('AppBundle:Question');
         $questions_count = $quest_repo->createQueryBuilder('q')
             ->select('count(q.id)')
-            ->where('q.quiz='.$attempt->getSession()->getQuiz()->getId())
+            ->where('q.quiz=' . $attempt->getSession()->getQuiz()->getId())
             ->getQuery()->getSingleScalarResult();
 
         $encoders = array(new XmlEncoder(), new JsonEncoder());
@@ -70,11 +70,11 @@ class DefaultController extends SystemController
         $response = new JsonResponse();
         $response->setData(array(
             'question' => $attempt->getQuestion()->getQuestion(),
-            'answers'=>$answers_json,
-            'attempt'=>$attempt->getId(),
-            'questions_count'=>$questions_count,
-            'answered'=>$answered,
-            'image'=>$image_url,
+            'answers' => $answers_json,
+            'attempt' => $attempt->getId(),
+            'questions_count' => $questions_count,
+            'answered' => $answered,
+            'image' => $image_url,
         ));
 
         return $response;
@@ -102,7 +102,7 @@ class DefaultController extends SystemController
 
         $response = new JsonResponse();
         $response->setData(array(
-            'success'=>true,
+            'success' => true,
         ));
 
         return $response;
@@ -111,31 +111,32 @@ class DefaultController extends SystemController
     /**
      * @Route("/API/session/getPupils/")
      */
-    public function getSessionPupilsAction(){
+    public function getSessionPupilsAction()
+    {
         $dane = json_decode(file_get_contents('php://input'), true);
         $em = $this->getDoctrine()->getManager();
         $pupils_logged = $em->getRepository("AppBundle:Attempt")->createQueryBuilder('a')
-            ->where('a.session='.$dane['session'])
+            ->where('a.session=' . $dane['session'])
             ->andWhere('a.end IS NULL')
             ->getQuery()->getResult();
 
-        if($dane['time']) {
+        if ($dane['time']) {
             $session_repo = $em->getRepository('AppBundle:QuizSession');
             $session = $session_repo->find($dane['session']);
             $session->setTime($dane['time']);
             $em->flush();
         }
 
-        foreach($pupils_logged as $k=>$v){
+        foreach ($pupils_logged as $k => $v) {
             $answered = $em->getRepository('AppBundle:UserAnswer')->createQueryBuilder('u');
-            $answered = $answered->select('count(u.id)')->where('u.attempt='.$v->getId())->getQuery()->getSingleScalarResult();
+            $answered = $answered->select('count(u.id)')->where('u.attempt=' . $v->getId())->getQuery()->getSingleScalarResult();
             $pupils_logged[$k]->answered = (int)$answered;
         }
 
         $pupils_ended = $em->getRepository("AppBundle:Result")->createQueryBuilder('r');
         $pupils_ended = $pupils_ended->innerJoin('r.attempt', 'a')
             ->innerJoin('a.session', 's')
-            ->where('a.session='.$dane['session'])
+            ->where('a.session=' . $dane['session'])
             ->andWhere('a.end IS NOT NULL')
             ->getQuery()->getResult();
 
@@ -144,13 +145,13 @@ class DefaultController extends SystemController
         $normalizers = array(new ObjectNormalizer());
         $serializer = new Serializer($normalizers, $encoders);
 
-        $pupils_logged_json= $serializer->normalize($pupils_logged, 'json');
-        $pupils_ended_json= $serializer->normalize($pupils_ended, 'json');
+        $pupils_logged_json = $serializer->normalize($pupils_logged, 'json');
+        $pupils_ended_json = $serializer->normalize($pupils_ended, 'json');
 
         $response = new JsonResponse();
         $response->setData(array(
             'pupils_logged' => $pupils_logged_json,
-            'pupils_ended'  => $pupils_ended_json,
+            'pupils_ended' => $pupils_ended_json,
         ));
 
         return $response;
@@ -159,13 +160,14 @@ class DefaultController extends SystemController
     /**
      * @Route("/API/refresh_ended/")
      */
-    public function refreshEndedAction(){
+    public function refreshEndedAction()
+    {
         $em = $this->getDoctrine()->getManager();
         $attempts = $em->getRepository("AppBundle:Attempt")->createQueryBuilder('a');
         $attempts = $attempts->innerJoin("a.session", "s")
             ->where("a.end IS NULL")->getQuery()->getResult();
 
-        foreach($attempts as $k=>$v) {
+        foreach ($attempts as $k => $v) {
             $session = $v->getSession();
             $time = $session->getTime();
             $time = $time * 60;
@@ -176,7 +178,7 @@ class DefaultController extends SystemController
             if ($now_timestamp > $end_timestamp) {
                 $end_date = new \DateTime();
                 $end_date->setTimestamp($end_timestamp);
-                print $v->getStarted()->format("H:i:s D")."<br />";
+                print $v->getStarted()->format("H:i:s D") . "<br />";
 
                 $attempts[$k]->setEnd($end_date);
                 $em->flush();
@@ -198,7 +200,8 @@ class DefaultController extends SystemController
     /**
      * @Route("/API/end/")
      */
-    public function endQuizAction(){
+    public function endQuizAction()
+    {
         try {
             $dane = json_decode(file_get_contents('php://input'), true);
 
@@ -213,7 +216,7 @@ class DefaultController extends SystemController
 
             $em->persist($result);
             $em->flush();
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return new JsonResponse('', 500);
         }
 
@@ -223,55 +226,26 @@ class DefaultController extends SystemController
     /**
      * @Route("/API/time/{attempt}")
      */
-    public function checkTimeAction($attempt){
+    public function checkTimeAction($attempt)
+    {
         $em = $this->getDoctrine()->getManager();
         $attempt = $em->getRepository("AppBundle:Attempt")->find($attempt);
         $time = $attempt->getSession()->getTime();
         $time_s = $time * 60;
 
         $start = $attempt->getStarted()->getTimestamp();
-        $end = $start+$time_s;
+        $end = $start + $time_s;
         $now = new \DateTime();
         $now = $now->getTimestamp();
 
-        $remaining = $end-$now;
+        $remaining = $end - $now;
 
         $response = new JsonResponse();
         $response->setData(array(
-            'time'=>$remaining,
-        ));
-        return $response;
-    }
-
-    /**
-     * @Route("/attempt/ajax/attempt/")
-     */
-    public function attemptGetAttempt()
-    {
-        $attempt = json_decode(file_get_contents('php://input'),true);
-        $em = $this->getDoctrine()->getManager();
-        $attempt = $em->getRepository('AppBundle:Attempt')->find($attempt);
-        $result = $em->getRepository('AppBundle:Result')->find($attempt);
-        $user_answers = $em->getRepository('AppBundle:UserAnswer')->findByAttempt($attempt);
-        $answers = $em->getRepository('AppBundle:Answer')->findAll();
-
-        $encoders = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $serializer = new Serializer($normalizers, $encoders);
-
-        $attempt = $serializer->normalize($attempt, 'json');
-        $result = $serializer->normalize($result, 'json');
-        $user_answers = $serializer->normalize($user_answers, 'json');
-        $answers = $serializer->normalize($answers, 'json');
-
-        $response = new JsonResponse();
-        $response->setData(array(
-            'attempt'=>$attempt,
-            'result'=>$result,
-            'user_answers'=>$user_answers,
-            'answers'=>$answers,
+            'time' => $remaining,
         ));
         return $response;
     }
 
 }
+?>

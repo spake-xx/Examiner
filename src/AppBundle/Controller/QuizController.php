@@ -100,7 +100,12 @@ class QuizController extends Controller
 		if($image){
 			$image=$image->getWebPath();
 		}
-
+		$correct = $em->getRepository('AppBundle:Answer')->createQueryBuilder('c');
+		$correct = $correct
+			->where('c.points > 0')
+			->andWhere('c.question='.$question->getId())
+			->getQuery()
+			->getResult();
 		$answer = new Answer();
 		$answer->setEnabled(1);
 		$answer->setQuestion($question);
@@ -111,11 +116,24 @@ class QuizController extends Controller
 					->add('save', SubmitType::class, array('label'=>"Dodaj odpowiedź"))
 					->getForm();
 		$form->handleRequest($request);
-		if($form->isValid()){
-			$em->persist($answer);
-			$em->flush();
-			$answers = $em->getRepository('AppBundle:Answer')->findByQuestion($question);
-		}
+//		if($form->isValid()){
+//			if($answer->getPoints()>=1 && $correct){
+//				$this->addFlash('notice','W tym pytaniu istnieje już poprawna odpowiedź!');
+//				return $this->render('teacher/edit_question.html.twig', array(
+//					'question' => $question,
+//					'questions' => $questions,
+//					'quiz' => $quiz,
+//					'answers'=>$answers,
+//					'add_answer'=>$form->createView(),
+//					'add_question'=>$formq->createView(),
+//					'add_image'=>$formfile->createView(),
+//					'image'=>$image,
+//				));
+//			}
+//			$em->persist($answer);
+//			$em->flush();
+//			$answers = $em->getRepository('AppBundle:Answer')->findByQuestion($question);
+//		}
 
 		$question_new = new Question();
 		$formq = $this->get('form.factory')->createNamedBuilder('question', FormType::class, $question_new)
@@ -147,6 +165,24 @@ class QuizController extends Controller
 			$this->addFlash('notice', 'Pomyślnie dodano obrazek do pytania.');
 		}
 
+		if($form->isValid()){
+			if($answer->getPoints()>=1 && $correct){
+				$this->addFlash('notice','W tym pytaniu istnieje już poprawna odpowiedź!');
+				return $this->render('teacher/edit_question.html.twig', array(
+					'question' => $question,
+					'questions' => $questions,
+					'quiz' => $quiz,
+					'answers'=>$answers,
+					'add_answer'=>$form->createView(),
+					'add_question'=>$formq->createView(),
+					'add_image'=>$formfile->createView(),
+					'image'=>$image,
+				));
+			}
+			$em->persist($answer);
+			$em->flush();
+			$answers = $em->getRepository('AppBundle:Answer')->findByQuestion($question);
+		}
 
 		return $this->render('teacher/edit_question.html.twig', array(
 			'question' => $question,

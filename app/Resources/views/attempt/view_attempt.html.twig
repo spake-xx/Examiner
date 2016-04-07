@@ -1,7 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 <div class="row" ng-app="myApp" ng-controller="attempt" ng-init="setAttempt({{ attempt.id }})">
     <div class="col-md-12" ng-if="result">
-        <div class="alert alert-info">Wynik: {{ '{{ result.points }}' }} / {{ '{{ result.maxPoints }}'  }}</div>
+        <div class="alert alert-info">Wynik: {{ result.points }} / {{ result.maxPoints  }}</div>
     </div>
     <div class="col-md-6">
         <div class="panel panel-default">
@@ -14,9 +14,9 @@
                     {#<li ng-repeat="user_answer in user_answers" ng-click="getQuestion(user_answer.answer.question.id)" ng-if="user_answer.answer.question.id != question.id" class="list-group-item">#}
                     <div  ng-repeat="user_answer in user_answers">
                         <li ng-click="getQuestion(user_answer.answer.question.id)" ng-if="user_answer.answer.question.id != question.id" class="list-group-item">
-                        <i class="fa fa-check" ng-if="user_answer.answer.points > 0"></i>
-                        <i class="fa fa-times" ng-if="user_answer.answer.points == 0"></i>
-                        {{ '{{ user_answer.answer.question.question | limitTo:40 }}{{ user_answer.answer.question.question.length > 40 ? "..." : "" }}' }}</li>
+                            <i class="fa fa-check" ng-if="user_answer.answer.points > 0"></i>
+                            <i class="fa fa-times" ng-if="user_answer.answer.points == 0"></i>
+                            {{ '{{ user_answer.answer.question.question | limitTo:40 }}{{ user_answer.answer.question.question.length > 40 ? "..." : "" }}' }}</li>
                         <li ng-click="getQuestion(user_answer.answer.question.id)" ng-if="user_answer.answer.question.id == question.id" class="list-group-item active">
                             <i class="fa fa-check" ng-if="user_answer.answer.points > 0"></i>
                             <i class="fa fa-times" ng-if="user_answer.answer.points == 0"></i>
@@ -33,16 +33,16 @@
                 <div class="alert alert-info alert-own" ng-if="!question">Choose a question from the list</div>
                 <ul class="list-group list-group-own" ng-if="question">
                     <img src="/{{ '{{ image }}' }}" class="img-responsive" alt="img" ng-if="image != null"/>
-                    <div ng-repeat="user in user_answers">
-                        <div ng-repeat="answer in answers">
+                    <div ng-repeat="answer in answers">
+                        <div ng-repeat="user in user_answers">
                             <div ng-if="answer.question.id == user.answer.question.id">
-                                <li class="list-group-item list-group-item-success" ng-if="user.answer.id == answer.id && user.answer.points > 0" >POPRAWNA+ZAZNACZONA {{ '{{ answer.answer }}' }}</li>
-                                <li class="list-group-item list-group-item-danger" ng-if="user.answer.points == 0">NIEPOPRAWNA + ZAZNACZONA{{ '{{ answer.answer }}' }}</li>
-                                <li class="list-group-item list-group-item-info" ng-if="user.answer.id != answer.id && answer.points > 0">POPRAWNA+NIEZAZNACZONA{{ '{{ answer.answer }}' }}</li>
-                                <li class="list-group-item" ng-if="user.answer.id != answer.id && answer.points == 0">NIEPOPRAWNA, NIEZAZNACZONA{{ '{{ answer.answer }}' }}</li>
+                                <li class="list-group-item list-group-item-success" ng-if="answer.id == user.answer.id && user.answer.points > 0" ><i class="fa fa-check"></i> {{ '{{ answer.answer }}' }}</li>
+                                <li class="list-group-item list-group-item-danger" ng-if="answer.id == user.answer.id && user.answer.points == 0"> {{ '{{ answer.answer }}' }}</li>
+                                <li class="list-group-item" ng-if="answer.id != user.answer.id && answer.points > 0"><i class="fa fa-check"></i>{{ '{{ answer.answer }}' }}</li>
+                                <li class="list-group-item" ng-if="answer.id != user.answer.id && answer.points == 0"> {{ '{{ answer.answer }}' }}</li>
                             </div>
                             {#<div ng-if="answer != user.answer">#}
-                                {#<li class="list-group-item">{{ '{{ answer.answer }}' }}</li>#}
+                            {#<li class="list-group-item">{{ '{{ answer.answer }}' }}</li>#}
                             {#</div>#}
                         </div>
                     </div>

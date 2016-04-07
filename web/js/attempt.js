@@ -25,7 +25,7 @@ angular.module('myApp', []).controller('attempt', function ($scope, $http, $inte
                 //$scope.result = response.data.result;
                 $scope.question = response.data.question;
                 //console.log(response.data.answers);
-                console.log(response.data.user_answers);
+                //console.log(response.data.user_answers);
         },function(response){
             alert(response.data);
         });
@@ -38,11 +38,11 @@ angular.module('myApp', []).controller('attempt', function ($scope, $http, $inte
       $http.post('/attempt/ajax/attempt/', $scope.attempt).then(function(response){
           $scope.attempt = response.data.attempt;
           //$scope.answers = response.data.answers;
-          $scope.result =  response.data.result;
+          $scope.result = response.data.result;
           $scope.user_answers = response.data.user_answers;
           //console.log(response.data.user_answers);
           //$scope.question_image = response.data.question_image;
-          //console.log(response.data.result);
+          console.log(response.data.result);
       }, function(response){
           console.log(response.data);
       });
