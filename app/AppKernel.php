@@ -5,6 +5,11 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 
 class AppKernel extends Kernel
 {
+    public function __construct($environment, $debug) {
+        date_default_timezone_set( 'Europe/Paris' );
+        parent::__construct($environment, $debug);
+    }
+
     public function registerBundles()
     {
         $bundles = array(
@@ -30,6 +35,16 @@ class AppKernel extends Kernel
 
         return $bundles;
     }
+
+//   public function getCacheDir()
+//    {
+//        // for docker performance
+//        if ($this->getEnvironment() === 'test' || $this->getEnvironment() === 'dev') {
+//            return '/tmp/'.$this->environment;
+//        } else {
+//            return $this->rootDir.'/app/cache/'.$this->environment;
+//        }
+//    }
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
